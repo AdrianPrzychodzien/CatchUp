@@ -1,4 +1,4 @@
-class Students::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Student::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     @student = Student.from_omniauth(request.env["omniauth.auth"])
 

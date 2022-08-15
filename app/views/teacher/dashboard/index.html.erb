@@ -18,19 +18,5 @@
 </div>
 
 <div class="my-2 border-2">
-  All students:
-  <ul>
-    <% @all_students.each do |student| %>
-      <li><%= student.email %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="my-2 border-2">
-  Your students:
-  <ul>
-    <% @students.each do |student| %>
-      <li><%= student.email %></li>
-    <% end %>
-  </ul>
+  <%= link_to "Your students", teacher_students_path %>
 </div>
