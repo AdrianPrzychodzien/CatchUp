@@ -1,6 +1,8 @@
 class Teacher::StudentsController < ApplicationController
     before_action :authenticate_teacher!
 
+    layout "teacher"
+
     def index
         @students = current_teacher.students
     end

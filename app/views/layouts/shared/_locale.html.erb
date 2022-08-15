@@ -1,0 +1,59 @@
+<% img_style = locals[:small] ? "width:40px; height:40px;" : "width:60px; height:60px;" %>
+
+<% if locals[:dropdown] %>
+    <% li_style = "min-w-max text-sm py-2 px-4 font-normal block
+                        w-full whitespace-nowrap bg-transparent
+                        text-gray-700 hover:bg-gray-100" %>
+
+    <div data-controller="dropdown" class="relative">
+        <button 
+            class="px-2 py-1 text-white font-medium text-xs
+                    leading-tight uppercase rounded
+                    hover:bg-$blue hover:shadow-lg
+                    focus:bg-$blue focus:shadow-lg focus:outline-none focus:ring-0
+                    active:bg-$blue active:shadow-lg active:text-white
+                    transition duration-150 ease-in-out
+                    flex items-center whitespace-nowrap"
+            data-dropdown-target="btn" 
+            data-action="dropdown#toggleBtn" 
+            aria-expanded="false"
+            id="dropdownMenuButton1"
+            type="button"
+        >
+            <%= image_tag "flags/#{I18n.locale}.png", class:"my-1 cursor-pointer", style: img_style, alt: "#{I18n.locale} logo" %>
+            <%= bootstrap_icon "caret-down-fill", class: "cursor-pointer w-4 h-4" %>
+        </button>
+
+        <ul hidden
+            data-dropdown-target="dropdown"
+            class="min-w-max absolute bg-white text-base float-left
+                    list-none text-left rounded-lg shadow-lg
+                    mt-1 m-0 bg-clip-padding border-none"
+            aria-labelledby="dropdownMenuButton1"
+        >
+            <%= button_to set_locale_path(:locale => "pl"), aria: { label: "dropdownButton" } do %>
+                <li class="<%= li_style %>">
+                    <%= image_tag "flags/pl.png", style: img_style, alt: "pl logo" %>
+                </li>
+            <% end %>
+            <%= button_to set_locale_path(:locale => "en"), aria: { label: "dropdownButton" } do %>
+                <li class="<%= li_style %>">
+                    <%= image_tag "flags/en.png", style: img_style, alt: "en logo" %>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+
+    <% else %>
+
+    <div class="flex justify-center items-center <%= locals[:class] %>">
+        <%= button_to set_locale_path(:locale => "pl") do %>
+            <%= image_tag "flags/pl.png", class:"mr-3", style: img_style, alt: "pl logo" %>
+        <% end %>
+
+        <%= button_to set_locale_path(:locale => "en") do %>
+            <%= image_tag "flags/en.png", class:"mr-3", style: img_style, alt: "en logo" %>
+        <% end %>
+    </div>
+
+<% end %>

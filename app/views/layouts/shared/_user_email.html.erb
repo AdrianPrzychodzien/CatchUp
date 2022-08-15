@@ -1,0 +1,9 @@
+<%
+    email = current_teacher.present? ? current_teacher.email : current_admin ? current_admin.email : nil
+%>
+
+<button class="flex items-center">
+    <div class="mr-3">
+    <p class="text-sm text-white"><%= email %></p>
+    </div>
+</button>

@@ -88,3 +88,5 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "simple_form-tailwind", "~> 0.1.1"
 
 gem "simple_form", "~> 5.1"
+
+gem "bootstrap-icons-helper", "~> 2.0"

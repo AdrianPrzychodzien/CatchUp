@@ -1,0 +1,80 @@
+<section data-controller="menu">
+  <nav class="relative">
+    <div class="p-6 flex items-center bg-gray-800">
+      <% if @current_user&.organization.present? %>
+        <div class="flex-shrink-0 mr-8 text-2xl text-white font-semibold">
+            <%= @current_user.organization.name%>
+        </div>
+      <% end %>
+
+      <ul class="hidden xl:flex" data-menu-target="menu_list">
+        <% admin_routes.each do |route| %>
+          <li>
+              <%= link_to t("admin_menu.#{route}"), [:teacher, route.to_sym], class:"px-6 py-6 text-gray-50 hover:text-gray-100 text-sm border-b-2 hover:text-gray-600 hover:border-gray-300" %>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="hidden xl:flex justify-end ml-auto">
+        <%= render 'layouts/shared/user_email' %>
+      </div>
+
+      <div class="flex items-center">
+        <%= render 'layouts/shared/logout_btn' %>
+        <%# <%= render 'layouts/shared/locale', locals: {small: true, dropdown:true} %>
+      </div>
+
+      <div class="ml-auto flex xl:hidden">
+        <button data-action="click->menu#toggle" class="navbar-burger flex items-center rounded border border-gray-50 focus:outline-none">
+          <svg class="text-white block h-8 w-8 p-2 rounded" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+            <title>Mobile menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div data-menu-target="mobile_menu" class="hidden navbar-menu fixed top-0 left-0 bottom-0 w-3/4 lg:w-80 sm:max-w-xs z-50">
+    <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-10"></div>
+    <nav class="relative flex flex-col pt-8 pb-8 h-full w-full bg-gray-800 overflow-y-auto">
+      <div class="flex w-full items-center px-6 pb-6 mb-6 lg:border-b border-gray-700">
+        <% if @current_user&.organization.present? %>
+          <div class="flex-shrink-0 mr-12 text-2xl text-white font-semibold">
+            <%= @current_user.organization.name%>
+          </div>
+        <% end %>
+      </div>
+
+      <a data-action="click->menu#toggle" class="navbar-close absolute top-4 right-4 p-4" href="#">
+        <%= bootstrap_icon "x-circle", class: "text-gray-50 inline w-8 h-8" %>
+      </a>
+
+      <div class="px-4 pb-6">
+        <h3 class="mb-2 text-xs uppercase text-gray-500 font-medium">Main</h3>
+
+        <ul class="mb-8 text-sm font-medium" data-menu-target="menu_list">
+         <% admin_routes.each do |route| %>
+            <li>
+                <%= link_to t("admin_menu.#{route}"), [:teacher, route.to_sym], class:"flex items-center pl-3 py-3 pr-4 text-gray-50 hover:bg-gray-900 rounded" %>
+            </li>
+          <% end %>
+        </ul>
+
+        <div class="pt-24">
+          <div class="flex justify-center my-4">
+            <%= render 'layouts/shared/user_email' %>
+          </div>
+
+          <div class="flex justify-center my-4">
+            <%# <%= render 'layouts/shared/locale', locals: {small: true} %> %>
+          </div>
+
+          <div class="flex justify-center my-4">
+            <%# <%= render 'layouts/shared/logout_btn' %> %>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>

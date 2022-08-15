@@ -1,0 +1,10 @@
+<%
+  # session_namespace = @namespace == :superadmin ? :superadmin : @namespace == :admin ? :user : @namespace
+  session_namespace = :teacher
+%>
+
+<%= button_to t("admin_menu.logout"), 
+    [:destroy, session_namespace, :session], 
+    method: :delete, 
+    class:"mx-4 whitespace-nowrap bg-transparent hover:bg-$blue text-gray-50 font-semibold hover:text-white py-2 px-4 border border-gray-50 hover:border-transparent rounded" 
+%>

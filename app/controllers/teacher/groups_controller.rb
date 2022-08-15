@@ -1,6 +1,8 @@
 class Teacher::GroupsController < ApplicationController
     before_action :authenticate_teacher!
 
+    layout "teacher"
+
     def index
         @groups = current_teacher.groups
     end

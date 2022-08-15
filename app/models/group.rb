@@ -21,6 +21,6 @@ class Group < ApplicationRecord
     before_save :set_name
 
     def set_name
-        self.name = "#{self.organization.name}_#{self.language.upcase}_#{self.level}"
+        self.name = "#{self.organization.name}_#{self.language}_#{self.level}".upcase
     end
 end
