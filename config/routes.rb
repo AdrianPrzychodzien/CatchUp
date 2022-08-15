@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   
   namespace :teacher do
     resources :students, only: [:index, :show]
+    resources :groups, only: [:index, :show]
   end
 
   root to: "pages#home"

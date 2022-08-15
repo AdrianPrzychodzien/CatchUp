@@ -13,6 +13,7 @@
 #  provider               :string
 #  uid                    :string
 #  teacher_id             :integer
+#  group_id               :integer
 #
 
 class Student < ApplicationRecord
@@ -26,6 +27,7 @@ class Student < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   belongs_to :teacher, optional: true
+  belongs_to :group, optional: true
 
   def self.from_omniauth(auth)
     student = Student.where(email: auth.info.email).first

@@ -13,6 +13,7 @@
 #  provider               :string
 #  uid                    :string
 #  teacher_id             :integer
+#  group_id               :integer
 #
 
 require "test_helper"

@@ -19,4 +19,5 @@ class Teacher < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :students
+  has_many :groups, through: :students
 end

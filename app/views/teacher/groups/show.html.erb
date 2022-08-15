@@ -1,0 +1,16 @@
+<h1>Group <%= @group.name %> page</h1>
+
+<div class="my-2 border-2">
+    All students in this group:
+    <ul>
+        <% @group.students.each do |student| %>
+            <li>
+                <%= link_to student.email, teacher_student_path(student) %>
+            </li>
+        <% end %>
+    </ul>
+</div>
+
+<div class="my-2 border-2">
+  <%= link_to "Back to groups", teacher_groups_path %>
+</div>

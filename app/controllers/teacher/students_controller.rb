@@ -7,5 +7,6 @@ class Teacher::StudentsController < ApplicationController
 
     def show
         @student = Student.find(params[:id])
+        @student_group = @student.group
     end
 end
