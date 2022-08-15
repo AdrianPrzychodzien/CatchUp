@@ -3,8 +3,7 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   # Default class for buttons
-  config.button_class = "my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-2 px-4 rounded"
-
+  config.button_class = "inline-block py-3 px-7 mb-4 w-full text-base text-white font-medium text-center leading-6 bg-orange-600 hover:bg-orange-400 focus:ring-2 focus:ring-orange-400 focus:ring-opacity-50 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
   # Define the default class of the input wrapper of the boolean input.
   config.boolean_label_class = ""
 
@@ -32,12 +31,12 @@ SimpleForm.setup do |config|
   # add validation classes to `input_field`
   config.input_field_error_class = "border-red-500"
   config.input_field_valid_class = "border-green-400"
-  config.label_class = "text-sm font-medium text-gray-600"
+  config.label_class = "block mb-2 text-gray-800 font-medium"
 
   # vertical forms
   #
   # vertical default_wrapper
-  config.wrappers :vertical_form, tag: "div", class: "mb-4" do |b|
+  config.wrappers :vertical_form, tag: "div", class: "mb-6" do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -45,8 +44,8 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: "block", error_class: "text-red-500"
-    b.use :input, class: "shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 bg-white focus:outline-none focus:ring-0 focus:border-blue-500 text-gray-400 leading-6 transition-colors duration-200 ease-in-out", error_class: "border-red-500", valid_class: "border-green-400"
+    b.use :label, class: "block mb-2 text-gray-800 font-medium", error_class: "text-red-500"
+    b.use :input, class: "appearance-none block w-full p-3 leading-5 text-gray-900 border border-gray-200 focus:border-$blue rounded-lg shadow-md placeholder-gray-400 focus:outline-none focus:ring-0 transition-colors duration-200 ease-in-out", error_class: "border-red-500", valid_class: "border-green-400"
     b.use :full_error, wrap_with: {tag: "p", class: "mt-2 text-red-500 text-xs italic"}
     b.use :hint, wrap_with: {tag: "p", class: "mt-2 text-grey-700 text-xs italic"}
   end
