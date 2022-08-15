@@ -1,10 +1,5 @@
-<div>
-  Your groups:
-  <ul>
-    <% @groups.each do |group| %>
-      <li>
-        <%= link_to group.name, teacher_group_path(group) %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<% @skip_create_new = true %>
+
+<%= render 'admin/shared/header', resource: Group.new, mode: "index" %>
+
+<%= render 'admin/shared/collection', resource: @groups, select_columns: @select_columns %> 

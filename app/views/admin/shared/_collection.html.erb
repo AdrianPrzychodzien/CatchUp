@@ -1,0 +1,62 @@
+<% @full_width = true %>
+
+<div class="flex flex-col mt-8">
+    <div class="overflow-x-auto">
+        <div class="inline-block min-w-full align-middle">
+            <div class="overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
+                    <thead class="bg-gray-100 dark:bg-gray-700">
+                        <tr>
+                            <% select_columns.each do |column| %>
+                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                    <%= t("admin.dashboard.#{column}") %>
+                                </th>
+                            <% end %>
+                        </tr>
+                    </thead>
+
+                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                        <% resource.each_with_index do |record, index| %>
+                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <% select_columns.each do |column| %>
+
+                                <% if column === "groups" %>
+                                    <td class="table-cell">
+                                        <%= render 'admin/shared/links', resource: record.groups %>
+                                    </td>
+                                <% elsif column === "students" %>
+                                    <td class="table-cell">
+                                        <%= render 'admin/shared/links', resource: record.students %>
+                                    </td>
+                                <% elsif column === "group_id" %>
+                                    <% group = Group.find(record[column]) %>
+                                    <td class="table-cell"><%= link_to group.name, [@namespace, group], class:"btn-outline mb-1" %></td>
+                                <% elsif column === "created_at" %>
+                                    <td class="table-cell"><%= record[column].to_s(:default) %></td>
+                                <% elsif column === "employee_id" %>
+                                    <td class="table-cell">
+                                        <%= render 'admin/shared/links', resource: [Employee.find(record[column])] %>
+                                    </td>
+                                <% elsif column === "organization_id" %>
+                                    <td class="table-cell">
+                                        <%= render 'admin/shared/links', resource: [Organization.find(record[column])] %>
+                                    </td>
+                                <% elsif column === "id" %>
+                                    <td class="table-cell">
+                                        # <%= index+1 %>
+                                    </td>
+                                <% else %>
+                                    <td class="table-cell"><%= record[column] %></td>
+                                <% end %>
+                                    
+                                <% end %>
+                                
+                                <td class="table-cell"><%= link_to t("admin.details"), [@namespace, record] %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,8 @@
                     <%= render 'admin/shared/links', resource: resource.groups %>
                 </span>
             <% elsif column === "group_id" %>
-                <span class="mb-4 ml-6 w-[80%]"><%= Group.find(resource[column]).name %></span>
+                <% group = Group.find(resource[column]) %>
+                <span class="mb-4 ml-6 w-[80%]"><%= link_to group.name, [@namespace, group], class:"btn-outline mb-1" %></span>
             <% elsif column === "pages_id" %>
                 <span class="mb-4 ml-6 w-[80%]"><%= Page.find(resource[column]).title if resource[column] %></span>
             <% elsif column === "organization_id" %>
