@@ -3,8 +3,7 @@ module ApplicationHelper
         # "application", "admin", 
         blacklist = ["registrations", "sessions"]
     
-        namespace = "teacher"
-        routes = Dir[Rails.root.join("app/controllers/#{namespace}/*_controller.rb")]
+        routes = Dir[Rails.root.join("app/controllers/#{@namespace}/*_controller.rb")]
           .map { |path|
                    path =~ /(\w+)_controller.rb/
                    $1

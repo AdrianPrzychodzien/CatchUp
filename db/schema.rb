@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_15_152939) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_15_160300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,11 +57,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_152939) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id"
     t.index ["email"], name: "index_teachers_on_email", unique: true
+    t.index ["organization_id"], name: "index_teachers_on_organization_id"
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
   end
 
   add_foreign_key "groups", "organizations"
   add_foreign_key "groups", "teachers"
   add_foreign_key "students", "groups"
+  add_foreign_key "teachers", "organizations"
 end

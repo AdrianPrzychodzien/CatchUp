@@ -10,6 +10,7 @@
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  organization_id        :integer
 #
 
 class Teacher < ApplicationRecord
@@ -18,6 +19,7 @@ class Teacher < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  belongs_to :organization
   has_many :students
   has_many :groups, through: :students
 end
