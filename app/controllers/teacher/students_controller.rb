@@ -1,5 +1,6 @@
 class Teacher::StudentsController < ApplicationController
     before_action :authenticate_teacher!
+    before_action :select_columns, only: [:index, :show]
 
     layout "teacher"
 
@@ -10,5 +11,11 @@ class Teacher::StudentsController < ApplicationController
     def show
         @student = Student.find(params[:id])
         @student_group = @student.group
+    end
+
+    private
+
+    def select_columns
+      @select_columns = ["id", "email", "group_id", "created_at"]
     end
 end

@@ -1,0 +1,35 @@
+<header class="border-b-2 pb-4 px-2 flex items-center">
+    <% if resource.present? %>
+
+        <% if mode === "index" %>
+            <% single_resource = resource.class.name %>
+            <% set_meta_tags title: single_resource.pluralize %>
+
+            <h1 class="text-2xl font-bold mr-auto"><%= t("admin_menu.#{single_resource.pluralize.downcase}")%></h1>
+            <%= link_to "#{t("admin.add")}", [:new, @namespace, single_resource.downcase.to_sym], class: "btn-primary" unless @skip_create_new %>
+        <% end %>
+
+        <% if mode === "new" %>
+            <h1 class="text-2xl font-bold mr-auto">
+                <%= t("admin.new")%> <%= t("admin_menu.singularized.#{resource.class.name.downcase}") %>
+            </h1>
+            <%= link_to t("admin.back"), :back, class: "btn-primary" %>
+        <% end %>
+
+        <% if mode === "edit" %>
+            <h1 class="text-2xl font-bold mr-auto"><%= t("admin.edit")%>
+                <%= get_resource_title_for_admin(resource)%>
+            </h1>
+            <%= link_to t("admin.show"), [@namespace, resource], class: "btn-primary" %>
+        <% end %>
+
+        <% if mode === "show" %>
+            <h1 class="text-2xl font-bold mr-auto">
+                <%= get_resource_title_for_admin(resource)%>
+            </h1>
+            <%# <%= link_to t("admin.edit"), [:edit, @namespace, resource], class: "btn-primary" %>
+            <%= link_to t("admin.delete"), [@namespace, resource], data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn-danger ml-4" %>
+        <% end %>
+
+    <% end %>   
+</header>

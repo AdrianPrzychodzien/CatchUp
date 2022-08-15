@@ -1,0 +1,35 @@
+<section class="px-6 pt-12">
+    <% select_columns.each do |column| %>
+        <div class="mb-4 flex">
+            <span class="mb-4 text-right uppercase w-[20%]"><%=t("admin.dashboard.#{column}") %></span>
+            
+            <% if column === "groups" %>
+                <span class="mb-4 ml-6 w-[80%]">
+                    <%= render 'admin/shared/links', resource: resource.groups %>
+                </span>
+            <% elsif column === "group_id" %>
+                <span class="mb-4 ml-6 w-[80%]"><%= Group.find(resource[column]).name %></span>
+            <% elsif column === "pages_id" %>
+                <span class="mb-4 ml-6 w-[80%]"><%= Page.find(resource[column]).title if resource[column] %></span>
+            <% elsif column === "organization_id" %>
+                <span class="mb-4 ml-6 w-[80%]"><%= Organization.find(resource[column]).name if resource[column] %></span>
+            <% elsif column === "created_at" %>
+                <span class="mb-4 ml-6 w-[80%]"><%= resource[column].to_s(:default) %></span>
+            <% elsif column === "students" %>
+                <span class="mb-4 ml-6 w-[80%]">
+                    <%= render 'admin/shared/links', resource: resource.students %>
+                </span>
+            <% elsif column === "body" %>
+                <span class="mb-4 ml-6 w-[80%]">
+                    <% if valid_json?(resource.body.to_s) %>
+                        <pre><%= JSON.pretty_generate(JSON.parse(resource.body)) %></pre>
+                    <% else %>
+                        <%= resource.body %>
+                    <% end %>
+                </span>
+            <% else %>
+                <span class="mb-4 ml-6 w-[80%]"><%= resource[column] %></span>
+            <% end %>
+        </div>
+    <% end %>
+</section>

@@ -1,10 +1,3 @@
-<h1>Student <%= @student.email %> page</h1>
+<%= render 'admin/shared/header', resource: @student, mode: "show" %>
 
-<div class="my-2 border-2">
-    All groups this student is in:
-    <%= link_to @student_group.name, teacher_group_path(@student_group) %>
-</div>
-
-<div class="my-2 border-2">
-    <%= link_to "Back to students", teacher_students_path %>
-</div>
+<%= render 'admin/shared/details', resource: @student, select_columns: @select_columns %> 

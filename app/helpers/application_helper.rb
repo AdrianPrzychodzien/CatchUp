@@ -11,4 +11,12 @@ module ApplicationHelper
           .compact
           .delete_if { |x| blacklist.include?(x) }
     end
+
+    def get_resource_title_for_admin(resource)
+      if resource.instance_of?(Teacher) || resource.instance_of?(Student)
+        resource.email
+      else
+        resource.instance_of?(Group) ? resource.name : ""
+      end
+    end
 end
