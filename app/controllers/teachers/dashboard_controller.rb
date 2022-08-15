@@ -3,5 +3,7 @@ class Teachers::DashboardController < ApplicationController
 
     def index
         @teachers = Teacher.all
+        @all_students = Student.all
+        @students = current_teacher.students
     end
 end

@@ -2,7 +2,7 @@
 #
 # Table name: students
 #
-#  id                     :bigint           not null, primary key
+#  id                     :integer          not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
@@ -10,7 +10,11 @@
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  provider               :string
+#  uid                    :string
+#  teacher_id             :integer
 #
+
 class Student < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -20,6 +24,8 @@ class Student < ApplicationRecord
     omniauth_providers: %i[facebook]
 
   validates :email, presence: true, uniqueness: true
+
+  belongs_to :teacher, optional: true
 
   def self.from_omniauth(auth)
     student = Student.where(email: auth.info.email).first
