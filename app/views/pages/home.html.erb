@@ -1,15 +1,24 @@
 <div class="decoration-red-800">
-<% if current_student %>
-you are logged in as <%= current_student.email %>
-<% else %>
-you are not logged in
-<% end %>
+    <% if current_student %>
+        you are logged in as <%= current_student.email %>
+    <% elsif current_teacher %>
+        you are logged in as <%= current_teacher.email %>
+    <% else %>
+        you are not logged in
+    <% end %>
 </div>
 
-<%= link_to "Sign in", new_student_session_path unless current_student %>
-<%= button_to "Sign out", destroy_student_session_path, method: :delete if current_student %>
+<div>
+    <%= link_to "Sign in as user", new_student_session_path unless current_student %>
+    <%= link_to "Sign in as teacher", new_teacher_session_path unless current_teacher %>
+</div>
+
+<div>
+    <%= button_to "Sign out from student", destroy_student_session_path, method: :delete if current_student %>
+    <%= button_to "Sign out from teacher", destroy_teacher_session_path, method: :delete if current_teacher %>
+</div>
 
 <%= button_to "Register with Facebook", 
         student_facebook_omniauth_authorize_path, 
-        data: { turbo: "false", method: :post} 
-    %>
+        data: { turbo: "false", method: :post } 
+%>

@@ -1,0 +1,18 @@
+<h1>TEACHERS DASHBOARD</h1>
+<p>Welcome <%= current_teacher.email %>!</p>
+
+<div>
+  <%= button_to "Log out", destroy_teacher_session_path, method: :delete %>
+</div>
+<div>
+  <%= link_to "Edit profile", edit_teacher_registration_path %>
+</div>
+
+<div>
+  All teachers:
+  <ul>
+    <% @teachers.each do |teacher| %>
+      <li><%= teacher.email %></li>
+    <% end %>
+  </ul>
+</div>
