@@ -78,3 +78,6 @@ gem "standard", group: [:development, :test]
 
 gem "devise", "~> 4.8"
 gem "devise-i18n"
+
+gem "omniauth-facebook"
+gem "omniauth-rails_csrf_protection", "~> 1.0"

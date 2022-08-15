@@ -1,0 +1,6 @@
+<h1>Home</h1>
+
+<%= button_to "Register with Facebook", 
+        student_facebook_omniauth_authorize_path, 
+        data: { turbo: "false", method: :post} 
+    %>

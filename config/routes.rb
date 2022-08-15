@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :students
+  devise_for :students, controllers: {
+    omniauth_callbacks: "students/omniauth_callbacks"
+  }
 
-  root to: 'home#index'
+  root to: 'pages#home'
 end
