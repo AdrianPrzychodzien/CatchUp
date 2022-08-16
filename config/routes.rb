@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   namespace :teacher do
     resources :students, only: [:index, :show]
     resources :groups, only: [:index, :show]
-    resources :decks
+    resources :decks do
+      post :download, on: :member
+    end
   end
 
   root to: "pages#home"

@@ -26,6 +26,13 @@ class Teacher::DecksController < ApplicationController
         end
     end
 
+    def download
+        @deck = Deck.find(params[:id])
+        anki_file = Teacher::CreateAnkiFileService.new(@deck).call
+
+        send_file anki_file, filename: "#{@deck.name}.txt"
+    end
+
     # def edit
     #     @deck = Deck.find(params[:id])
     # end
