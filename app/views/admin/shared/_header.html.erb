@@ -5,8 +5,8 @@
             <% single_resource = resource.class.name %>
             <%# <% set_meta_tags title: single_resource.pluralize %>
 
-            <h1 class="text-2xl font-bold mr-auto"><%= t("admin_menu.#{single_resource.pluralize.downcase}")%></h1>
-            <%= link_to "#{t("admin.add")}", [:new, @namespace, single_resource.downcase.to_sym], class: "btn-primary" unless @skip_create_new %>
+            <h1 class="text-2xl font-bold mr-auto"><%= single_resource.pluralize.downcase%></h1>
+            <%= link_to "Add", [:new, @namespace, single_resource.downcase.to_sym], class: "btn-primary" unless @skip_create_new %>
         <% end %>
 
         <% if mode === "new" %>
