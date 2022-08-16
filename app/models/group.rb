@@ -13,14 +13,14 @@
 #
 
 class Group < ApplicationRecord
-    belongs_to :organization
-    belongs_to :teacher
-    has_many :students
-    # has_many :lessons, through: :students
+  belongs_to :organization
+  belongs_to :teacher
+  has_many :students
+  # has_many :lessons, through: :students
 
-    before_save :set_name
+  before_save :set_name
 
-    def set_name
-        self.name = "#{self.organization.name}_#{self.language}_#{self.level}".upcase
-    end
+  def set_name
+    self.name = "#{organization.name}_#{language}_#{level}".upcase
+  end
 end

@@ -1,20 +1,20 @@
 class Teacher::GroupsController < ApplicationController
-    before_action :authenticate_teacher!
-    before_action :select_columns, only: [:index, :show]
+  before_action :authenticate_teacher!
+  before_action :select_columns, only: [:index, :show]
 
-    layout "teacher"
+  layout "teacher"
 
-    def index
-        @groups = current_teacher.groups
-    end
+  def index
+    @groups = current_teacher.groups
+  end
 
-    def show
-        @group = Group.find(params[:id])
-    end
+  def show
+    @group = Group.find(params[:id])
+  end
 
-    private
+  private
 
-    def select_columns
-      @select_columns = ["id", "name", "language", "level", "students", "created_at"]
-    end
+  def select_columns
+    @select_columns = ["id", "name", "language", "level", "students", "created_at"]
+  end
 end
