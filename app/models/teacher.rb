@@ -22,4 +22,5 @@ class Teacher < ApplicationRecord
   belongs_to :organization
   has_many :students
   has_many :groups, through: :students
+  has_many :decks
 end

@@ -4,8 +4,11 @@
 
 import { application } from "./application"
 
+import DynamicFormController from "./dynamic_form_controller"
+application.register("dynamic-form", DynamicFormController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import MenuController from './menu_controller';
-application.register('menu', MenuController);
+import MenuController from "./menu_controller"
+application.register("menu", MenuController)
