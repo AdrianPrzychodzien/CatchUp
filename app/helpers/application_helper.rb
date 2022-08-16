@@ -16,7 +16,7 @@ module ApplicationHelper
     if resource.instance_of?(Teacher) || resource.instance_of?(Student)
       resource.email
     else
-      resource.instance_of?(Group) ? resource.name : ""
+      resource.instance_of?(Group) || resource.instance_of?(Deck) ? resource.name : ""
     end
   end
 end

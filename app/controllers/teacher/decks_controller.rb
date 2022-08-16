@@ -49,7 +49,7 @@ class Teacher::DecksController < ApplicationController
   def destroy
     @deck = Deck.find(params[:id])
     @deck.destroy
-    redirect_to teacher_decks_path
+    redirect_to [:teacher, :decks], status: :see_other
   end
 
   private

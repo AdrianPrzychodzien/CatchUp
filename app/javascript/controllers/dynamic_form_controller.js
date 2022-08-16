@@ -18,13 +18,13 @@ export default class extends Controller {
     newRow.appendChild(span);
 
     const frontDiv = this.frontTarget.cloneNode(true);
-
     const frontLabel = frontDiv.getElementsByTagName('label')[0];
-    frontLabel.setAttribute('for', `deck_cards_${id}_front`);
+    const id = `deck_cards_${id}_front`
+    frontLabel.setAttribute('for', id);
 
     const frontInput = frontDiv.getElementsByTagName('input')[0];
     frontInput.setAttribute('name', `deck[cards][${id}][front]`);
-    frontInput.setAttribute('id', `deck_cards_${id}_front`);
+    frontInput.setAttribute('id', id);
     frontInput.value = '';
 
     newRow.appendChild(frontDiv);
@@ -32,11 +32,12 @@ export default class extends Controller {
     const backDiv = this.backTarget.cloneNode(true);
 
     const backLabel = backDiv.getElementsByTagName('label')[0];
-    backLabel.setAttribute('for', `deck_cards_${id}_back`);
+    const id = `deck_cards_${id}_back`
+    backLabel.setAttribute('for', id);
 
     const backInput = backDiv.getElementsByTagName('input')[0];
     backInput.setAttribute('name', `deck[cards][${id}][back]`);
-    backInput.setAttribute('id', `deck_cards_${id}_back`);
+    backInput.setAttribute('id', id);
     backInput.value = '';
 
     newRow.appendChild(backDiv);
