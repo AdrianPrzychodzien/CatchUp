@@ -33,18 +33,18 @@ class Teacher::DecksController < ApplicationController
     send_file anki_file, filename: "#{@deck.name}.txt"
   end
 
-  # def edit
-  #     @deck = Deck.find(params[:id])
-  # end
+  def edit
+      @deck = Deck.find(params[:id])
+  end
 
-  # def update
-  #     @deck = Deck.find(params[:id])
-  #     if @deck.update(deck_params)
-  #         redirect_to teacher_decks_path
-  #     else
-  #         render :edit
-  #     end
-  # end
+  def update
+      @deck = Deck.find(params[:id])
+      if @deck.update(deck_params)
+          redirect_to [:teacher, :decks], status: :see_other
+      else
+          render :edit
+      end
+  end
 
   def destroy
     @deck = Deck.find(params[:id])

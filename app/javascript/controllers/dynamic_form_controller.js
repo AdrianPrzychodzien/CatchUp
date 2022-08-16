@@ -4,9 +4,8 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['row', 'template', 'front', 'back', 'add_button', 'delete_button'];
 
-  connect() {
-    console.log("🚀connect ~ this", this);
-  }
+  connect() { }
+  // TODO: Walidacja add new row
 
   createNewRow(id) {
     const newRow = document.createElement('div');
@@ -19,12 +18,12 @@ export default class extends Controller {
 
     const frontDiv = this.frontTarget.cloneNode(true);
     const frontLabel = frontDiv.getElementsByTagName('label')[0];
-    const id = `deck_cards_${id}_front`
-    frontLabel.setAttribute('for', id);
+    const frontId = `deck_cards_${id}_front`
+    frontLabel.setAttribute('for', frontId);
 
     const frontInput = frontDiv.getElementsByTagName('input')[0];
     frontInput.setAttribute('name', `deck[cards][${id}][front]`);
-    frontInput.setAttribute('id', id);
+    frontInput.setAttribute('id', frontId);
     frontInput.value = '';
 
     newRow.appendChild(frontDiv);
@@ -32,12 +31,12 @@ export default class extends Controller {
     const backDiv = this.backTarget.cloneNode(true);
 
     const backLabel = backDiv.getElementsByTagName('label')[0];
-    const id = `deck_cards_${id}_back`
-    backLabel.setAttribute('for', id);
+    const backId = `deck_cards_${id}_back`
+    backLabel.setAttribute('for', backId);
 
     const backInput = backDiv.getElementsByTagName('input')[0];
     backInput.setAttribute('name', `deck[cards][${id}][back]`);
-    backInput.setAttribute('id', id);
+    backInput.setAttribute('id', backId);
     backInput.value = '';
 
     newRow.appendChild(backDiv);
@@ -61,6 +60,8 @@ export default class extends Controller {
     const newRow = this.createNewRow(+lastRowId + 1);
 
     this.templateTarget.insertAdjacentElement('beforeend', newRow);
+    const inputToFocus = newRow.getElementsByTagName('input')[0];
+    inputToFocus.focus();
   }
 
   delete_field(e) {
