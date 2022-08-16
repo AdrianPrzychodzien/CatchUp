@@ -34,16 +34,16 @@ class Teacher::DecksController < ApplicationController
   end
 
   def edit
-      @deck = Deck.find(params[:id])
+    @deck = Deck.find(params[:id])
   end
 
   def update
-      @deck = Deck.find(params[:id])
-      if @deck.update(deck_params)
-          redirect_to [:teacher, :decks], status: :see_other
-      else
-          render :edit
-      end
+    @deck = Deck.find(params[:id])
+    if @deck.update(deck_params)
+      redirect_to [:teacher, :decks], status: :see_other
+    else
+      render :edit
+    end
   end
 
   def destroy
