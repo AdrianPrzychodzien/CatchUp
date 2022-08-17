@@ -3,7 +3,7 @@ class Manager::InvitationsController < ApplicationController
   before_action :select_columns, only: [:index, :show]
   before_action :destroy_all_batch_ids, only: [:index]
 
-  layout "teacher"
+  layout "admin"
 
   def index
     @invitations = current_manager.invitations

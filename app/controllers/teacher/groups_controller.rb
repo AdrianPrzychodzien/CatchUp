@@ -2,7 +2,7 @@ class Teacher::GroupsController < ApplicationController
   before_action :authenticate_teacher!
   before_action :select_columns, only: [:index, :show]
 
-  layout "teacher"
+  layout "admin"
 
   def index
     @groups = current_teacher.groups

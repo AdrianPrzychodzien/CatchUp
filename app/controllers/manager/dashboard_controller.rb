@@ -1,7 +1,7 @@
 class Manager::DashboardController < ApplicationController
   before_action :authenticate_manager!
 
-  layout "teacher"
+  layout "admin"
 
   def index
   end

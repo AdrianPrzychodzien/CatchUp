@@ -3,7 +3,7 @@ class Teacher::DecksController < ApplicationController
   before_action :find_deck, only: [:show, :edit, :update, :destroy, :download]
   before_action :select_columns
 
-  layout "teacher"
+  layout "admin"
 
   def new
     @deck = Deck.new

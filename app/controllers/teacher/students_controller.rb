@@ -2,7 +2,7 @@ class Teacher::StudentsController < ApplicationController
   before_action :authenticate_teacher!
   before_action :select_columns, only: [:index, :show]
 
-  layout "teacher"
+  layout "admin"
 
   def index
     @students = current_teacher.students
