@@ -1,0 +1,5 @@
+<h1>Welcome <%= current_student.email %> to the student dashboard.</h1>
+
+<div class="inline-block mt-5">
+    <%= button_to "Sign out from student", destroy_student_session_path, method: :delete, class: "btn-secondary" %>
+</div>

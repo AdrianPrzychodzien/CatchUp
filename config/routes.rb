@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   }
   devise_for :student, controllers: {
     omniauth_callbacks: "student/omniauth_callbacks",
-    registrations: "student/registrations"
+    registrations: "student/registrations",
+    sessions: "student/sessions"
   }
 
   get "/teacher/dashboard", to: "teacher/dashboard#index", as: "teacher_dashboard"
+  get "/student/dashboard", to: "student/dashboard#index", as: "student_dashboard"
 
   namespace :teacher do
     resources :students, only: [:index, :show]

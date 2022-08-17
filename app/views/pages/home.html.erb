@@ -13,9 +13,11 @@
     <%= link_to "Sign in as teacher", new_teacher_session_path, class: "btn-primary inline-block" unless current_teacher %>
 </div>
 
-<div>
-    <%= button_to "Sign out from student", destroy_student_session_path, method: :delete, class: "btn-secondary inline-block" if current_student %>
-    <%= button_to "Sign out from teacher", destroy_teacher_session_path, method: :delete, class: "btn-secondary inline-block" if current_teacher %>
+<div class="inline-block">
+    <%= button_to "Sign out from student", destroy_student_session_path, method: :delete, class: "btn-secondary" if current_student %>
+</div>
+<div class="inline-block">
+    <%= button_to "Sign out from teacher", destroy_teacher_session_path, method: :delete, class: "btn-secondary" if current_teacher %>
 </div>
 
 <%= button_to "Register with Facebook", 
