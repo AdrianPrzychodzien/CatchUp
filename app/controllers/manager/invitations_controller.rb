@@ -1,4 +1,5 @@
 class Manager::InvitationsController < ApplicationController
+  before_action :authenticate_manager!
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
   before_action :select_columns, only: [:index, :show]
   before_action :destroy_all_batch_ids, only: [:index]
