@@ -18,4 +18,8 @@ module ApplicationHelper
       resource.instance_of?(Group) || resource.instance_of?(Deck) ? resource.name : ""
     end
   end
+
+  def is_editable(resource)
+    resource.class.name == "Deck"
+  end
 end

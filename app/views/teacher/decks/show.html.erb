@@ -2,4 +2,5 @@
 
 <%= render 'admin/shared/details', resource: @deck, select_columns: @select_columns %> 
 
-<%= button_to 'Download in anki format', download_teacher_deck_path, data: {turbo: "false"}, class:"btn-primary" %>
+<%= button_to 'Download in txt format', download_teacher_deck_path(format: "txt"), data: {turbo: "false"}, class:"btn-primary inline-block" %>
+<%= button_to 'Download in csv format', download_teacher_deck_path(format: "csv"), data: {turbo: "false"}, class:"btn-primary inline-block" %>

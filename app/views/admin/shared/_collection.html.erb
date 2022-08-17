@@ -28,6 +28,12 @@
                                     <td class="table-cell">
                                         <%= render 'admin/shared/links', resource: record.students %>
                                     </td>
+                                <% elsif column === "cards" %>
+                                    <td class="table-cell">
+                                        <% record[column].values.each do |card| %>
+                                            <%= card["front"] %> => <%= card["back"] %><br>
+                                        <% end %>
+                                    </td>
                                 <% elsif column === "group_id" %>
                                     <% group = Group.find(record[column]) %>
                                     <td class="table-cell"><%= link_to group.name, [@namespace, group], class:"btn-outline mb-1" %></td>

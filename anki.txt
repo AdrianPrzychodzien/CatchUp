@@ -1,2 +1,3 @@
-dog; pies
-cat; kot
+stolica polski; warszawa
+stolica niemiec; berlin
+rzeka w polsce; wisla

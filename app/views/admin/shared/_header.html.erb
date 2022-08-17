@@ -27,7 +27,11 @@
             <h1 class="text-2xl font-bold mr-auto">
                 <%= get_resource_title_for_admin(resource)%>
             </h1>
-            <%# <%= link_to t("admin.edit"), [:edit, @namespace, resource], class: "btn-primary" %>
+
+            <% if is_editable(resource) %>
+                <%= link_to t("admin.edit"), [:edit, @namespace, resource], class: "btn-primary" %>
+            <% end %>
+
             <%= link_to t("admin.delete"), [@namespace, resource], data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn-danger ml-4" %>
         <% end %>
 

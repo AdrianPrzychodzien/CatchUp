@@ -1,5 +1,6 @@
 class Teacher::DecksController < ApplicationController
   before_action :authenticate_teacher!
+  before_action :find_deck, only: [:show, :edit, :update, :destroy, :download]
   before_action :select_columns
 
   layout "teacher"
@@ -13,7 +14,6 @@ class Teacher::DecksController < ApplicationController
   end
 
   def show
-    @deck = Deck.find(params[:id])
   end
 
   def create
@@ -26,19 +26,10 @@ class Teacher::DecksController < ApplicationController
     end
   end
 
-  def download
-    @deck = Deck.find(params[:id])
-    anki_file = Teacher::CreateAnkiFileService.new(@deck).call
-
-    send_file anki_file, filename: "#{@deck.name}.txt"
-  end
-
   def edit
-    @deck = Deck.find(params[:id])
   end
 
   def update
-    @deck = Deck.find(params[:id])
     if @deck.update(deck_params)
       redirect_to [:teacher, :decks], status: :see_other
     else
@@ -47,12 +38,21 @@ class Teacher::DecksController < ApplicationController
   end
 
   def destroy
-    @deck = Deck.find(params[:id])
     @deck.destroy
     redirect_to [:teacher, :decks], status: :see_other
   end
 
+  def download
+    txt_file, file_name = Teacher::CreateAnkiFileService.new(@deck, params[:format]).call
+
+    send_file txt_file, filename: file_name
+  end
+
   private
+
+  def find_deck
+    @deck = Deck.find(params[:id])
+  end
 
   def select_columns
     @select_columns = ["id", "name", "cards", "created_at"]

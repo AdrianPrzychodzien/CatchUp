@@ -20,6 +20,12 @@
                 <span class="mb-4 ml-6 w-[80%]">
                     <%= render 'admin/shared/links', resource: resource.students %>
                 </span>
+            <% elsif column === "cards" %>
+                <span class="mb-4 ml-6 w-[80%]">
+                    <% resource[column].values.each do |card| %>
+                        <%= card["front"] %> => <%= card["back"] %><br>
+                    <% end %>
+                </span>
             <% elsif column === "body" %>
                 <span class="mb-4 ml-6 w-[80%]">
                     <% if valid_json?(resource.body.to_s) %>
