@@ -22,4 +22,12 @@ module ApplicationHelper
   def is_editable(resource)
     resource.class.name == "Deck"
   end
+
+  def manager_namespace?
+    request.parameters["controller"].include?("manager/")
+  end
+
+  def teacher_namespace?
+    request.parameters["controller"].include?("teacher/")
+  end
 end
