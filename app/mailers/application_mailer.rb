@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "adrian.przychodzien@gmail.com"
+  default from: "adrian@catchup.com"
   layout "mailer"
 
     # http://localhost:3000/rails/mailers/application_mailer/invitation_email.html
