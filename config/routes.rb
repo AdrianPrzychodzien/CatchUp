@@ -8,11 +8,17 @@ Rails.application.routes.draw do
     registrations: "student/registrations",
     sessions: "student/sessions"
   }
-
-  resources :invitations
-
+  devise_for :manager, controllers: {
+    registrations: "manager/registrations",
+    sessions: "manager/sessions"
+  }
+  get "/manager/dashboard", to: "manager/dashboard#index", as: "manager_dashboard"
   get "/teacher/dashboard", to: "teacher/dashboard#index", as: "teacher_dashboard"
   get "/student/dashboard", to: "student/dashboard#index", as: "student_dashboard"
+
+  namespace :manager do
+  resources :invitations
+  end
 
   namespace :teacher do
     resources :students, only: [:index, :show]

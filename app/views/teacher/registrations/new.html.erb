@@ -1,11 +1,17 @@
 <% 
   @title= "Sign up"
+  resource.token = params[:token] if params[:token]
+  # invatation = Invitation.find_by(token: params[:token])
 %>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
 
+<%= params[:token]%>
   <div class="form-inputs">
+    <%= f.input :token,
+                required: true,
+                autofocus: true %>
     <%= f.input :email,
                 required: true,
                 autofocus: true,
@@ -17,6 +23,8 @@
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+                
+    <%# <%= f.hidden_field :organization_id, value: invatation.organization.id %> %>
   </div>
 
   <div class="form-actions">

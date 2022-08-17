@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def get_resource_title_for_admin(resource)
-    if resource.instance_of?(Teacher) || resource.instance_of?(Student)
+    if resource.instance_of?(Teacher) || resource.instance_of?(Student) || resource.instance_of?(Manager)
       resource.email
     else
       resource.instance_of?(Group) || resource.instance_of?(Deck) ? resource.name : ""

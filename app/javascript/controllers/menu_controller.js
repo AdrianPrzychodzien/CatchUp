@@ -25,9 +25,10 @@ export default class extends Controller {
         const breadcrumbs = document.getElementById('breadcrumbs');
         const pathname = window.location.pathname;
         const is_teacher_dashboard = window.location.pathname.includes('teacher');
+        const is_manager_dashboard = window.location.pathname.includes('manager');
 
         Array.from(menuLinks).forEach(menuLink => {
-            if (is_teacher_dashboard) {
+            if (is_teacher_dashboard || is_manager_dashboard) {
                 const href_last_word = menuLink.href.split('/').pop();
                 if (pathname.includes(href_last_word)) {
                     menuLink.classList.add('font-bold', 'border-blue-600', 'hover:text-blue-600');

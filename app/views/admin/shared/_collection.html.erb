@@ -39,9 +39,9 @@
                                     <td class="table-cell"><%= link_to group.name, [@namespace, group], class:"btn-outline mb-1" %></td>
                                 <% elsif column === "created_at" %>
                                     <td class="table-cell"><%= record[column].to_s(:default) %></td>
-                                <% elsif column === "employee_id" %>
+                                <% elsif column === "teacher_id" %>
                                     <td class="table-cell">
-                                        <%= render 'admin/shared/links', resource: [Employee.find(record[column])] %>
+                                        <%= render 'admin/shared/links', resource: [Teacher.find(record[column])] %>
                                     </td>
                                 <% elsif column === "organization_id" %>
                                     <td class="table-cell">

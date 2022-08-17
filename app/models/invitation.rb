@@ -6,7 +6,7 @@
 #  organization_id :integer          not null
 #  teacher_id      :integer
 #  token           :string
-#  expite_at       :datetime
+#  expire_at       :datetime
 #  via             :string
 #  status          :string
 #  email           :string

@@ -1,0 +1,8 @@
+Vivamus vitae iaculis arcu. Curabitur convallis dolor nec risus semper tincidunt. Maecenas maximus mauris quam, eget congue enim sagittis a. Sed fermentum risus vitae vehicula aliquam. Duis quis libero felis. Vestibulum sed augue bibendum, faucibus felis eget, finibus lectus.
+
+<div style="margin-top:20px;">
+    <strong>Your invitation token:</strong>
+</div>
+<div><%= @invitation.token %></div>
+
+<p><%= link_to "Register your account with provided token", new_teacher_registration_url(token: @invitation.token) %></p>
