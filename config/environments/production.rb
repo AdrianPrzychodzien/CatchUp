@@ -19,7 +19,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -92,15 +92,21 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  ActionMailer::Base.smtp_settings = {
-    :port           => ENV['MAILGUN_SMTP_PORT'],
-    :address        => ENV['MAILGUN_SMTP_SERVER'],
-    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
-    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'chatch-uup.heroku.com',
-    :authentication => :plain,
+  config.action_mailer.smtp_settings = {
+    # :port           => ENV['MAILGUN_SMTP_PORT'],
+    # :address        => ENV['MAILGUN_SMTP_SERVER'],
+    # :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    # :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    # :domain         => 'chatch-uup.heroku.com',
+    # :authentication => :plain,
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => "adrian.przychodzien@gmail.com",
+    :password             => ENV["GMAIL_PASSWORD"],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
   }
-  ActionMailer::Base.delivery_method = :smtp
+  config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.default_url_options = {host: ENV["PUBLIC_DOMAIN"], protocol: "https"}
 end
