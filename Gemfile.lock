@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.3.0)
+      concurrent-ruby (~> 1.0)
     actioncable (7.0.3.1)
       actionpack (= 7.0.3.1)
       activesupport (= 7.0.3.1)
@@ -128,6 +130,10 @@ GEM
       railties (>= 6.0.0)
     json (2.6.2)
     jwt (2.4.1)
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -305,6 +311,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aasm (~> 5.2)
   annotate (~> 2.6)
   bootsnap
   bootstrap-icons-helper (~> 2.0)
@@ -315,6 +322,7 @@ DEPENDENCIES
   devise-i18n
   jbuilder
   jsbundling-rails
+  letter_opener
   omniauth-facebook
   omniauth-rails_csrf_protection (~> 1.0)
   pg (~> 1.1)

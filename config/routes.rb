@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     sessions: "student/sessions"
   }
 
+  resources :invitations
+
   get "/teacher/dashboard", to: "teacher/dashboard#index", as: "teacher_dashboard"
   get "/student/dashboard", to: "student/dashboard#index", as: "student_dashboard"
 

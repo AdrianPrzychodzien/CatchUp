@@ -17,6 +17,9 @@
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+    <%= f.input :organization do %>
+      <%= f.select :organization_id, Organization.all.map { |r| [r.name, r.id] }, include_blank: true %>
+    <% end %>
   </div>
 
   <div class="form-actions">

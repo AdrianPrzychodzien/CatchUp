@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_054324) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_17_122945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_054324) do
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_groups_on_organization_id"
     t.index ["teacher_id"], name: "index_groups_on_teacher_id"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "teacher_id"
+    t.string "token"
+    t.datetime "expite_at"
+    t.string "via"
+    t.string "status"
+    t.string "email"
+    t.string "batch_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_invitations_on_organization_id"
+    t.index ["teacher_id"], name: "index_invitations_on_teacher_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -75,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_054324) do
   add_foreign_key "decks", "teachers"
   add_foreign_key "groups", "organizations"
   add_foreign_key "groups", "teachers"
+  add_foreign_key "invitations", "organizations"
   add_foreign_key "students", "groups"
   add_foreign_key "teachers", "organizations"
 end
