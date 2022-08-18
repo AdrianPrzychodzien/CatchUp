@@ -48,7 +48,7 @@ class Teacher::InvitationsController < ApplicationController
 
   def destroy_all_batch_ids
     invitations = current_teacher.invitations.where.not(batch_id: nil)
-    invitations.destroy_all if invitations
+    invitations&.destroy_all
   end
 
   def set_batched_invitations

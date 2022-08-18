@@ -4,9 +4,9 @@ module ApplicationHelper
 
     Dir[Rails.root.join("app/controllers/#{@namespace}/*_controller.rb")]
       .map { |path|
-               path =~ /(\w+)_controller.rb/
-               $1
-             }
+      path =~ /(\w+)_controller.rb/
+      $1
+    }
       .compact
       .delete_if { |x| blacklist.include?(x) }
   end
@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def is_editable(resource)
-    resource.class.name == "Deck"
+    resource.instance_of?(::Deck)
   end
 
   def manager_namespace?

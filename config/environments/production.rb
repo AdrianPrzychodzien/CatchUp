@@ -99,12 +99,12 @@ Rails.application.configure do
     # :password       => ENV['MAILGUN_SMTP_PASSWORD'],
     # :domain         => 'chatch-uup.heroku.com',
     # :authentication => :plain,
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => "apcatchup@gmail.com",
-    :password             => ENV["GMAIL_PASSWORD"],
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    address: "smtp.gmail.com",
+    port: 587,
+    user_name: "apcatchup@gmail.com",
+    password: ENV["GMAIL_PASSWORD"],
+    authentication: "plain",
+    enable_starttls_auto: true
   }
   config.action_mailer.delivery_method = :smtp
 
