@@ -6,10 +6,10 @@
 #  organization_id :integer          not null
 #  teacher_id      :integer
 #  name            :string
-#  language        :string
-#  level           :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  language        :integer          default("0")
+#  level           :integer          default("0")
 #
 
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

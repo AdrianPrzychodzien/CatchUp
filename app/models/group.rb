@@ -6,13 +6,19 @@
 #  organization_id :integer          not null
 #  teacher_id      :integer
 #  name            :string
-#  language        :string
-#  level           :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  language        :integer          default("0")
+#  level           :integer          default("0")
 #
 
 class Group < ApplicationRecord
+  enum language: { en: 0, pl: 1, fr: 2 }
+  enum level: { A1: 0, A2: 1, B1: 2, B2: 3, C1: 4, C2: 5 }
+
+  validates :level, inclusion: { in: levels.keys }
+  validates :language, inclusion: { in: languages.keys }
+
   belongs_to :organization
   belongs_to :teacher
   has_many :students

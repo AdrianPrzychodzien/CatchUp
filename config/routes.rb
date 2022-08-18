@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   namespace :teacher do
     resources :invitations
     resources :students, only: [:index, :show]
-    resources :groups, only: [:index, :show]
+    resources :groups
     resources :decks do
       post :download, on: :member
     end

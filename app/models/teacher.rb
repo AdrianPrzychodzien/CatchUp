@@ -23,7 +23,7 @@ class Teacher < ApplicationRecord
   belongs_to :invitation, optional: true
 
   has_many :students
-  has_many :groups, through: :students
+  has_many :groups
   has_many :decks
 
   has_one :manager, through: :organization

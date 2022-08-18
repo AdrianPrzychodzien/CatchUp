@@ -18,8 +18,7 @@ class Teacher::InvitationsController < ApplicationController
   end
 
   def create
-    @invitation = current_teacher.invitations.new(create_invitation_params)
-    @invitation.teacher = current_teacher
+    @invitation = current_teacher.invitations.build(create_invitation_params)
     @invitation.organization = current_teacher.organization
     @invitation.recipient_type = "student"
 
