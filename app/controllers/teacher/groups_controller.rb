@@ -1,6 +1,7 @@
 class Teacher::GroupsController < ApplicationController
   before_action :authenticate_teacher!
   before_action :select_columns, only: [:index, :show]
+  before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   layout "admin"
 
@@ -13,7 +14,9 @@ class Teacher::GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:id])
+  end
+
+  def edit
   end
 
   def create
@@ -27,7 +30,24 @@ class Teacher::GroupsController < ApplicationController
     end
   end
 
+  def update
+    if @group.update(create_group_params)
+      redirect_to [:teacher, @group], notice: t(".success_msg")
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @group.destroy
+    redirect_to [:teacher, :groups], status: :see_other, notice: t(".success_msg")
+  end
+
   private
+
+  def set_group
+    @group = Group.find(params[:id])
+  end
 
   def select_columns
     @select_columns = ["id", "name", "language", "level", "students", "created_at"]
