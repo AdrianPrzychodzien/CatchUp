@@ -18,4 +18,8 @@
     .table-cell {
         @apply py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white;
     }
+
+    .btn-deck-remove {
+        @apply inline-block m-1 px-3 leading-loose rounded-xl bg-orange-700 hover:bg-orange-500 text-gray-50 font-bold transition duration-200 ease-in-out;
+    }
 }

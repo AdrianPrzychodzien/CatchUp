@@ -2,10 +2,10 @@
     <% if cards.present? && cards.length > 0 %>
 
     <% cards.values.each_with_index do |card, index| %>
-        <div class="flex align-center justify-between" data-id="<%=index%>" data-dynamic-form-target="row">
-            <span>#<%=index +1%></span>
+        <div class="flex items-center justify-between relative mb-6" data-id="<%=index%>" data-dynamic-form-target="row">
+            <span class="absolute -left-6">#<%=index +1%></span>
             <div data-dynamic-form-target="front">
-                <label class="block mb-2 text-gray-800 font-medium string optional block mb-2 text-gray-800 font-medium" 
+                <label class="block mb-1 text-gray-800 font-medium string optional block text-gray-800 font-medium" 
                         for="deck_cards_<%=index%>_front"
                 >Front</label>
                 <input class="appearance-none block w-full p-3 leading-5 text-gray-900 border border-gray-200 focus:border-$blue rounded-lg shadow-md placeholder-gray-400 focus:outline-none focus:ring-0 transition-colors duration-200 ease-in-out string optional"
@@ -15,7 +15,7 @@
                         id="deck_cards_<%=index%>_front" />
             </div>
             <div data-dynamic-form-target="back">
-                <label class="block mb-2 text-gray-800 font-medium string optional block mb-2 text-gray-800 font-medium" 
+                <label class="block mb-1 text-gray-800 font-medium string optional block text-gray-800 font-medium" 
                         for="deck_cards_<%=index%>_back"
                 >Back</label>
                 <input class="appearance-none block w-full p-3 leading-5 text-gray-900 border border-gray-200 focus:border-$blue rounded-lg shadow-md placeholder-gray-400 focus:outline-none focus:ring-0 transition-colors duration-200 ease-in-out string optional"
@@ -25,17 +25,16 @@
                         id="deck_cards_<%=index%>_back" />
             </div>
 
-            <button data-dynamic-form-target="add_button" data-action="click->dynamic-form#add_field">Add new</button>
-            <button data-dynamic-form-target="delete_button" data-action="click->dynamic-form#delete_field">Delete</button>
+            <button tabindex="-1" data-dynamic-form-target="delete_button" data-action="click->dynamic-form#delete_field" class="btn-deck-remove inline-block align-middle">X</button>
         </div>
     <% end %>
 
     <% else %>
 
-        <div class="flex align-center justify-between" data-id="0" data-dynamic-form-target="row">
-            <span>#1</span>
+        <div class="flex items-center justify-between relative mb-6" data-id="0" data-dynamic-form-target="row">
+            <span class="absolute -left-6">#1</span>
             <div data-dynamic-form-target="front">
-            <label class="block mb-2 text-gray-800 font-medium string optional block mb-2 text-gray-800 font-medium" 
+            <label class="block mb-1 text-gray-800 font-medium string optional block text-gray-800 font-medium" 
                     for="deck_cards_0_front"
             >Front</label>
             <input class="appearance-none block w-full p-3 leading-5 text-gray-900 border border-gray-200 focus:border-$blue rounded-lg shadow-md placeholder-gray-400 focus:outline-none focus:ring-0 transition-colors duration-200 ease-in-out string optional"
@@ -44,7 +43,7 @@
                     id="deck_cards_0_front" />
             </div>
             <div data-dynamic-form-target="back">
-            <label class="block mb-2 text-gray-800 font-medium string optional block mb-2 text-gray-800 font-medium" 
+            <label class="block mb-1 text-gray-800 font-medium string optional block text-gray-800 font-medium" 
                     for="deck_cards_0_back"
             >Back</label>
             <input class="appearance-none block w-full p-3 leading-5 text-gray-900 border border-gray-200 focus:border-$blue rounded-lg shadow-md placeholder-gray-400 focus:outline-none focus:ring-0 transition-colors duration-200 ease-in-out string optional"
@@ -53,8 +52,9 @@
                     id="deck_cards_0_back" />
             </div>
 
-            <button data-dynamic-form-target="add_button" data-action="click->dynamic-form#add_field">Add new</button>
-            <button data-dynamic-form-target="delete_button" data-action="click->dynamic-form#delete_field">Delete</button>
+            <button tabindex="-1" data-dynamic-form-target="delete_button" data-action="click->dynamic-form#delete_field" class="btn-deck-remove inline-block align-middle">X</button>
         </div>
     <% end %>
+
+    <button data-dynamic-form-target="add_button" data-action="click->dynamic-form#add_field" class="btn-primary float-right mt-0">Add new</button>
 </section>

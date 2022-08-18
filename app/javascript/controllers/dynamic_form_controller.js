@@ -10,10 +10,11 @@ export default class extends Controller {
   createNewRow(id) {
     const newRow = document.createElement('div');
     newRow.setAttribute('data-id', id);
-    newRow.classList.add('flex', 'items-center', 'justify-between');
+    newRow.classList.add('flex', 'items-center', 'justify-between', 'relative', 'mb-6');
 
     const span = document.createElement('span');
     span.innerText = `#${id+1}`;
+    span.classList.add('absolute', '-left-6');
     newRow.appendChild(span);
 
     const frontDiv = this.frontTarget.cloneNode(true);
@@ -41,26 +42,31 @@ export default class extends Controller {
 
     newRow.appendChild(backDiv);
 
-    const addButton = this.add_buttonTarget
-    newRow.appendChild(addButton);
-
     const deleteButton = this.delete_buttonTarget.cloneNode(true);
     newRow.appendChild(deleteButton);
 
     return newRow;
+  }
 
+  get_last_row_id() {
+    const rows = Array.from(this.templateTarget.children).filter(el => el.getAttribute('data-id') !== null);
+    const lastRowId = rows.length > 0 ? rows.at(-1).getAttribute('data-id') : 0;
+    return +lastRowId;
   }
 
   add_field(e) {
     e.preventDefault();
-    const template = this.templateTarget;
-    const lastRow = template.lastElementChild;
-    const lastRowId = lastRow.getAttribute('data-id');
 
-    const newRow = this.createNewRow(+lastRowId + 1);
+    const lastRowId = this.get_last_row_id();
+
+    const newRow = this.createNewRow(lastRowId + 1);
 
     this.templateTarget.insertAdjacentElement('beforeend', newRow);
     const inputToFocus = newRow.getElementsByTagName('input')[0];
+
+    const addButton = this.add_buttonTarget
+    this.templateTarget.insertAdjacentElement('beforeend', addButton);
+
     inputToFocus.focus();
   }
 
