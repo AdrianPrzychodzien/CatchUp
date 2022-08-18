@@ -4,7 +4,6 @@ class Api::V1::SessionsController < ApiController
   def create
     student = Student.find_by(email: params[:email])
 
-    # authenticate
     if student&.valid_password?(params[:password])
       render json: {
         status: :created,
@@ -17,5 +16,11 @@ class Api::V1::SessionsController < ApiController
   end
 
   def destroy
+    current_student.update(auth_token: nil)
+
+    # logout
+    # reset_session
+    # redirect_to root_path
+    render json: {status: 200}
   end
 end
