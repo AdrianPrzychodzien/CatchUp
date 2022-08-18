@@ -50,7 +50,7 @@ export default class extends Controller {
 
   get_last_row_id() {
     const rows = Array.from(this.templateTarget.children).filter(el => el.getAttribute('data-id') !== null);
-    const lastRowId = rows.length > 0 ? rows.at(-1).getAttribute('data-id') : 0;
+    const lastRowId = rows.length > 0 ? rows[rows.length - 1].getAttribute('data-id') : 0;
     return +lastRowId;
   }
 
