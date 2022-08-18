@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_17_133609) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_18_063429) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,7 +46,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_17_133609) do
     t.string "batch_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "student_id"
+    t.string "recipient_type"
+    t.integer "group_id"
     t.index ["organization_id"], name: "index_invitations_on_organization_id"
+    t.index ["student_id"], name: "index_invitations_on_student_id"
     t.index ["teacher_id"], name: "index_invitations_on_teacher_id"
   end
 
@@ -82,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_17_133609) do
     t.string "uid"
     t.integer "teacher_id"
     t.bigint "group_id"
+    t.integer "organization_id"
     t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["group_id"], name: "index_students_on_group_id"
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true

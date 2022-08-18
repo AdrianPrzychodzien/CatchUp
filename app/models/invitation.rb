@@ -13,6 +13,9 @@
 #  batch_id        :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  student_id      :integer
+#  recipient_type  :string
+#  group_id        :integer
 #
 
 class Invitation < ApplicationRecord
@@ -20,6 +23,7 @@ class Invitation < ApplicationRecord
 
   belongs_to :organization
   belongs_to :teacher, optional: true
+  belongs_to :student, optional: true
 
   validates :email, uniqueness: true, presence: true, format: Devise.email_regexp
   validates :token, uniqueness: true, presence: true
@@ -28,6 +32,8 @@ class Invitation < ApplicationRecord
   before_validation :set_expire_at, if: :new_record?
 
   # has_many :groups
+
+  scope :student_invitation, -> { where(recipient_type: "student") }
 
   aasm column: :status do
     state :pending, initial: true
@@ -43,12 +49,6 @@ class Invitation < ApplicationRecord
     event :realize do
       transitions from: [:pending, :sent], to: :fulfilled
     end
-  end
-
-  def set_teacher!(teacher)
-    realize
-    self.teacher = teacher
-    save
   end
 
   def send_invitation_email!

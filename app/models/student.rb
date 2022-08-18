@@ -14,11 +14,12 @@
 #  uid                    :string
 #  teacher_id             :integer
 #  group_id               :integer
+#  organization_id        :integer
 #
 
 class Student < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include Invitable
+
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable,
     :omniauthable,
@@ -26,6 +27,7 @@ class Student < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
 
+  belongs_to :organization
   belongs_to :teacher, optional: true
   belongs_to :group, optional: true
 

@@ -17,10 +17,11 @@ Rails.application.routes.draw do
   get "/student/dashboard", to: "student/dashboard#index", as: "student_dashboard"
 
   namespace :manager do
-  resources :invitations
+    resources :invitations
   end
 
   namespace :teacher do
+    resources :invitations
     resources :students, only: [:index, :show]
     resources :groups, only: [:index, :show]
     resources :decks do

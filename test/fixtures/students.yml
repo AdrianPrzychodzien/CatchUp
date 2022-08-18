@@ -14,6 +14,7 @@
 #  uid                    :string
 #  teacher_id             :integer
 #  group_id               :integer
+#  organization_id        :integer
 #
 
 # This model initially had no columns defined. If you add columns to the

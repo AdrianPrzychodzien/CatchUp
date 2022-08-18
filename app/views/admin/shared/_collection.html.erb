@@ -35,8 +35,8 @@
                                         <% end %>
                                     </td>
                                 <% elsif column === "group_id" %>
-                                    <% group = Group.find(record[column]) %>
-                                    <td class="table-cell"><%= link_to group.name, [@namespace, group], class:"btn-outline mb-1" %></td>
+                                    <% group = Group.find(record[column]) if record[column] %>
+                                    <td class="table-cell"><%= link_to group.name, [@namespace, group], class:"btn-outline mb-1" if group %></td>
                                 <% elsif column === "created_at" %>
                                     <td class="table-cell"><%= record[column].to_s(:default) %></td>
                                 <% elsif column === "teacher_id" %>

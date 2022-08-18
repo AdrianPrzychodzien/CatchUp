@@ -14,6 +14,8 @@
 #
 
 class Teacher < ApplicationRecord
+  include Invitable
+
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable
 
@@ -25,31 +27,5 @@ class Teacher < ApplicationRecord
   has_many :decks
 
   has_one :manager, through: :organization
-
-  attribute :token
-
-  # FIXME: SUB-OPTIMAL for larges sets or generated token, will be ok upto 10000 pending invintations
-  validates :token, presence: true, inclusion: {in: proc { Invitation.sent.pluck(:token) }}, on: :create
-
-  before_validation :get_organization_id_from_invitation, on: :create
-  after_create :set_invitation_status
-
-  private
-
-  def get_organization_id_from_invitation
-    invitation = Invitation.find_by(token: token)
-    self.organization_id = invitation.organization_id if invitation
-  end
-
-  def set_invitation_status
-    invitation = Invitation.find_by(token: token)
-    invitation.teacher = self
-    invitation.realize
-    invitation.save
-
-    # invitation.groups.each do |group|
-    #   groups << group
-    # end
-    save
-  end
+  has_many :invitations, -> { where(recipient_type: "student") }, through: :organization
 end

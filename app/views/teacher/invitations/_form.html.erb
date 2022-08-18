@@ -1,0 +1,5 @@
+<%= simple_form_for [:teacher, @invitation], data: {turbo: false}, :html=> { class: 'px-6 py-12' } do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :email %>
+    <%= f.button :submit %>  
+<% end %>
