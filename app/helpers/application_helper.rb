@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def is_editable(resource)
-    resource.instance_of?(::Deck)
+    resource.instance_of?(::Deck) || resource.instance_of?(::Student) || resource.instance_of?(::Group)
   end
 
   def manager_namespace?

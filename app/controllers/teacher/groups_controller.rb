@@ -54,6 +54,6 @@ class Teacher::GroupsController < ApplicationController
   end
 
   def create_group_params
-    params.require(:group).permit(:name, :language, :level)
+    params.require(:group).permit(:name, :language, :level, student_ids: [])
   end
 end

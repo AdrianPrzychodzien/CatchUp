@@ -2,5 +2,6 @@
     <%= f.error_notification %>
     <%= f.input :language, as: :select, collection: Group.languages.keys %>
     <%= f.input :level, as: :select, collection: Group.levels.keys %>
+    <%= f.input :student_ids, as: :select, collection: @group.teacher.students.map {|s| [s.email, s.id]}, input_html: { multiple: true } %>
     <%= f.button :submit %>  
 <% end %>

@@ -19,7 +19,7 @@ module Invitable
 
     if invitation.recipient_type == "student"
       self.teacher_id = invitation.teacher_id
-      self.group_id = invitation.group_id if invitation
+      self.group_id = invitation.group_id
     end
   end
 

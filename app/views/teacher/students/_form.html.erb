@@ -1,0 +1,5 @@
+<%= simple_form_for [:teacher, @student], data: {turbo: false}, :html=> { class: 'px-6 py-12' } do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :group_id, as: :select, collection: Group.all %>
+    <%= f.button :submit %>  
+<% end %>
