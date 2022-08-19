@@ -5,10 +5,12 @@ class Api::V1::SessionsController < ApiController
     student = Student.find_by(email: params[:email])
 
     if student&.valid_password?(params[:password])
+      access_token = Jwt::Encoder.call(student, response)
+
       render json: {
         status: :created,
         user: student.as_json(only: [:id, :email]),
-        token: jwt_encode(student_id: student.id)
+        access_token: access_token
       }
     else
       render json: {status: 401}
@@ -16,11 +18,7 @@ class Api::V1::SessionsController < ApiController
   end
 
   def destroy
-    current_student.update(auth_token: nil)
-
-    # logout
-    # reset_session
-    # redirect_to root_path
-    render json: {status: 200}
+    response.delete_cookie(:jwt)
+    render json: {status: :ok}
   end
 end

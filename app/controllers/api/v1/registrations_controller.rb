@@ -5,10 +5,12 @@ class Api::V1::RegistrationsController < ApiController
     student = Student.new(student_params)
 
     if student.save
+      access_token = Jwt::Encoder.call(student, response)
+
       render json: {
         status: :created,
         user: student.as_json(only: [:id, :email]),
-        token: jwt_encode(student_id: student.id)
+        access_token: access_token
       }
     else
       render json: {status: 401}
@@ -19,6 +21,7 @@ class Api::V1::RegistrationsController < ApiController
     student = Student.find(params[:id])
 
     if student.destroy
+      response.delete_cookie(:jwt)
       render json: {status: :ok}
     else
       render json: {status: :unauthorized}

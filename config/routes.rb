@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: [:create, :destroy]
       resources :registrations, only: [:create, :destroy]
+      resources :refresh_token, only: [:create]
       resources :decks, only: [:show, :index]
     end
   end

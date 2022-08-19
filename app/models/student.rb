@@ -31,6 +31,8 @@ class Student < ApplicationRecord
   belongs_to :teacher, optional: true
   belongs_to :group, optional: true
 
+  has_many :refresh_tokens, dependent: :delete_all
+
   def self.from_omniauth(auth)
     student = Student.where(email: auth.info.email).first
 

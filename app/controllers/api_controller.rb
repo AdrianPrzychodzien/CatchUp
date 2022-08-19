@@ -10,12 +10,13 @@ class ApiController < ActionController::API
     header = header.split(" ").last if header
 
     begin
-      @decoded = jwt_decode(header)
+      @decoded = JsonWebToken.jwt_decode(header)
       @current_student = Student.find(@decoded[:student_id])
     rescue ActiveRecord::RecordNotFound => e
       render json: {errors: e.message}, status: :unauthorized
     rescue JWT::DecodeError => e
-      render json: {errors: e.message}, status: :unauthorized
+      # Go and get new refresh-token
+      render json: {errors: e.message}, status: :forbidden
     end
   end
 end
