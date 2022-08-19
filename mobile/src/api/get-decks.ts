@@ -14,9 +14,8 @@ export interface Deck {
 // }
 
 export const getDecks = async () => {
-  return await axios.get(`${API_URL}decks`).then((response) => {
-      console.log("🚀 ~ response", response);
-      return response.data;
+  return await axios.get(`${API_URL}decks`).then(response => {
+    return response.data;
   });
 };
 
