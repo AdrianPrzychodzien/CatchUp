@@ -3,7 +3,7 @@ import { Button, SafeAreaView, View } from "react-native";
 import { useUserContext } from "../context/user/user.context";
 import { TextInput } from "react-native-paper";
 
-export function LoginScreen() {
+export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,4 +30,4 @@ export function LoginScreen() {
       </View>
     </SafeAreaView>
   );
-}
+};

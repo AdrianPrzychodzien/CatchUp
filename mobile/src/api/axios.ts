@@ -5,7 +5,7 @@ const jwt = Cookies.get("jwt");
 
 const axiosInstance = axios.create();
 axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + jwt;
-const API_URL = "http://localhost:3000/api/v1/";
+const API_URL = `${process.env.BACKEND_URL}/api/v1/`;
 
 axiosInstance.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
