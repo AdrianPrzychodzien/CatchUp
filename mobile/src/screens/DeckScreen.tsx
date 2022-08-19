@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import { Deck, getDecks } from "../api/get-decks";
 
-export function DeckScreen() {
+export const DeckScreen = () => {
   const [decks, setDecks] = useState<Deck[]>([]);
   const [error, setError] = useState<any>();
 
@@ -31,4 +31,4 @@ export function DeckScreen() {
       </SafeAreaView>
     </ScrollView>
   );
-}
+};

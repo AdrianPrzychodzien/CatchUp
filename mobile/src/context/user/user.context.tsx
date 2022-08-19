@@ -1,11 +1,14 @@
 import Cookies from "js-cookie";
 import React, { useContext, useEffect, useState } from "react";
 import { apiSignIn } from "../../api/sign-in";
+import { apiSignOut } from "../../api/sign-out";
 import { DecodedUserToken, UserContextProps, UserContextProviderProps } from "./types";
 // import { useGetUser } from '../../api/use-get-users';
 
 const UserContext = React.createContext<UserContextProps>({
   signIn: (credentials: any) => new Promise(() => {}),
+  signOut: () => new Promise(() => {}),
+  userId: undefined,
   // currentUser: undefined,
   // refetch: () => null,
   // isFetching: false,
@@ -44,6 +47,20 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
+  console.log("🚀 ~ userId", userId);
+  const signOut = async () => {
+    if (!userId) return;
+
+    const response = await apiSignOut(userId);
+    console.log("🚀 ~ response", response);
+
+    if (response.status === 200) {
+      Cookies.remove("jwt");
+      Cookies.remove("current_user_session");
+      setRefetch(true);
+    }
+  };
+
   useEffect(() => {
     if (refetch) setRefetch(false);
   }, [refetch]);
@@ -52,6 +69,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     <UserContext.Provider
       value={{
         signIn,
+        signOut,
         userId,
         // currentUser: isFetching ? (token as any) : currentUser,
         // isFetching,

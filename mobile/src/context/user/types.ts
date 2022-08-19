@@ -12,6 +12,7 @@ interface Credentials {
 
 export interface UserContextProps {
   signIn: (credentails: Credentials) => Promise<void>;
+  signOut: () => Promise<void>;
   userId?: string;
   // currentUser?: User;
   // refetch?: Dispatch<SetStateAction<boolean>>;
