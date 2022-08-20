@@ -10,6 +10,7 @@ import UserContextProvider, { useUserContext } from "./src/context/user/user.con
 import { DeckScreen } from "./src/screens/DeckScreen";
 import { LoginScreen } from "./src/screens/LoginScreen";
 import { HomeScreen } from "./src/screens/HomeScreen";
+import { RegisterScreen } from "./src/screens/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,9 +46,10 @@ const StackComponent = () => {
           <Tab.Screen name="Deck" component={DeckScreen} />
         </Tab.Navigator>
       ) : (
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={LoginScreen} />
-        </Stack.Navigator>
+        <Tab.Navigator>
+          <Tab.Screen name="Login" component={LoginScreen} />
+          <Tab.Screen name="Register" component={RegisterScreen} />
+        </Tab.Navigator>
       )}
     </>
   );

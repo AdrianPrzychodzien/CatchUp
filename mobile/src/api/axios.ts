@@ -5,14 +5,17 @@ const jwt = Cookies.get("jwt");
 
 const axiosInstance = axios.create();
 axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + jwt;
-const API_URL = `${process.env.BACKEND_URL}/api/v1/`;
+// const API_URL = `${process.env.BACKEND_URL}/api/v1/`;
+// const API_URL = `https://catch-uup.herokuapp.com/api/v1/`;
+const API_URL = `https://catchup-admin.herokuapp.com/api/v1/`;
+// const API_URL = `http://localhost:3000/api/v1/`;
 
 axiosInstance.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
     config.baseURL = API_URL;
     config.timeout = 10000;
-    // config.withCredentials = true;
-    axios.defaults.withCredentials = process.env.NODE_ENV !== "development";
+    config.withCredentials = false; // ????? WTF
+    // axios.defaults.withCredentials = process.env.NODE_ENV !== "development";
     return config;
   },
   (error: AxiosError) => {

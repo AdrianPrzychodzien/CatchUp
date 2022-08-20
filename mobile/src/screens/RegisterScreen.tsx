@@ -3,15 +3,20 @@ import { Button, SafeAreaView, View } from "react-native";
 import { useUserContext } from "../context/user/user.context";
 import { TextInput } from "react-native-paper";
 
-export const LoginScreen = () => {
+export const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const { signIn } = useUserContext();
+  const { signUp } = useUserContext();
+
+  const token = new URLSearchParams(window.location.search).get("token") || "";
+  console.log("🚀 ~ token", token);
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <View>
+        <TextInput value={"17HYBM6V"} />
         <TextInput
           placeholder="Email"
           value={email}
@@ -25,11 +30,17 @@ export const LoginScreen = () => {
           onChangeText={setPassword}
           secureTextEntry
         />
+        <TextInput
+          placeholder="Password confirmation"
+          value={passwordConfirmation}
+          onChangeText={setPasswordConfirmation}
+          secureTextEntry
+        />
 
         <View style={{ marginTop: 20 }}>
           <Button
-            title="Sign in"
-            onPress={() => signIn({ email, password })}
+            title="Sign up"
+            onPress={() => signUp({ token: "17HYBM6V", email, password, passwordConfirmation })}
             disabled={!email || !password || email.length < 3 || password.length < 3}
           />
         </View>

@@ -10,8 +10,14 @@ interface Credentials {
   password: string;
 }
 
+interface RegisterCredentials extends Credentials {
+  token: string;
+  passwordConfirmation: string;
+}
+
 export interface UserContextProps {
   signIn: (credentails: Credentials) => Promise<void>;
+  signUp: (credentails: RegisterCredentials) => Promise<void>;
   signOut: () => Promise<void>;
   userId?: string;
   // currentUser?: User;

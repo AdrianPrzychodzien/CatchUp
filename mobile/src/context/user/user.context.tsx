@@ -2,11 +2,13 @@ import Cookies from "js-cookie";
 import React, { useContext, useEffect, useState } from "react";
 import { apiSignIn } from "../../api/sign-in";
 import { apiSignOut } from "../../api/sign-out";
+import { apiSignUp } from "../../api/sign-up";
 import { DecodedUserToken, UserContextProps, UserContextProviderProps } from "./types";
 // import { useGetUser } from '../../api/use-get-users';
 
 const UserContext = React.createContext<UserContextProps>({
   signIn: (credentials: any) => new Promise(() => {}),
+  signUp: (credentials: any) => new Promise(() => {}),
   signOut: () => new Promise(() => {}),
   userId: undefined,
   // currentUser: undefined,
@@ -34,20 +36,18 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
   const signIn = async ({ email, password }: { email: string; password: string }) => {
     const response = await apiSignIn({ email, password });
-    console.log("🚀 ~ response", response);
 
     const access_token = response.data.access_token;
-    console.log("🚀 ~ access_token", access_token);
     const userId = response.data.user.id;
 
     if (access_token) {
       Cookies.set("jwt", access_token);
       Cookies.set("current_user_session", JSON.stringify({ id: userId }));
       setRefetch(true);
+      window.location.reload();
     }
   };
 
-  console.log("🚀 ~ userId", userId);
   const signOut = async () => {
     if (!userId) return;
 
@@ -61,6 +61,27 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     }
   };
 
+  const signUp = async ({
+    token,
+    email,
+    password,
+    passwordConfirmation,
+  }: {
+    token: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+  }) => {
+    const response = await apiSignUp({ token, email, password, passwordConfirmation });
+
+    if (response.status === 200) {
+      Cookies.set("jwt", response.data.access_token);
+      Cookies.set("current_user_session", JSON.stringify({ id: response.data.user.id }));
+      setRefetch(true);
+      window.location.reload();
+    }
+  };
+
   useEffect(() => {
     if (refetch) setRefetch(false);
   }, [refetch]);
@@ -70,6 +91,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
       value={{
         signIn,
         signOut,
+        signUp,
         userId,
         // currentUser: isFetching ? (token as any) : currentUser,
         // isFetching,
