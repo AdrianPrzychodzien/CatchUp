@@ -4,19 +4,19 @@ import { useUserContext } from "../context/user/user.context";
 import { TextInput } from "react-native-paper";
 
 export const RegisterScreen = () => {
-  const [token, setToken] = useState("");
+  const tokenParam = new URLSearchParams(window.location.search).get("token") || "";
+
+  const [token, setToken] = useState(tokenParam);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const { signUp } = useUserContext();
 
-  const tokenParam = new URLSearchParams(window.location.search).get("token") || "";
-
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <View>
-        <TextInput placeholder="Token" value={tokenParam} onChangeText={setToken} />
+        <TextInput placeholder="Token" value={token} onChangeText={setToken} />
         <TextInput
           placeholder="Email"
           value={email}
