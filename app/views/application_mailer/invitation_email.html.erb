@@ -6,6 +6,11 @@ Vivamus vitae iaculis arcu. Curabitur convallis dolor nec risus semper tincidunt
 <div><%= @invitation.token %></div>
 
 <% if @invitation.recipient_type == "student" %>
+    <p>
+        <a href="https://catchup-mobile-adrianprzychodzien.vercel.app/register?token=<%=@invitation.token%>">
+            Register your student account with provided token
+        </a>
+    </p>
     <p><%= link_to "Register your student account with provided token", new_student_registration_url(token: @invitation.token) %></p>
 <% else %>
     <p><%= link_to "Register your account with provided token", new_teacher_registration_url(token: @invitation.token) %></p>

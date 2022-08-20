@@ -46,21 +46,28 @@ const StackComponent = () => {
           <Tab.Screen name="Deck" component={DeckScreen} />
         </Tab.Navigator>
       ) : (
-        <Tab.Navigator>
-          <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="Register" component={RegisterScreen} />
-        </Tab.Navigator>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} />
+        </Stack.Navigator>
       )}
     </>
   );
 };
 
 export default function App() {
+  const isRegisterRoute = window.location.pathname === "/register";
+
   return (
     <PaperProvider>
       <UserContextProvider>
         <NavigationContainer>
-          <StackComponent />
+          {isRegisterRoute ? (
+            <Stack.Navigator>
+              <Stack.Screen name="Register" component={RegisterScreen} />
+            </Stack.Navigator>
+          ) : (
+            <StackComponent />
+          )}
         </NavigationContainer>
       </UserContextProvider>
     </PaperProvider>

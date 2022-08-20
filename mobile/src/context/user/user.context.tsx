@@ -4,7 +4,6 @@ import { apiSignIn } from "../../api/sign-in";
 import { apiSignOut } from "../../api/sign-out";
 import { apiSignUp } from "../../api/sign-up";
 import { DecodedUserToken, UserContextProps, UserContextProviderProps } from "./types";
-// import { useGetUser } from '../../api/use-get-users';
 
 const UserContext = React.createContext<UserContextProps>({
   signIn: (credentials: any) => new Promise(() => {}),
@@ -52,7 +51,6 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     if (!userId) return;
 
     const response = await apiSignOut(userId);
-    console.log("🚀 ~ response", response);
 
     if (response.status === 200) {
       Cookies.remove("jwt");
@@ -78,7 +76,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
       Cookies.set("jwt", response.data.access_token);
       Cookies.set("current_user_session", JSON.stringify({ id: response.data.user.id }));
       setRefetch(true);
-      window.location.reload();
+      window.location.href = "/";
     }
   };
 

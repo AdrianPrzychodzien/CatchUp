@@ -11,12 +11,11 @@ export const RegisterScreen = () => {
   const { signUp } = useUserContext();
 
   const token = new URLSearchParams(window.location.search).get("token") || "";
-  console.log("🚀 ~ token", token);
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <View>
-        <TextInput value={"17HYBM6V"} />
+        <TextInput value={token} />
         <TextInput
           placeholder="Email"
           value={email}
@@ -40,7 +39,7 @@ export const RegisterScreen = () => {
         <View style={{ marginTop: 20 }}>
           <Button
             title="Sign up"
-            onPress={() => signUp({ token: "17HYBM6V", email, password, passwordConfirmation })}
+            onPress={() => signUp({ token, email, password, passwordConfirmation })}
             disabled={!email || !password || email.length < 3 || password.length < 3}
           />
         </View>
