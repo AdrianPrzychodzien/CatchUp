@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create, :destroy]
       resources :refresh_token, only: [:create]
       resources :decks, only: [:show, :index]
+      resources :test, only: [:index]
     end
   end
 
