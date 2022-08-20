@@ -17,6 +17,7 @@ const Tab = createBottomTabNavigator();
 
 const StackComponent = () => {
   const { userId } = useUserContext();
+  const token = new URLSearchParams(window.location.search).get("token") || "";
 
   return (
     <>
@@ -47,7 +48,11 @@ const StackComponent = () => {
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={LoginScreen} />
+          {token ? (
+            <Stack.Screen name="Register" component={RegisterScreen} />
+          ) : (
+            <Stack.Screen name="Login" component={LoginScreen} />
+          )}
         </Stack.Navigator>
       )}
     </>
@@ -55,19 +60,11 @@ const StackComponent = () => {
 };
 
 export default function App() {
-  const isRegisterRoute = window.location.pathname === "/register";
-
   return (
     <PaperProvider>
       <UserContextProvider>
         <NavigationContainer>
-          {isRegisterRoute ? (
-            <Stack.Navigator>
-              <Stack.Screen name="Register" component={RegisterScreen} />
-            </Stack.Navigator>
-          ) : (
-            <StackComponent />
-          )}
+          <StackComponent />
         </NavigationContainer>
       </UserContextProvider>
     </PaperProvider>
