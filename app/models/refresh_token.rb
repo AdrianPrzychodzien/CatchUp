@@ -18,7 +18,7 @@ class RefreshToken < ApplicationRecord
 
   def self.find_by_token(token)
     return unless token.present?
-    
+
     crypted_token = Digest::SHA256.hexdigest token
     RefreshToken.find_by(crypted_token: crypted_token)
   end
