@@ -9,7 +9,7 @@ const RootStack = createBottomTabNavigator<RootStackParams>();
 export const AppScreenStack = () => {
   return (
     <RootStack.Navigator
-      initialRouteName="Home"
+      initialRouteName="DecksStack"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: "tomato",

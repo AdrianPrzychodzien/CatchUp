@@ -3,7 +3,16 @@ import axios from "./axios";
 export interface Deck {
   id: number;
   name: string;
-  cards: any;
+  cards: Card[];
+}
+
+export interface Card {
+  id: string;
+  front: string;
+  back: string;
+  interval: number;
+  difficulty: "easy" | "medium" | "hard";
+  prev_difficulty: "easy" | "medium" | "hard";
 }
 
 export const getDecks = async () => {

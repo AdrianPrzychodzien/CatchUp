@@ -16,13 +16,14 @@ export const TopBackNavigation = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    marginTop: 20,
   },
   backButton: {
     borderRadius: 8,
     width: 50,
     height: 50,
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    fontSize: 16,
   },
 });

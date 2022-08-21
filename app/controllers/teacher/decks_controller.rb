@@ -18,8 +18,10 @@ class Teacher::DecksController < ApplicationController
 
   def create
     formated_cards = deck_params[:cards].values
-    @deck = current_teacher.decks.build(deck_params.except(:cards))
-    @deck.cards = formated_cards
+    formated_cards.each do |card|
+      card["id"] = SecureRandom.uuid
+    end
+    @deck = current_teacher.decks.build(deck_params.except(:cards).merge(cards: formated_cards))
 
     if @deck.save
       redirect_to teacher_decks_path
