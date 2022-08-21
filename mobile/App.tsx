@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider as PaperProvider } from "react-native-paper";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 // import SafeAreaView from 'react-native-safe-area-view';
 import UserContextProvider, { useUserContext } from "./src/context/user/user.context";
 import { AuthScreenStack } from "./src/stacks/AuthScreenStack";
@@ -19,10 +20,12 @@ const AppInner = () => {
 
 export default function App() {
   return (
-    <PaperProvider>
-      <UserContextProvider>
-        <AppInner />
-      </UserContextProvider>
-    </PaperProvider>
+    <SafeAreaProvider>
+      <PaperProvider>
+        <UserContextProvider>
+          <AppInner />
+        </UserContextProvider>
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 }
