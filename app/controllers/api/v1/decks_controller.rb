@@ -35,22 +35,16 @@ class Api::V1::DecksController < ApiController
     new_cards = deck.cards
     .map do |card|
       card_from_mobile = params["savedCards"].find { |card_from_mobile| card_from_mobile["id"] == card["id"] }
-      new_card = card
+      new_card = {}
 
       if cardsToRemove.include?(card["id"])
         new_card = {
-          id: card["id"],
-          front: card["front"],
-          back: card["back"],
-          difficulty: card["difficulty"],
-          interval: card["interval"],
+          **card,
           done: true
         }
       else
         new_card = {
-          id: card["id"],
-          front: card["front"],
-          back: card["back"],
+          **card,
           difficulty: card_from_mobile["difficulty"],
           interval: card["interval"].nil? ? card_from_mobile["interval"] : card["interval"] - 1,
         }

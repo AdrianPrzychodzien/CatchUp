@@ -5,7 +5,6 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create, :destroy]
       resources :refresh_token, only: [:create]
       resources :decks, only: [:show, :index]
-      resources :test, only: [:index]
 
       post 'decks/save_game', to: 'decks#save_game'
     end
