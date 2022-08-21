@@ -98,3 +98,5 @@ gem "bootstrap-icons-helper", "~> 2.0"
 gem "aasm", "~> 5.2"
 
 gem "rack-cors", require: "rack/cors"
+
+gem 'active_model_serializers', '~> 0.10.0'
