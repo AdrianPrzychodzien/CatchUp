@@ -1,14 +1,20 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import { Deck, getDecks } from "../api/get-decks";
+import { Deck, getDeck } from "../api/get-decks";
+import { RootStackParams } from "../types/stack.types";
 
-export const DeckScreen = () => {
-  const [decks, setDecks] = useState<Deck[]>([]);
+type DeckScreenProps = NativeStackNavigationProp<RootStackParams, "Deck">;
+
+export const DeckScreen = ({ route }: DeckScreenProps) => {
+  const deckId = route.params.deckId;
+  const [deck, setDeck] = useState<Deck[]>([]);
+  console.log("🚀 ~ deck", deck);
   const [error, setError] = useState<any>();
 
   useEffect(() => {
-    getDecks()
-      .then(res => setDecks(res.decks))
+    getDeck(deckId)
+      .then(res => setDeck(res.deck))
       .catch(error => {
         setError(error.message);
       });
@@ -19,15 +25,9 @@ export const DeckScreen = () => {
       <SafeAreaView>
         {error && <Text>{error}</Text>}
 
-        {!error &&
-          decks &&
-          decks.map(deck => (
-            <View key={deck.id}>
-              <pre>{JSON.stringify(deck, null, 2)}</pre>
-            </View>
-          ))}
+        {!error && deck && <pre>{JSON.stringify(deck, null, 2)}</pre>}
 
-        {!decks && <div>Loading...</div>}
+        {!deck && <div>Loading...</div>}
       </SafeAreaView>
     </ScrollView>
   );

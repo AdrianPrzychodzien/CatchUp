@@ -8,7 +8,7 @@ export const HomeScreen = ({ navigation }: any) => {
     <SafeAreaView style={{ flex: 1, justifyContent: "space-between", alignItems: "center" }}>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Home Screen</Text>
-        <Button title="Go to Deck" onPress={() => navigation.navigate("Deck")} />
+        <Button title="Go to Decks" onPress={() => navigation.navigate("Decks")} />
         <Button title="Logout" onPress={() => signOut()} />
       </View>
     </SafeAreaView>

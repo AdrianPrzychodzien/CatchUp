@@ -11,3 +11,9 @@ export const getDecks = async () => {
     return response.data;
   });
 };
+
+export const getDeck = async (id: string) => {
+  return await axios.get(`/decks/${id}`).then(response => {
+    return response.data;
+  });
+};

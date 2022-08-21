@@ -21,7 +21,7 @@ class Api::V1::DecksController < ApiController
     if decks
       render json: {
         status: :ok,
-        decks: decks.as_json(only: [:id, :name, :cards, :created_at, :updated_at])
+        decks: decks.as_json(only: [:id, :name])
       }
     else
       render json: {status: 401}
