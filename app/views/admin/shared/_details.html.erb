@@ -22,7 +22,7 @@
                 </span>
             <% elsif column === "cards" %>
                 <span class="mb-4 ml-6 w-[80%]">
-                    <% resource[column].values.each do |card| %>
+                    <% resource[column].each do |card| %>
                         <%= card["front"] %> => <%= card["back"] %><br>
                     <% end %>
                 </span>

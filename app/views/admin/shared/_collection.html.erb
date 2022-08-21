@@ -30,7 +30,7 @@
                                     </td>
                                 <% elsif column === "cards" %>
                                     <td class="table-cell">
-                                        <% record[column].values.each do |card| %>
+                                        <% record[column].each do |card| %>
                                             <%= card["front"] %> => <%= card["back"] %><br>
                                         <% end %>
                                     </td>

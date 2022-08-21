@@ -1,6 +1,6 @@
 class Teacher::DecksController < ApplicationController
   before_action :authenticate_teacher!
-  before_action :find_deck, only: [:show, :edit, :update, :destroy, :download]
+  before_action :set_deck, only: [:show, :edit, :update, :destroy, :download]
   before_action :select_columns
 
   layout "admin"
@@ -17,7 +17,9 @@ class Teacher::DecksController < ApplicationController
   end
 
   def create
-    @deck = current_teacher.decks.build(deck_params)
+    formated_cards = deck_params[:cards].values
+    @deck = current_teacher.decks.build(deck_params.except(:cards))
+    @deck.cards = formated_cards
 
     if @deck.save
       redirect_to teacher_decks_path
@@ -30,7 +32,10 @@ class Teacher::DecksController < ApplicationController
   end
 
   def update
-    if @deck.update(deck_params)
+    formated_cards = deck_params[:cards].values
+    @deck.cards = formated_cards
+
+    if @deck.update(deck_params.except(:cards))
       redirect_to [:teacher, :decks], status: :see_other
     else
       render :edit
@@ -50,8 +55,8 @@ class Teacher::DecksController < ApplicationController
 
   private
 
-  def find_deck
-    @deck = Deck.find(params[:id])
+  def set_deck
+    @deck = current_teacher.decks.find(params[:id])
   end
 
   def select_columns

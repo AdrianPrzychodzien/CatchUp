@@ -1,7 +1,7 @@
 <section data-controller="dynamic-form" data-dynamic-form-target="template">
     <% if cards.present? && cards.length > 0 %>
 
-    <% cards.values.each_with_index do |card, index| %>
+    <% cards.each_with_index do |card, index| %>
         <div class="flex items-center justify-between relative mb-6" data-id="<%=index%>" data-dynamic-form-target="row">
             <span class="absolute -left-6">#<%=index +1%></span>
             <div data-dynamic-form-target="front">

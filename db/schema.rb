@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_19_094447) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_21_063408) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "decks", force: :cascade do |t|
     t.bigint "teacher_id"
     t.string "name"
-    t.jsonb "cards"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "cards", default: []
     t.index ["teacher_id"], name: "index_decks_on_teacher_id"
   end
 
