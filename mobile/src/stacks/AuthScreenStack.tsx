@@ -2,15 +2,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { LoginScreen } from "../screens/LoginScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
-import { RootStackParams } from "../types/stack.types";
+import { AuthStackParams } from "../types/stack.types";
 
-const RootStack = createBottomTabNavigator<RootStackParams>();
+const AuthStack = createBottomTabNavigator<AuthStackParams>();
 
 export const AuthScreenStack = () => {
   const token = new URLSearchParams(window.location.search).get("token") || "";
 
   return (
-    <RootStack.Navigator
+    <AuthStack.Navigator
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: "tomato",
         tabBarIcon: ({ focused }) => {
@@ -30,10 +30,10 @@ export const AuthScreenStack = () => {
       })}
     >
       {token ? (
-        <RootStack.Screen name="Register" component={RegisterScreen} />
+        <AuthStack.Screen name="Register" component={RegisterScreen} />
       ) : (
-        <RootStack.Screen name="Login" component={LoginScreen} />
+        <AuthStack.Screen name="Login" component={LoginScreen} />
       )}
-    </RootStack.Navigator>
+    </AuthStack.Navigator>
   );
 };

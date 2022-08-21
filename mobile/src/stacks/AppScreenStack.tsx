@@ -9,7 +9,7 @@ const RootStack = createBottomTabNavigator<RootStackParams>();
 export const AppScreenStack = () => {
   return (
     <RootStack.Navigator
-      initialRouteName="DecksStack"
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: "tomato",
@@ -21,8 +21,6 @@ export const AppScreenStack = () => {
             iconName = "home";
           } else if (rn === "DecksStack") {
             iconName = "list";
-          } else if (rn === "Login") {
-            iconName = "account";
           }
 
           if (iconName) {
