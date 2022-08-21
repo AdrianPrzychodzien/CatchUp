@@ -2,6 +2,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import { Deck, getDeck } from "../api/get-decks";
+import { TopBackNavigation } from "../components/TopBackNavigation";
 import { RootStackParams } from "../types/stack.types";
 
 type DeckScreenProps = NativeStackNavigationProp<RootStackParams, "Deck">;
@@ -23,6 +24,7 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
   return (
     <ScrollView contentContainerStyle={{ paddingHorizontal: 24 }}>
       <SafeAreaView>
+        <TopBackNavigation />
         {error && <Text>{error}</Text>}
 
         {!error && deck && <pre>{JSON.stringify(deck, null, 2)}</pre>}

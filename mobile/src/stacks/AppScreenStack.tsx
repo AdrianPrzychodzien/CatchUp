@@ -11,6 +11,7 @@ export const AppScreenStack = () => {
     <RootStack.Navigator
       initialRouteName="DecksStack"
       screenOptions={({ route }) => ({
+        headerShown: false,
         tabBarActiveTintColor: "tomato",
         tabBarIcon: ({ focused }) => {
           let iconName;
