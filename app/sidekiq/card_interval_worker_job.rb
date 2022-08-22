@@ -14,5 +14,9 @@ class CardIntervalWorkerJob
     end
 
     deck.save
+
+    if deck.cards.any? { |c| c["interval"] && c["interval"] > 1 }
+      CardIntervalWorkerJob.perform_in(20.seconds, deck.id, Time.now + 20.seconds)
+    end
   end
 end
