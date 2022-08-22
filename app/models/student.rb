@@ -22,8 +22,7 @@ class Student < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable,
-    :omniauthable,
-    omniauth_providers: %i[facebook]
+    :omniauthable
 
   validates :email, presence: true, uniqueness: true
 

@@ -23,9 +23,3 @@
 <div class="inline-block">
     <%= button_to "Sign out from manager", destroy_manager_session_path, method: :delete, class: "btn-secondary" if current_manager %>
 </div>
-
-<%= button_to "Register with Facebook", 
-        student_facebook_omniauth_authorize_path, 
-        class: "btn-primary",
-        data: { turbo: "false", method: :post } 
-%>

@@ -84,7 +84,6 @@ gem "devise-i18n"
 gem "jwt"
 gem "bcrypt", "~> 3.1.7"
 
-gem "omniauth-facebook"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 gem "tailwindcss-rails", "~> 2.0"
