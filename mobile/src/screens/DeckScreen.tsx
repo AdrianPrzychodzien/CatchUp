@@ -10,15 +10,16 @@ import { RootStackParams } from "../types/stack.types";
 type DeckScreenProps = NativeStackNavigationProp<RootStackParams, "Deck"> & any;
 
 export const DeckScreen = ({ route }: DeckScreenProps) => {
-  // const deckId = route.params.deckId;
-  const deckId = new URLSearchParams(window.location.search).get("deckId") || "44";
+  const deckId = new URLSearchParams(window.location.search).get("deckId") || "47";
   const [deck, setDeck] = useState<Deck>();
   console.log("🚀 ~ deck", deck);
   const [error, setError] = useState<any>();
 
   useEffect(() => {
     getDeck(deckId)
-      .then(res => setDeck(res.deck))
+      .then(res => {
+        setDeck({ ...res.deck, cards: res.cards });
+      })
       .catch(error => {
         setError(error.message);
       });

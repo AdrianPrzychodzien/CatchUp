@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CardsGameResult } from "../screens/CardsGameResult";
+import { CardsGameResultScreen } from "../screens/CardsGameResultScreen";
 import { DeckScreen } from "../screens/DeckScreen";
 import { DecksScreen } from "../screens/DecksScreen";
 import { DecksStackParams } from "../types/stack.types";
@@ -15,6 +15,6 @@ export const DecksScreenStack = () => (
   >
     <DecksStack.Screen name="Decks" component={DecksScreen} />
     <DecksStack.Screen name="Deck" component={DeckScreen} />
-    <DecksStack.Screen name="CardsGameResult" component={CardsGameResult} />
+    <DecksStack.Screen name="CardsGameResult" component={CardsGameResultScreen} />
   </DecksStack.Navigator>
 );

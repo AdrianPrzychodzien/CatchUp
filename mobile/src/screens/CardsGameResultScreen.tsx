@@ -10,19 +10,16 @@ import { DecksStackParams, RootStackParams } from "../types/stack.types";
 
 type DeckScreenProps = NativeStackNavigationProp<DecksStackParams, "CardsGameResult"> & any;
 
-export const CardsGameResult = (props: DeckScreenProps) => {
-  const savedCards = props.route.params.savedCards;
-  const cardsToRemove = props.route.params.cardsToRemove;
-  const deckId = props.route.params.deckId;
+export const CardsGameResultScreen = (props: DeckScreenProps) => {
+  const { savedCards, deckId } = props.route.params;
 
   useEffect(() => {
-    saveGameResult({ deckId, savedCards, cardsToRemove })
+    saveGameResult({ deckId, savedCards })
       .then(res => {
         console.log("🚀 ~ res", res);
       })
       .catch(error => {
         console.log("🚀 ~ error", error);
-        // setError(error.message);
       });
   }, []);
 

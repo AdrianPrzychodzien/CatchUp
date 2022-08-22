@@ -16,7 +16,6 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
   const [step, setStep] = useState(0);
 
   const [savedCards, setSavedCards] = useState<Card[]>([]);
-  const [cardsToRemove, setCardsToRemove] = useState<Card[]>([]);
 
   const handleDifficultyLevel = (level: Card["difficulty"]) => {
     const currentCard = deck.cards[step];
@@ -29,14 +28,7 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
       difficulty: level,
     };
 
-    const cardToRemove =
-      cardToSave.difficulty === "easy" && cardToSave.prev_difficulty === "easy" && level === "easy";
-
-    if (cardToRemove) {
-      setCardsToRemove(prev => [...prev, cardToSave]);
-    } else {
-      setSavedCards(prev => [...prev, cardToSave]);
-    }
+    setSavedCards(prev => [...prev, cardToSave]);
 
     setFlipped(false);
     setStep(prev => prev + 1);
@@ -54,7 +46,7 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
 
   useEffect(() => {
     if (step === deck.cards.length) {
-      navigation.navigate("CardsGameResult", { deckId: deck.id, savedCards, cardsToRemove });
+      navigation.navigate("CardsGameResult", { deckId: deck.id, savedCards });
     }
   }, [step]);
 

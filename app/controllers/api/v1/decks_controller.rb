@@ -25,15 +25,16 @@ class Api::V1::DecksController < ApiController
   end
 
   def save_game
-    cardsToRemove = params[:cardsToRemove].map { |card| card["id"]}
     deck = Deck.where(id: params[:deckId], teacher: @teacher).first
 
     new_cards = deck.cards
-    .map do |card|
+      .map do |card|
       card_from_mobile = params["savedCards"].find { |card_from_mobile| card_from_mobile["id"] == card["id"] }
+      signCardAsDone = card_from_mobile["difficulty"] == "easy" && card["difficulty"] == "easy" && card["prev_difficulty"] == "easy"
+
       new_card = {}
 
-      if cardsToRemove.include?(card["id"])
+      if signCardAsDone
         new_card = {
           **card,
           done: true
@@ -42,9 +43,9 @@ class Api::V1::DecksController < ApiController
         new_card = {
           **card,
           difficulty: card_from_mobile["difficulty"],
-          interval: card["interval"].nil? ? card_from_mobile["interval"] : card["interval"] - 1,
+          interval: card["interval"].nil? ? card_from_mobile["interval"] : card["interval"] - 1
         }
-  
+
         if card["difficulty"]
           new_card["prev_difficulty"] = card["difficulty"]
         end
