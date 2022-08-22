@@ -12,6 +12,7 @@ export const DecksScreen = () => {
   const navigation = useNavigation<DecksScreenProps>();
 
   const [decks, setDecks] = useState<Deck[]>([]);
+  console.log("🚀 ~ decks", decks);
   const [error, setError] = useState<any>();
 
   useEffect(() => {

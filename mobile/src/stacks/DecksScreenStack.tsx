@@ -8,7 +8,7 @@ const DecksStack = createNativeStackNavigator<DecksStackParams>();
 
 export const DecksScreenStack = () => (
   <DecksStack.Navigator
-    initialRouteName="Deck"
+    initialRouteName="Decks"
     screenOptions={{
       headerShown: false,
     }}
