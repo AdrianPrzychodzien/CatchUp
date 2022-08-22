@@ -13,9 +13,10 @@ class Api::V1::SaveCardGameService
 
   def build_new_cards
     @new_cards = @deck.cards
+      .reject { |c| c["done"] }
       .map do |card|
       card_from_mobile = get_card_from_mobile(card["id"])
-      is_done = sign_card_as_done?(card_from_mobile, card)
+      is_done = card_from_mobile ? sign_card_as_done?(card, card_from_mobile) : false
 
       new_card = {}
 
@@ -25,11 +26,18 @@ class Api::V1::SaveCardGameService
           done: true
         }
       else
-        new_card = {
-          **card,
-          difficulty: card_from_mobile["difficulty"],
-          interval: card["interval"].nil? ? card_from_mobile["interval"] : card["interval"] - 1
-        }
+        new_card = if card_from_mobile
+          {
+            **card,
+            difficulty: card_from_mobile["difficulty"],
+            interval: card_from_mobile["interval"]
+          }
+        else
+          {
+            **card,
+            interval: card["interval"] - 1
+          }
+        end
 
         if card["difficulty"]
           new_card["prev_difficulty"] = card["difficulty"]
