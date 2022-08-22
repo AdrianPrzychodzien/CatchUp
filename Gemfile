@@ -56,6 +56,8 @@ group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "standard"
   gem "foreman"
+  gem "byebug"
+  gem "pry-remote"
 end
 
 group :development do
@@ -99,3 +101,5 @@ gem "aasm", "~> 5.2"
 gem "rack-cors", require: "rack/cors"
 
 gem "active_model_serializers", "~> 0.10.0"
+
+gem "sidekiq"

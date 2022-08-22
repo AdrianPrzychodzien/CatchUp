@@ -11,32 +11,33 @@ interface CardContenttProps {
 }
 
 export const CardContent = ({ cards, step, started, flipped, onFlip }: CardContenttProps) => {
-  if (started && step < cards.length) {
-    return (
-      <View>
-        <Text style={{ fontSize: 24, textAlign: "center" }}>{cards[step].front}</Text>
-        {flipped && (
-          <>
-            <hr style={styles.horizontalRule} />
+  const cardContent = () => (
+    <View>
+      <Text style={{ fontSize: 24, textAlign: "center" }}>{cards[step].front}</Text>
+      {flipped && (
+        <>
+          <hr style={styles.horizontalRule} />
 
-            <Text style={{ fontSize: 24, textAlign: "center" }}>{cards[step].back}</Text>
-          </>
-        )}
-      </View>
-    );
-  }
+          <Text style={{ fontSize: 24, textAlign: "center" }}>{cards[step].back}</Text>
+        </>
+      )}
+    </View>
+  );
 
-  if (started && !flipped) {
-    return (
-      <View style={styles.flipButtonWrapper}>
-        <Button mode="contained" onPress={onFlip}>
-          Flip
-        </Button>
-      </View>
-    );
-  }
+  const flipButton = () => (
+    <View style={styles.flipButtonWrapper}>
+      <Button mode="contained" onPress={onFlip}>
+        Flip
+      </Button>
+    </View>
+  );
 
-  return null;
+  return (
+    <>
+      {started && step < cards.length && cardContent()}
+      {started && !flipped && flipButton()}
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
