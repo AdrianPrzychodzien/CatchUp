@@ -8,7 +8,7 @@ axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + jwt;
 const API_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000/api/v1/"
-    : `${process.env.BACKEND_URL}/api/v1/`;
+    : `https://catchup-admin.herokuapp.com/api/v1/`;
 
 axiosInstance.interceptors.request.use(
   async (config: AxiosRequestConfig) => {

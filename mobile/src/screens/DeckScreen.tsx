@@ -35,11 +35,11 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
         }}
       >
         <TopBackNavigation />
-        {deck && <CardsGameHeader deck={deck} />}
+        {deck && deck.cards?.length && <CardsGameHeader deck={deck} />}
         {!deck && <div>Loading...</div>}
         {error && <Text>{error}</Text>}
 
-        {deck && <CardsGame deck={deck} />}
+        {deck && deck.cards?.length && <CardsGame deck={deck} />}
       </ScrollView>
     </>
   );
