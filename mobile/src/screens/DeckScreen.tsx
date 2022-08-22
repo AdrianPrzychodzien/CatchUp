@@ -38,7 +38,6 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
         {!deck && <div>Loading...</div>}
         {error && <Text>{error}</Text>}
 
-        {/* <pre>{JSON.stringify(deck, null, 2)}</pre> */}
         {deck && <CardsGame deck={deck} />}
       </ScrollView>
     </>

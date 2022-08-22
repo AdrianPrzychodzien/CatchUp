@@ -6,6 +6,8 @@ import { Button, Text } from "react-native-paper";
 import { Card, Deck } from "../api/get-decks";
 import { getCardInterval } from "../helpers/get-card-interval.helper";
 import { RootStackParams } from "../types/stack.types";
+import { CardsGameDifficultyButtons } from "./CardsGameDifficultyButtons";
+import { CardContent } from "./CardContent";
 
 type CardsGameProps = NativeStackNavigationProp<RootStackParams>;
 
@@ -16,6 +18,7 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
   const [step, setStep] = useState(0);
 
   const [savedCards, setSavedCards] = useState<Card[]>([]);
+  const haveCards = deck.cards.length > 0;
 
   const handleDifficultyLevel = (level: Card["difficulty"]) => {
     const currentCard = deck.cards[step];
@@ -45,10 +48,18 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
   }, [started]);
 
   useEffect(() => {
-    if (step === deck.cards.length) {
+    if (haveCards && step === deck.cards.length) {
       navigation.navigate("CardsGameResult", { deckId: deck.id, savedCards });
     }
   }, [step]);
+
+  if (!haveCards) {
+    return (
+      <View style={styles.cardsGameWrapper}>
+        <Text>There are no cards in this deck</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.cardsGameWrapper}>
@@ -58,39 +69,16 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
         </Button>
       )}
 
-      {started && step < deck.cards.length && (
-        <View>
-          <Text style={{ fontSize: 24, textAlign: "center" }}>{deck.cards[step].front}</Text>
-          {flipped && (
-            <>
-              <hr style={styles.horizontalRule} />
-
-              <Text style={{ fontSize: 24, textAlign: "center" }}>{deck.cards[step].back}</Text>
-            </>
-          )}
-        </View>
-      )}
-
-      {started && !flipped && (
-        <View style={styles.flipButtonWrapper}>
-          <Button mode="contained" onPress={() => setFlipped(true)}>
-            Flip
-          </Button>
-        </View>
-      )}
+      <CardContent
+        cards={deck.cards}
+        step={step}
+        started={started}
+        flipped={flipped}
+        onFlip={() => setFlipped(true)}
+      />
 
       {started && flipped && (
-        <View style={styles.evaluateWrapper}>
-          <Button mode="contained" onPress={() => handleDifficultyLevel("easy")}>
-            Easy
-          </Button>
-          <Button mode="contained" onPress={() => handleDifficultyLevel("medium")}>
-            Medium
-          </Button>
-          <Button mode="contained" onPress={() => handleDifficultyLevel("hard")}>
-            Hard
-          </Button>
-        </View>
+        <CardsGameDifficultyButtons onDifficultyLevel={handleDifficultyLevel} />
       )}
     </View>
   );
@@ -104,26 +92,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingBottom: "25%",
-  },
-  horizontalRule: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
-    width: "100%",
-    marginBottom: "25%",
-  },
-  flipButtonWrapper: {
-    position: "absolute",
-    bottom: 0,
-    marginBottom: "10%",
-    width: "90%",
-  },
-  evaluateWrapper: {
-    position: "absolute",
-    bottom: 0,
-    marginBottom: "10%",
-    width: "90%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
   },
 });

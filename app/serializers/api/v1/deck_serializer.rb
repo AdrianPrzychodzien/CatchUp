@@ -17,10 +17,7 @@ class Api::V1::DeckSerializer < ActiveModel::Serializer
       {
         id: card["id"],
         front: card["front"],
-        back: card["back"],
-        difficulty: card["difficulty"],
-        interval: card["interval"],
-        prev_difficulty: card["prev_difficulty"]
+        back: card["back"]
       }
     end
   end
