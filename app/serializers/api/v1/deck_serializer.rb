@@ -14,6 +14,8 @@ class Api::V1::DeckSerializer < ActiveModel::Serializer
     object.cards.map do |card|
       {
         id: card["id"],
+        front: card["front"],
+        back: card["back"],
         difficulty: card["difficulty"],
         interval: card["interval"],
         prev_difficulty: card["prev_difficulty"],
