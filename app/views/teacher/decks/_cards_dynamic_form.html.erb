@@ -4,13 +4,19 @@
     <% cards.each_with_index do |card, index| %>
         <div class="flex items-center justify-between relative mb-6" data-id="<%=index%>" data-dynamic-form-target="row">
             <span class="absolute -left-6">#<%=index +1%></span>
+
+            <input type="hidden" 
+                name="deck[cards][<%=index%>][id]"
+                value="<%= card["id"] %>"
+                id="deck_cards_<%=index%>_id" />
+
             <div data-dynamic-form-target="front">
                 <label class="block mb-1 text-gray-800 font-medium string optional block text-gray-800 font-medium" 
                         for="deck_cards_<%=index%>_front"
                 >Front</label>
                 <input class="appearance-none block w-full p-3 leading-5 text-gray-900 border border-gray-200 focus:border-$blue rounded-lg shadow-md placeholder-gray-400 focus:outline-none focus:ring-0 transition-colors duration-200 ease-in-out string optional"
                         type="text" 
-                        name="deck[cards][<%=index%>][][front]"
+                        name="deck[cards][<%=index%>][front]"
                         value="<%= card["front"] %>"
                         id="deck_cards_<%=index%>_front" />
             </div>
@@ -33,6 +39,12 @@
 
         <div class="flex items-center justify-between relative mb-6" data-id="0" data-dynamic-form-target="row">
             <span class="absolute -left-6">#1</span>
+
+            <input type="hidden" 
+                name="deck[cards][0][id]"
+                value="<%= SecureRandom.uuid %>"
+                id="deck_cards_0_id" />
+
             <div data-dynamic-form-target="front">
             <label class="block mb-1 text-gray-800 font-medium string optional block text-gray-800 font-medium" 
                     for="deck_cards_0_front"
