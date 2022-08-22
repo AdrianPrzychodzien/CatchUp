@@ -35,7 +35,9 @@ class Teacher::DecksController < ApplicationController
 
   def update
     formated_cards = deck_params[:cards].values
-    @deck.cards = formated_cards
+
+    new_cards = Teacher::UpdateCardsService.new(@deck, formated_cards).call
+    @deck.cards = new_cards
 
     if @deck.update(deck_params.except(:cards))
       redirect_to [:teacher, :decks], status: :see_other
