@@ -17,6 +17,8 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
   console.log("🚀 ~ deck", deck);
   const [error, setError] = useState<any>();
 
+  const hasCards = deck && deck.cards && deck.cards.length > 0;
+
   useEffect(() => {
     getDeck(deckId)
       .then(res => {
@@ -36,11 +38,11 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
         }}
       >
         <TopBackNavigation />
-        {deck && deck.cards?.length && <CardsGameHeader deck={deck} />}
+        {hasCards && <CardsGameHeader deck={deck} />}
         {!deck && <div>Loading...</div>}
         {error && <Text>{error}</Text>}
 
-        {deck && deck.cards?.length && <CardsGame deck={deck} />}
+        {deck && !!deck.cards && <CardsGame deck={deck} />}
       </ScrollView>
     </>
   );
