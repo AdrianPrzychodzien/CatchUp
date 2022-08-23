@@ -1,5 +1,5 @@
-if Rails.env.production?
-    CARD_INTERVAL = 7200
+CARD_INTERVAL = if Rails.env.production?
+  60
 else
-    CARD_INTERVAL = 20
+  20
 end

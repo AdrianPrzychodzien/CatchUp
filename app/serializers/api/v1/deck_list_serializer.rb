@@ -15,12 +15,11 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
 
   def done_cards_count
     object.cards
-      .select { |c| c["done"] }
-      .count
+      .count { |c| c["done"] }
   end
 
   def next_game_available_at
-    arr = not_done_cards.map { |c| c["interval"] && c["interval"] > 1 && c["interval"] }.reject { |v| !v}
+    arr = not_done_cards.map { |c| c["interval"] && c["interval"] > 1 && c["interval"] }.reject { |v| !v }
     lowest_interval = arr.min
 
     return unless lowest_interval
@@ -41,12 +40,7 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
   end
 
   def get_interval_time(lowest_interval)
-    if Rails.env.production?
-      seconds_num = (lowest_interval - 1) * CARD_INTERVAL
-      seconds_num.seconds
-    else
-      seconds_num = (lowest_interval - 1) * CARD_INTERVAL
-      seconds_num.seconds
-    end
+    seconds_num = (lowest_interval - 1) * CARD_INTERVAL
+    seconds_num.seconds
   end
 end
