@@ -8,6 +8,7 @@ import { getCardInterval } from "../helpers/get-card-interval.helper";
 import { RootStackParams } from "../types/stack.types";
 import { CardsGameDifficultyButtons } from "./CardsGameDifficultyButtons";
 import { CardGameContent } from "./CardGameContent";
+import { CardsGameHeader } from "./CardsGameHeader";
 
 type CardsGameProps = NativeStackNavigationProp<RootStackParams>;
 
@@ -72,6 +73,10 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
 
   return (
     <View style={styles.cardsGameWrapper}>
+      <View style={styles.headerWrapper}>
+        <CardsGameHeader deck={deck} step={step} />
+      </View>
+
       <CardGameContent
         cards={allCards}
         step={step}
@@ -90,6 +95,12 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
 };
 
 const styles = StyleSheet.create({
+  headerWrapper: {
+    position: "absolute",
+    top: 16,
+    left: 0,
+    right: 0,
+  },
   cardsGameWrapper: {
     width: "100%",
     height: "100%",

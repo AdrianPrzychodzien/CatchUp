@@ -2082,6 +2082,13 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.5.tgz#75a2a8e7d8ab4b230414505d92335d1dcb53a6df"
   integrity sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==
 
+"@types/react-native-animated-progress@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-animated-progress/-/react-native-animated-progress-1.0.0.tgz#68a7a9bd9d291b824ddce9bff00aa41ad251e8f7"
+  integrity sha512-DTUGYrgNu0xCAO9AU/tmFfnEzeXzgz+kpMfAsn+/5WVs43HclvW5OeQIgUg04zboUPpK88377ccrY4AQTwAssg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native-vector-icons@^6.4.11":
   version "6.4.11"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.11.tgz#8783d4248377aec14e06420397037b96ff242684"
@@ -9327,6 +9334,11 @@ react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-native-animated-progress@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-animated-progress/-/react-native-animated-progress-1.0.2.tgz#3c5c90daf9624abfeb5bf5b9950c9ef3913d1063"
+  integrity sha512-8EQSHTjT7QQY+u/Gknc1X4FxlV/8gRevi2wAlMIUQBf3fq13z++8WIGPPwwKvjsVcQJMm4cadTwn3Ptn5fiUJw==
 
 react-native-codegen@^0.69.1:
   version "0.69.1"

@@ -1,9 +1,8 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
-import { Card, Deck, getDeck } from "../api/get-decks";
+import { Deck, getDeck } from "../api/get-decks";
 import { CardsGame } from "../components/CardsGame";
-import { CardsGameHeader } from "../components/CardsGameHeader";
 import { TopBackNavigation } from "../components/TopBackNavigation";
 import { RootStackParams } from "../types/stack.types";
 
@@ -11,13 +10,8 @@ type DeckScreenProps = NativeStackNavigationProp<RootStackParams, "Deck"> & any;
 
 export const DeckScreen = ({ route }: DeckScreenProps) => {
   const { deckId } = route.params;
-  // const deckId = new URLSearchParams(window.location.search).get("deckId") || "";
-  // || "55";
   const [deck, setDeck] = useState<Deck>();
-  console.log("🚀 ~ deck", deck);
   const [error, setError] = useState<any>();
-
-  const hasCards = deck && deck.cards && deck.cards.length > 0;
 
   useEffect(() => {
     getDeck(deckId)
@@ -30,20 +24,12 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
   }, []);
 
   return (
-    <>
-      <ScrollView
-        contentContainerStyle={{
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <TopBackNavigation />
-        {hasCards && <CardsGameHeader deck={deck} />}
-        {!deck && <div>Loading...</div>}
-        {error && <Text>{error}</Text>}
+    <ScrollView contentContainerStyle={{ width: "100%", height: "100%" }}>
+      <TopBackNavigation />
+      {!deck && <div>Loading...</div>}
+      {error && <Text>{error}</Text>}
 
-        {deck && !!deck.cards && <CardsGame deck={deck} />}
-      </ScrollView>
-    </>
+      {deck && !!deck.cards && <CardsGame deck={deck} />}
+    </ScrollView>
   );
 };
