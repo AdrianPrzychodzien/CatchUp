@@ -18,10 +18,19 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
   const [step, setStep] = useState(0);
 
   const [savedCards, setSavedCards] = useState<Card[]>([]);
-  const haveCards = deck.cards.length > 0;
+  const [failedCards, setFailedCards] = useState<Card[]>([]);
+
+  const allCards = [...deck.cards, ...failedCards];
+
+  const haveCards = allCards.length > 0;
+
+  const handleNext = () => {
+    setFlipped(false);
+    setStep(prev => prev + 1);
+  };
 
   const handleDifficultyLevel = (level: Card["difficulty"]) => {
-    const currentCard = deck.cards[step];
+    const currentCard = allCards[step];
 
     const interval = getCardInterval(level, currentCard);
 
@@ -32,9 +41,12 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
     };
 
     setSavedCards(prev => [...prev, cardToSave]);
+    handleNext();
+  };
 
-    setFlipped(false);
-    setStep(prev => prev + 1);
+  const handleFail = (card: Card) => {
+    setFailedCards(prev => [...prev, card]);
+    handleNext();
   };
 
   useEffect(() => {
@@ -48,7 +60,7 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
   }, [started]);
 
   useEffect(() => {
-    if (haveCards && step === deck.cards.length) {
+    if (haveCards && step === allCards.length) {
       navigation.navigate("CardsGameResult", { deckId: deck.id, savedCards });
     }
   }, [step]);
@@ -70,7 +82,7 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
       )}
 
       <CardContent
-        cards={deck.cards}
+        cards={allCards}
         step={step}
         started={started}
         flipped={flipped}
@@ -78,7 +90,10 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
       />
 
       {started && flipped && (
-        <CardsGameDifficultyButtons onDifficultyLevel={handleDifficultyLevel} />
+        <CardsGameDifficultyButtons
+          onDifficultyLevel={handleDifficultyLevel}
+          onFail={() => handleFail(allCards[step])}
+        />
       )}
     </View>
   );

@@ -20,7 +20,7 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
   end
 
   def next_game_available_at
-    arr = not_done_cards.map { |c| c["interval"] && c["interval"] > 1 && c["interval"] }
+    arr = not_done_cards.map { |c| c["interval"] && c["interval"] > 1 && c["interval"] }.reject { |v| !v}
     lowest_interval = arr.min
 
     return unless lowest_interval

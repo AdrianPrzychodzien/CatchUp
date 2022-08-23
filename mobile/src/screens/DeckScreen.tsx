@@ -1,7 +1,7 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
-import { Deck, getDeck } from "../api/get-decks";
+import { Card, Deck, getDeck } from "../api/get-decks";
 import { CardsGame } from "../components/CardsGame";
 import { CardsGameHeader } from "../components/CardsGameHeader";
 import { TopBackNavigation } from "../components/TopBackNavigation";

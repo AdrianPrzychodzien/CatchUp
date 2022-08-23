@@ -4,20 +4,25 @@ import { Card } from "../api/get-decks";
 
 interface CardsGameDifficultyButtonsProps {
   onDifficultyLevel: (level: Card["difficulty"]) => void;
+  onFail: () => void;
 }
 
 export const CardsGameDifficultyButtons = ({
   onDifficultyLevel,
+  onFail,
 }: CardsGameDifficultyButtonsProps) => {
   return (
     <View style={styles.evaluateWrapper}>
-      <Button mode="contained" onPress={() => onDifficultyLevel("easy")}>
+      <Button color="violet" mode="contained" onPress={onFail}>
+        Fail
+      </Button>
+      <Button color="green" mode="contained" onPress={() => onDifficultyLevel("easy")}>
         Easy
       </Button>
-      <Button mode="contained" onPress={() => onDifficultyLevel("medium")}>
+      <Button color="yellow" mode="contained" onPress={() => onDifficultyLevel("medium")}>
         Medium
       </Button>
-      <Button mode="contained" onPress={() => onDifficultyLevel("hard")}>
+      <Button color="red" mode="contained" onPress={() => onDifficultyLevel("hard")}>
         Hard
       </Button>
     </View>
