@@ -14,9 +14,21 @@ export const CardPreview = ({ card }: { card: ICard }) => {
     <Card style={stylesheet.card}>
       <Text style={stylesheet.topBar}>{difficulty.toUpperCase()}</Text>
       <View style={stylesheet.cardContent}>
-        <Card.Title title={card.front} />
+        <Card.Title
+          titleNumberOfLines={2}
+          titleStyle={
+            card.front.split(" ").length === 1 ? stylesheet.cardTextNoWrap : stylesheet.cardText
+          }
+          title={card.front}
+        />
         <hr style={stylesheet.horizontalRule} />
-        <Card.Title title={card.back} />
+        <Card.Title
+          titleNumberOfLines={2}
+          titleStyle={
+            card.back.split(" ").length === 1 ? stylesheet.cardTextNoWrap : stylesheet.cardText
+          }
+          title={card.back}
+        />
       </View>
     </Card>
   );
@@ -25,12 +37,23 @@ export const CardPreview = ({ card }: { card: ICard }) => {
 const styles = (color: string) =>
   StyleSheet.create({
     card: {
-      margin: 4,
+      margin: 6,
       border: `2px solid ${color}`,
       borderRadius: 12,
+      maxWidth: "40%",
+      minWidth: "40%",
     },
     cardContent: {
-      padding: 12,
+      padding: 6,
+    },
+    cardText: {
+      textAlign: "center",
+      fontSize: 18,
+    },
+    cardTextNoWrap: {
+      textAlign: "center",
+      fontSize: 18,
+      whiteSpace: "nowrap",
     },
     topBar: {
       backgroundColor: color,

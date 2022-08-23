@@ -1,12 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
-import { Button } from "react-native-paper";
-import { Card, Deck, getDeck } from "../api/get-decks";
+import React, { useEffect } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { Button, Title } from "react-native-paper";
+import { Card } from "../api/get-decks";
 import { saveGameResult } from "../api/save-game-result";
 import { CardPreview } from "../components/CardPreview";
-import { TopBackNavigation } from "../components/TopBackNavigation";
 import { DecksStackParams, RootStackParams } from "../types/stack.types";
 
 type DeckScreenProps = NativeStackNavigationProp<DecksStackParams, "CardsGameResult"> & any;
@@ -31,12 +30,12 @@ export const CardsGameResultScreen = (props: DeckScreenProps) => {
   return (
     <ScrollView
       contentContainerStyle={{
-        width: "100%",
-        height: "100%",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <TopBackNavigation />
-      <Text>Preview:</Text>
+      <Title>Preview:</Title>
 
       <View style={styles.cardsWrapper}>
         {savedCards.map((card: Card) => {
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
+    width: "100%",
     marginBottom: 20,
   },
 });
