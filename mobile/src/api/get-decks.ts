@@ -1,5 +1,14 @@
 import axios from "./axios";
 
+export interface ListElementDeck {
+  id: number;
+  name: string;
+  all_cards_count: number;
+  playable_cards_count: number;
+  done_cards_count: number;
+  next_game_available_at: string | null;
+}
+
 export interface Deck {
   id: number;
   name: string;

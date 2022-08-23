@@ -39,6 +39,12 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    if (error.config.url === "/refresh_token" && error.response?.status === 401) {
+      Cookies.remove("jwt");
+      Cookies.remove("current_user_session");
+      window.location.reload();
+    }
+
     if (error.response?.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
       const data = await axiosInstance.post("/refresh_token");

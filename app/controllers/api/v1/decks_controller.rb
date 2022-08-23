@@ -15,10 +15,7 @@ class Api::V1::DecksController < ApiController
     decks = Deck.where(teacher: @teacher)
 
     if decks
-      render json: {
-        status: :ok,
-        decks: decks.as_json(only: [:id, :name])
-      }
+      render json: decks, each_serializer: Api::V1::DeckListSerializer
     else
       render json: {status: 401}
     end

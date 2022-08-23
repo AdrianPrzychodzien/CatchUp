@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button } from "react-native-paper";
-import { Deck, getDecks } from "../api/get-decks";
-import { useNavigation } from "@react-navigation/native";
-import { RootStackParams } from "../types/stack.types";
-
-type DecksScreenProps = NativeStackNavigationProp<RootStackParams>;
+import React, { useCallback, useState } from "react";
+import { ScrollView } from "react-native";
+import { Text, Title } from "react-native-paper";
+import { getDecks, ListElementDeck } from "../api/get-decks";
+import { useFocusEffect } from "@react-navigation/native";
+import { DeckPreview } from "../components/DeckPreview";
 
 export const DecksScreen = () => {
-  const navigation = useNavigation<DecksScreenProps>();
-
-  const [decks, setDecks] = useState<Deck[]>([]);
+  const [decks, setDecks] = useState<ListElementDeck[]>([]);
   console.log("🚀 ~ decks", decks);
   const [error, setError] = useState<any>();
 
-  useEffect(() => {
-    getDecks()
-      .then(res => setDecks(res.decks))
-      .catch(error => {
-        setError(error.message);
-      });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getDecks()
+        .then(setDecks)
+        .catch(error => {
+          setError(error.message);
+        });
+    }, [])
+  );
 
   return (
     <ScrollView
@@ -31,19 +28,16 @@ export const DecksScreen = () => {
         justifyContent: "center",
       }}
     >
-      <Button onPress={() => navigation.navigate("Home")}>Go to Home</Button>
-
       {error && <Text>{error}</Text>}
 
-      {!error &&
-        decks &&
-        decks.map(deck => (
-          <View key={deck.id}>
-            <Button onPress={() => navigation.navigate("Deck", { deckId: deck.id })}>
-              go to {deck.name}
-            </Button>
-          </View>
-        ))}
+      {!error && decks && (
+        <>
+          <Title>Your decks:</Title>
+          {decks.map(deck => (
+            <DeckPreview key={deck.id} deck={deck} />
+          ))}
+        </>
+      )}
 
       {!decks && <div>Loading...</div>}
     </ScrollView>

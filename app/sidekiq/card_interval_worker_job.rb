@@ -6,7 +6,7 @@ class CardIntervalWorkerJob
     deck = Deck.find(deck_id)
 
     return if deck.updated_at > delay_interval
-    
+
     deck.cards.each do |card|
       if card["interval"] && card["interval"] > 1
         card["interval"] -= 1
