@@ -15,7 +15,8 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
 
   def done_cards_count
     object.cards
-      .count { |c| c["done"] }
+      .select { |c| c["done"] }
+      .count
   end
 
   def next_game_available_at
@@ -26,9 +27,10 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
 
     updated_at = object.updated_at
     parsed_updated_at = DateTime.parse updated_at.to_s
-    hours_num = (lowest_interval - 1) * HOURS_NUM_INTERVAL
 
-    parsed_updated_at + hours_num.hours
+    interval_time = get_interval_time(lowest_interval)
+
+    parsed_updated_at + interval_time
   end
 
   private
@@ -36,5 +38,15 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
   def not_done_cards
     object.cards
       .reject { |c| c["done"] }
+  end
+
+  def get_interval_time(lowest_interval)
+    if Rails.env.production?
+      hours_num = (lowest_interval - 1) * CARD_INTERVAL
+      hours_num.hours
+    else
+      seconds_num = (lowest_interval - 1) * CARD_INTERVAL
+      seconds_num.seconds
+    end
   end
 end

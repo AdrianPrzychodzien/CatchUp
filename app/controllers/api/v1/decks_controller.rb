@@ -27,8 +27,8 @@ class Api::V1::DecksController < ApiController
     is_success = Api::V1::SaveCardGameService.new(deck, params["savedCards"]).call
 
     if is_success
-      delay_interval = Time.now + 20.seconds
-      CardIntervalWorkerJob.perform_in(20.seconds, deck.id, delay_interval)
+      delay_interval = Time.now + CARD_INTERVAL
+      CardIntervalWorkerJob.perform_in(CARD_INTERVAL, deck.id, delay_interval)
       render json: {status: :ok}
     else
       render json: {status: :error}

@@ -1,11 +1,11 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { Button, Card, Text } from "react-native-paper";
 import { ListElementDeck } from "../api/get-decks";
 import { RootStackParams } from "../types/stack.types";
-import { differenceInHours, differenceInMinutes } from "date-fns";
 
 type DecksScreenProps = NativeStackNavigationProp<RootStackParams>;
 
@@ -20,7 +20,10 @@ export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
     if (diffInHours > 2) return `${diffInHours} hours`;
 
     const diffInMinutes = differenceInMinutes(new Date(time), new Date());
-    return `${diffInMinutes} minutes`;
+    if (diffInMinutes > 2) return `${diffInMinutes} minutes`;
+
+    const diffInSeconds = differenceInSeconds(new Date(time), new Date());
+    if (diffInSeconds > 2) return `${diffInSeconds} seconds`;
   };
 
   return (
