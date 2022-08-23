@@ -2,18 +2,17 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { Card, Deck } from "../api/get-decks";
 import { getCardInterval } from "../helpers/get-card-interval.helper";
 import { RootStackParams } from "../types/stack.types";
 import { CardsGameDifficultyButtons } from "./CardsGameDifficultyButtons";
-import { CardContent } from "./CardContent";
+import { CardGameContent } from "./CardGameContent";
 
 type CardsGameProps = NativeStackNavigationProp<RootStackParams>;
 
 export const CardsGame = ({ deck }: { deck: Deck }) => {
   const navigation = useNavigation<CardsGameProps>();
-  const [started, setStarted] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [step, setStep] = useState(0);
 
@@ -50,14 +49,12 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
   };
 
   useEffect(() => {
-    if (started) {
-      navigation.getParent()?.setOptions({
-        tabBarStyle: { display: "none" },
-      });
+    navigation.getParent()?.setOptions({
+      tabBarStyle: { display: "none" },
+    });
 
-      return () => navigation.getParent()?.setOptions({ tabBarStyle: undefined });
-    }
-  }, [started]);
+    return () => navigation.getParent()?.setOptions({ tabBarStyle: undefined });
+  }, []);
 
   useEffect(() => {
     if (haveCards && step === allCards.length) {
@@ -75,21 +72,14 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
 
   return (
     <View style={styles.cardsGameWrapper}>
-      {!started && (
-        <Button mode="contained" onPress={() => setStarted(true)}>
-          Start
-        </Button>
-      )}
-
-      <CardContent
+      <CardGameContent
         cards={allCards}
         step={step}
-        started={started}
         flipped={flipped}
         onFlip={() => setFlipped(true)}
       />
 
-      {started && flipped && (
+      {flipped && (
         <CardsGameDifficultyButtons
           onDifficultyLevel={handleDifficultyLevel}
           onFail={() => handleFail(allCards[step])}

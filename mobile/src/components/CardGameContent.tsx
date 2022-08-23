@@ -2,23 +2,22 @@ import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { Card } from "../api/get-decks";
 
-interface CardContenttProps {
+interface CardGameContentProps {
   cards: Card[];
   step: number;
-  started: boolean;
   flipped: boolean;
   onFlip: () => void;
 }
 
-export const CardContent = ({ cards, step, started, flipped, onFlip }: CardContenttProps) => {
+export const CardGameContent = ({ cards, step, flipped, onFlip }: CardGameContentProps) => {
   const cardContent = () => (
-    <View>
-      <Text style={{ fontSize: 24, textAlign: "center" }}>{cards[step].front}</Text>
+    <View style={{ width: "100%" }}>
+      <Text style={styles.cardGameText}>{cards[step].front}</Text>
       {flipped && (
         <>
           <hr style={styles.horizontalRule} />
 
-          <Text style={{ fontSize: 24, textAlign: "center" }}>{cards[step].back}</Text>
+          <Text style={styles.cardGameText}>{cards[step].back}</Text>
         </>
       )}
     </View>
@@ -34,18 +33,23 @@ export const CardContent = ({ cards, step, started, flipped, onFlip }: CardConte
 
   return (
     <>
-      {started && step < cards.length && cardContent()}
-      {started && !flipped && flipButton()}
+      {step < cards.length && cardContent()}
+      {!flipped && flipButton()}
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  cardGameText: {
+    fontSize: 24,
+    textAlign: "center",
+  },
   horizontalRule: {
-    borderBottomColor: "black",
+    borderBottomColor: "lightGray",
     borderBottomWidth: 1,
-    width: "100%",
-    marginBottom: "25%",
+    width: "90%",
+    marginTop: 16,
+    marginBottom: 16,
   },
   flipButtonWrapper: {
     position: "absolute",
