@@ -42,8 +42,8 @@ class Api::V1::DeckListSerializer < ActiveModel::Serializer
 
   def get_interval_time(lowest_interval)
     if Rails.env.production?
-      hours_num = (lowest_interval - 1) * CARD_INTERVAL
-      hours_num.hours
+      seconds_num = (lowest_interval - 1) * CARD_INTERVAL
+      seconds_num.seconds
     else
       seconds_num = (lowest_interval - 1) * CARD_INTERVAL
       seconds_num.seconds

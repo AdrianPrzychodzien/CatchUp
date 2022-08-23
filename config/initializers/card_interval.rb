@@ -1,7 +1,5 @@
 if Rails.env.production?
-    CARD_INTERVAL = 2
-    CARD_TIME = "hours"
+    CARD_INTERVAL = 7200
 else
     CARD_INTERVAL = 20
-    CARD_TIME = "seconds"
 end
