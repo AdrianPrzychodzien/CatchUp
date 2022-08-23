@@ -4,12 +4,17 @@ import { Title } from "react-native-paper";
 import { Deck } from "../api/get-decks";
 import ProgressBar from "react-native-animated-progress";
 
-export const CardsGameHeader = ({ deck, step }: { deck: Deck; step: number }) => {
+interface CardsGameHeaderProps {
+  deck: Deck;
+  step: number;
+}
+
+export const CardsGameHeader = ({ deck, step }: CardsGameHeaderProps) => {
   const progress = (step / deck.cards.length) * 100;
 
   return (
     <>
-      <Title style={{ textAlign: "center", marginBottom: 16 }}>{deck.name}</Title>
+      <Title style={styles.title}>{deck.name}</Title>
 
       <View style={styles.progressBarWrapper}>
         <ProgressBar height={5} progress={progress} backgroundColor="#4a0072" />
@@ -19,6 +24,10 @@ export const CardsGameHeader = ({ deck, step }: { deck: Deck; step: number }) =>
 };
 
 const styles = StyleSheet.create({
+  title: {
+    textAlign: "center",
+    marginBottom: 16,
+  },
   progressBarWrapper: {
     width: "100%",
   },

@@ -7,7 +7,6 @@ import { DeckPreview } from "../components/DeckPreview";
 
 export const DecksScreen = () => {
   const [decks, setDecks] = useState<ListElementDeck[]>([]);
-  console.log("🚀 ~ decks", decks);
   const [error, setError] = useState<any>();
 
   useFocusEffect(
@@ -21,13 +20,7 @@ export const DecksScreen = () => {
   );
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <ScrollView contentContainerStyle={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       {error && <Text>{error}</Text>}
 
       {!error && decks && (

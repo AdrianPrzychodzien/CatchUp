@@ -10,7 +10,6 @@ import { RootStackParams } from "../types/stack.types";
 type DecksScreenProps = NativeStackNavigationProp<RootStackParams>;
 
 export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
-  console.log("🚀 ~ deck", deck);
   const navigation = useNavigation<DecksScreenProps>();
 
   const canPlay = deck.playable_cards_count > 0;

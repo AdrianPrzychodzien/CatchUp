@@ -15,8 +15,6 @@ export const CardsGameResultScreen = (props: DeckScreenProps) => {
   const { savedCards, deckId } = props.route.params;
   const navigation = useNavigation<CardsGameResultScreenProps>();
 
-  console.log("🚀 ~ savedCards", savedCards);
-
   useEffect(() => {
     saveGameResult({ deckId, savedCards })
       .then(res => {
@@ -38,9 +36,9 @@ export const CardsGameResultScreen = (props: DeckScreenProps) => {
       <Title>Preview:</Title>
 
       <View style={styles.cardsWrapper}>
-        {savedCards.map((card: Card) => {
-          return <CardPreview key={card.id} card={card} />;
-        })}
+        {savedCards.map((card: Card) => (
+          <CardPreview key={card.id} card={card} />
+        ))}
       </View>
 
       <Button onPress={() => navigation.navigate("DecksStack", { screen: "Decks" })}>
