@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Card, Deck } from "../api/get-decks";
 import { getCardInterval } from "../helpers/get-card-interval.helper";
 import { RootStackParams, RootStackProps } from "../navigation/types";
+import { Card, Deck } from "../types/deck.types";
 import { useHideTabBar } from "./use-hide-tab-bar.hook";
 
 export const useCardGame = ({ deck }: { deck: Deck }) => {

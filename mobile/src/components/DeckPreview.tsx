@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { Button, Card, Text } from "react-native-paper";
-import { ListElementDeck } from "../api/get-decks";
 import { RootStackProps } from "../navigation/types";
+import { ListElementDeck } from "../types/deck.types";
 
 export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
   const navigation = useNavigation<RootStackProps>();

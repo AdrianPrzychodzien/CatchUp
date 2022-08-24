@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { Card } from "../api/get-decks";
+import { Card } from "../types/deck.types";
 
 interface CardGameContentProps {
   cards: Card[];

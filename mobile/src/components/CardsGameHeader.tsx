@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Title } from "react-native-paper";
-import { Deck } from "../api/get-decks";
 import ProgressBar from "react-native-animated-progress";
+import { Deck } from "../types/deck.types";
 
 interface CardsGameHeaderProps {
   deck: Deck;

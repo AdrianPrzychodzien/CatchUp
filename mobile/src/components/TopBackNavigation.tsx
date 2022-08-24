@@ -3,7 +3,11 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export const TopBackNavigation = ({ absolute }: { absolute?: true }) => {
+interface TopBackNavigationProps {
+  absolute?: true;
+}
+
+export const TopBackNavigation = ({ absolute }: TopBackNavigationProps) => {
   const navigation = useNavigation();
 
   const content = (

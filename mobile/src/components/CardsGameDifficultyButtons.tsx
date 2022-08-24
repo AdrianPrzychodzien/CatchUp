@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
-import { Card } from "../api/get-decks";
+import { CARD_DIFFICULTY } from "../types/deck.types";
 
 interface CardsGameDifficultyButtonsProps {
-  onDifficultyLevel: (level: Card["difficulty"]) => void;
+  onDifficultyLevel: (level: CARD_DIFFICULTY) => void;
   onFail: () => void;
 }
 
@@ -16,17 +16,25 @@ export const CardsGameDifficultyButtons = ({
       <Button buttonColor="violet" mode="contained-tonal" onPress={onFail}>
         Fail
       </Button>
-      <Button buttonColor="green" mode="contained-tonal" onPress={() => onDifficultyLevel("easy")}>
+      <Button
+        buttonColor="green"
+        mode="contained-tonal"
+        onPress={() => onDifficultyLevel(CARD_DIFFICULTY.EASY)}
+      >
         Easy
       </Button>
       <Button
         buttonColor="yellow"
         mode="contained-tonal"
-        onPress={() => onDifficultyLevel("medium")}
+        onPress={() => onDifficultyLevel(CARD_DIFFICULTY.MEDIUM)}
       >
         Medium
       </Button>
-      <Button buttonColor="red" mode="contained-tonal" onPress={() => onDifficultyLevel("hard")}>
+      <Button
+        buttonColor="red"
+        mode="contained-tonal"
+        onPress={() => onDifficultyLevel(CARD_DIFFICULTY.HARD)}
+      >
         Hard
       </Button>
     </View>

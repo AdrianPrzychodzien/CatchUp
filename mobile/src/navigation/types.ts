@@ -1,6 +1,6 @@
 import type { NavigatorScreenParams } from "@react-navigation/native";
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Card } from "../api/get-decks";
+import { Card } from "../types/deck.types";
 
 export type RootStackParams = {
   Home: undefined;

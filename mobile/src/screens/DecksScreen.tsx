@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { Text, Title } from "react-native-paper";
-import { getDecks, ListElementDeck } from "../api/get-decks";
+import { getDecks } from "../api/get-decks";
 import { useFocusEffect } from "@react-navigation/native";
 import { DeckPreview } from "../components/DeckPreview";
+import { ListElementDeck } from "../types/deck.types";
 
 export const DecksScreen = () => {
   const [decks, setDecks] = useState<ListElementDeck[]>([]);

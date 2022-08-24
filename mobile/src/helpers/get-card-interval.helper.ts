@@ -1,14 +1,14 @@
-import { Card } from "../api/get-decks";
+import { Card, CARD_DIFFICULTY } from "../types/deck.types";
 
-export const getCardInterval = (level: Card["difficulty"], currentCard: Card) => {
+export const getCardInterval = (level: CARD_DIFFICULTY, currentCard: Card) => {
   let interval = 0;
   switch (level) {
-    case "easy":
-      if (currentCard.difficulty === "easy") {
+    case CARD_DIFFICULTY.EASY:
+      if (currentCard.difficulty === CARD_DIFFICULTY.EASY) {
         interval = 8;
-      } else if (currentCard.difficulty === "medium") {
+      } else if (currentCard.difficulty === CARD_DIFFICULTY.MEDIUM) {
         interval = 6;
-      } else if (currentCard.difficulty === "hard") {
+      } else if (currentCard.difficulty === CARD_DIFFICULTY.HARD) {
         interval = 4;
       }
 
@@ -17,12 +17,12 @@ export const getCardInterval = (level: Card["difficulty"], currentCard: Card) =>
       }
 
       break;
-    case "medium":
-      if (currentCard.difficulty === "easy") {
+    case CARD_DIFFICULTY.MEDIUM:
+      if (currentCard.difficulty === CARD_DIFFICULTY.EASY) {
         interval = 1;
-      } else if (currentCard.difficulty === "medium") {
+      } else if (currentCard.difficulty === CARD_DIFFICULTY.MEDIUM) {
         interval = 2;
-      } else if (currentCard.difficulty === "hard") {
+      } else if (currentCard.difficulty === CARD_DIFFICULTY.HARD) {
         interval = 3;
       }
 
@@ -31,12 +31,12 @@ export const getCardInterval = (level: Card["difficulty"], currentCard: Card) =>
       }
 
       break;
-    case "hard":
-      if (currentCard.difficulty === "easy") {
+    case CARD_DIFFICULTY.HARD:
+      if (currentCard.difficulty === CARD_DIFFICULTY.EASY) {
         interval = 1;
-      } else if (currentCard.difficulty === "medium") {
+      } else if (currentCard.difficulty === CARD_DIFFICULTY.MEDIUM) {
         interval = 1;
-      } else if (currentCard.difficulty === "hard") {
+      } else if (currentCard.difficulty === CARD_DIFFICULTY.HARD) {
         interval = 1;
       }
 

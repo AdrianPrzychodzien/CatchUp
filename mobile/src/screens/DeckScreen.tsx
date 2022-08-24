@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
-import { Deck, getDeck } from "../api/get-decks";
+import { getDeck } from "../api/get-decks";
 import { CardsGame } from "../components/CardsGame";
 import { TopBackNavigation } from "../components/TopBackNavigation";
 import { DeckScreenProps } from "../navigation/types";
+import { Deck } from "../types/deck.types";
 
 export const DeckScreen = ({ route }: DeckScreenProps) => {
   const { deckId } = route.params;

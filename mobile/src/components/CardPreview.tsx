@@ -1,12 +1,17 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { Card as ICard } from "../api/get-decks";
+import { Card as ICard, CARD_DIFFICULTY } from "../types/deck.types";
 
 export const CardPreview = ({ card }: { card: ICard }) => {
   const difficulty = card.difficulty;
 
-  const color = difficulty === "easy" ? "green" : difficulty === "medium" ? "yellow" : "red";
+  const color =
+    difficulty === CARD_DIFFICULTY.EASY
+      ? "green"
+      : difficulty === CARD_DIFFICULTY.MEDIUM
+      ? "yellow"
+      : "red";
 
   const stylesheet = styles(color);
 

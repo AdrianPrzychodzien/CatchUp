@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
-import { Deck } from "../api/get-decks";
 import { CardsGameDifficultyButtons } from "./CardsGameDifficultyButtons";
 import { CardGameContent } from "./CardGameContent";
 import { CardsGameHeader } from "./CardsGameHeader";
 import { useCardGame } from "../hooks/use-card-game.hook";
+import { Deck } from "../types/deck.types";
 
 export const CardsGame = ({ deck }: { deck: Deck }) => {
   const { step, flipped, allCards, handleDifficultyLevel, handleFail, handleFlip } = useCardGame({
