@@ -22,6 +22,7 @@ const theme = {
   ...DefaultTheme,
   roundness: 2,
   version: 3,
+  backgroundColor: "#8fcbbc",
   colors: {
     ...DefaultTheme.colors,
     primary: "#3498db",

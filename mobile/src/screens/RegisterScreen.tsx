@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { useUserContext } from "../context/user/user.context";
-import { Button, TextInput } from "react-native-paper";
+import { Button, TextInput, useTheme } from "react-native-paper";
 
 export const RegisterScreen = () => {
   const tokenParam = new URLSearchParams(window.location.search).get("token") || "";
@@ -11,10 +11,18 @@ export const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
+  const theme = useTheme();
   const { signUp } = useUserContext();
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
       <TextInput placeholder="Token" value={token} onChangeText={setToken} mode="outlined" />
       <TextInput
         placeholder="Email"

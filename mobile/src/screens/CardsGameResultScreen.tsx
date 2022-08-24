@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { Button, Title } from "react-native-paper";
+import { Button, Title, useTheme } from "react-native-paper";
 import { saveGameResult } from "../api/save-game-result";
 import { CardPreview } from "../components/CardPreview";
 import { CardsGameResultProps } from "../navigation/types";
 
 export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProps) => {
   const { savedCards, deckId } = route.params;
+  const theme = useTheme();
 
   useEffect(() => {
     saveGameResult({ deckId, savedCards })
@@ -19,7 +20,14 @@ export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProp
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
       <Title>Preview:</Title>
 
       <View style={styles.cardsWrapper}>
