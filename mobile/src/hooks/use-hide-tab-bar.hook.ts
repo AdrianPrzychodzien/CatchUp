@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/types";
+import { tabBarStyle } from "../navigation/styles";
 
 export const useHideTabBar = <T extends RootStackParams>({
   navigation,
@@ -12,6 +13,6 @@ export const useHideTabBar = <T extends RootStackParams>({
       tabBarStyle: { display: "none" },
     });
 
-    return () => navigation.getParent()?.setOptions({ tabBarStyle: undefined });
+    return () => navigation.getParent()?.setOptions({ tabBarStyle });
   }, []);
 };
