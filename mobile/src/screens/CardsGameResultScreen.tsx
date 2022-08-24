@@ -1,19 +1,12 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Button, Title } from "react-native-paper";
-import { Card } from "../api/get-decks";
 import { saveGameResult } from "../api/save-game-result";
 import { CardPreview } from "../components/CardPreview";
-import { DecksStackParams, RootStackParams } from "../types/stack.types";
+import { CardsGameResultProps } from "../navigation/types";
 
-type DeckScreenProps = NativeStackNavigationProp<DecksStackParams, "CardsGameResult"> & any;
-type CardsGameResultScreenProps = NativeStackNavigationProp<RootStackParams>;
-
-export const CardsGameResultScreen = (props: DeckScreenProps) => {
-  const { savedCards, deckId } = props.route.params;
-  const navigation = useNavigation<CardsGameResultScreenProps>();
+export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProps) => {
+  const { savedCards, deckId } = route.params;
 
   useEffect(() => {
     saveGameResult({ deckId, savedCards })
@@ -26,17 +19,11 @@ export const CardsGameResultScreen = (props: DeckScreenProps) => {
   }, []);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <ScrollView contentContainerStyle={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Title>Preview:</Title>
 
       <View style={styles.cardsWrapper}>
-        {savedCards.map((card: Card) => (
+        {savedCards.map(card => (
           <CardPreview key={card.id} card={card} />
         ))}
       </View>

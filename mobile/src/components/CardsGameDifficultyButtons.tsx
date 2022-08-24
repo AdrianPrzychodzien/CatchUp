@@ -13,16 +13,20 @@ export const CardsGameDifficultyButtons = ({
 }: CardsGameDifficultyButtonsProps) => {
   return (
     <View style={styles.evaluateWrapper}>
-      <Button color="violet" mode="contained" onPress={onFail}>
+      <Button buttonColor="violet" mode="contained-tonal" onPress={onFail}>
         Fail
       </Button>
-      <Button color="green" mode="contained" onPress={() => onDifficultyLevel("easy")}>
+      <Button buttonColor="green" mode="contained-tonal" onPress={() => onDifficultyLevel("easy")}>
         Easy
       </Button>
-      <Button color="yellow" mode="contained" onPress={() => onDifficultyLevel("medium")}>
+      <Button
+        buttonColor="yellow"
+        mode="contained-tonal"
+        onPress={() => onDifficultyLevel("medium")}
+      >
         Medium
       </Button>
-      <Button color="red" mode="contained" onPress={() => onDifficultyLevel("hard")}>
+      <Button buttonColor="red" mode="contained-tonal" onPress={() => onDifficultyLevel("hard")}>
         Hard
       </Button>
     </View>

@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { HomeScreen } from "../screens/HomeScreen";
-import { RootStackParams } from "../types/stack.types";
+import { RootStackParams } from "../navigation/types";
 import { DecksScreenStack } from "./DecksScreenStack";
 
 const RootStack = createBottomTabNavigator<RootStackParams>();

@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { CardsGameResultScreen } from "../screens/CardsGameResultScreen";
 import { DeckScreen } from "../screens/DeckScreen";
 import { DecksScreen } from "../screens/DecksScreen";
-import { DecksStackParams } from "../types/stack.types";
+import { DecksStackParams } from "../navigation/types";
 
 const DecksStack = createNativeStackNavigator<DecksStackParams>();
 

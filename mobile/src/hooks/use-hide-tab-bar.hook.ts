@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../types/stack.types";
+import { RootStackParams } from "../navigation/types";
 
 export const useHideTabBar = <T extends RootStackParams>({
   navigation,

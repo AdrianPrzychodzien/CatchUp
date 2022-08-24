@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, View } from "react-native";
+import { View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
 import { useUserContext } from "../context/user/user.context";
-import { TextInput } from "react-native-paper";
 
 export const LoginScreen = () => {
   const [email, setEmail] = useState("");
@@ -17,21 +17,24 @@ export const LoginScreen = () => {
         onChangeText={setEmail}
         autoComplete="email"
         autoFocus
+        mode="outlined"
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        mode="outlined"
       />
 
-      <View style={{ marginTop: 20 }}>
-        <Button
-          title="Sign in"
-          onPress={() => signIn({ email, password })}
-          disabled={!email || !password || email.length < 3 || password.length < 3}
-        />
-      </View>
+      <Button
+        onPress={() => signIn({ email, password })}
+        disabled={!email || !password || email.length < 3 || password.length < 3}
+        mode="contained-tonal"
+        style={{ marginTop: 20 }}
+      >
+        Sign in
+      </Button>
     </View>
   );
 };

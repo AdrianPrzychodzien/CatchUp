@@ -1,16 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { Button, Card, Text } from "react-native-paper";
 import { ListElementDeck } from "../api/get-decks";
-import { RootStackParams } from "../types/stack.types";
-
-type DecksScreenProps = NativeStackNavigationProp<RootStackParams>;
+import { RootStackProps } from "../navigation/types";
 
 export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
-  const navigation = useNavigation<DecksScreenProps>();
+  const navigation = useNavigation<RootStackProps>();
 
   const canPlay = deck.playable_cards_count > 0;
 

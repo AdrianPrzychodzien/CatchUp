@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button, View } from "react-native";
+import { View } from "react-native";
 import { useUserContext } from "../context/user/user.context";
-import { TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 
 export const RegisterScreen = () => {
   const tokenParam = new URLSearchParams(window.location.search).get("token") || "";
@@ -15,34 +15,38 @@ export const RegisterScreen = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <TextInput placeholder="Token" value={token} onChangeText={setToken} />
+      <TextInput placeholder="Token" value={token} onChangeText={setToken} mode="outlined" />
       <TextInput
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         autoComplete="email"
         autoFocus
+        mode="outlined"
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        mode="outlined"
       />
       <TextInput
         placeholder="Password confirmation"
         value={passwordConfirmation}
         onChangeText={setPasswordConfirmation}
         secureTextEntry
+        mode="outlined"
       />
 
-      <View style={{ marginTop: 20 }}>
-        <Button
-          title="Sign up"
-          onPress={() => signUp({ token, email, password, passwordConfirmation })}
-          disabled={!email || !password || email.length < 3 || password.length < 3}
-        />
-      </View>
+      <Button
+        onPress={() => signUp({ token, email, password, passwordConfirmation })}
+        disabled={!email || !password || email.length < 3 || password.length < 3}
+        mode="contained-tonal"
+        style={{ marginTop: 20 }}
+      >
+        Sign up
+      </Button>
     </View>
   );
 };

@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { LoginScreen } from "../screens/LoginScreen";
 import { RegisterScreen } from "../screens/RegisterScreen";
-import { AuthStackParams } from "../types/stack.types";
+import { AuthStackParams } from "../navigation/types";
 
 const AuthStack = createBottomTabNavigator<AuthStackParams>();
 

@@ -1,15 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { Card, Deck } from "../api/get-decks";
 import { getCardInterval } from "../helpers/get-card-interval.helper";
-import { RootStackParams } from "../types/stack.types";
+import { RootStackParams, RootStackProps } from "../navigation/types";
 import { useHideTabBar } from "./use-hide-tab-bar.hook";
 
-type CardsGameProps = NativeStackNavigationProp<RootStackParams>;
-
 export const useCardGame = ({ deck }: { deck: Deck }) => {
-  const navigation = useNavigation<CardsGameProps>();
+  const navigation = useNavigation<RootStackProps>();
 
   const [flipped, setFlipped] = useState(false);
   const [step, setStep] = useState(0);
