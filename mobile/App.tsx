@@ -6,6 +6,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import UserContextProvider, { useUserContext } from "./src/context/user/user.context";
 import { AppScreenStack } from "./src/navigation/AppScreenStack";
 import { AuthScreenStack } from "./src/navigation/AuthScreenStack";
+import { styledBoxShadow } from "./src/styles/global.style";
 
 const AppInner = () => {
   const { userId } = useUserContext();
@@ -23,6 +24,7 @@ const theme = {
   roundness: 2,
   version: 3,
   backgroundColor: "#8fcbbc",
+  styledBoxShadow,
   colors: {
     ...DefaultTheme.colors,
     primary: "#3498db",

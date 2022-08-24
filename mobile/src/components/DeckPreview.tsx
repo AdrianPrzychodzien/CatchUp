@@ -2,12 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
-import { Button, Card, Text } from "react-native-paper";
+import { Button, Card, Text, useTheme } from "react-native-paper";
 import { RootStackProps } from "../navigation/types";
 import { ListElementDeck } from "../types/deck.types";
 
 export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
   const navigation = useNavigation<RootStackProps>();
+  const theme = useTheme();
 
   const canPlay = deck.playable_cards_count > 0;
 
@@ -23,7 +24,7 @@ export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
   };
 
   return (
-    <Card style={styles.deck}>
+    <Card style={{ ...styles.deck, ...theme.styledBoxShadow }}>
       <View style={styles.deckTitle}>
         <Card.Title title={deck.name.substring(0, 18)} />
         <View style={dotStyles(canPlay).playableDot}></View>
