@@ -23,7 +23,7 @@ const theme = {
   ...DefaultTheme,
   roundness: 2,
   version: 3,
-  backgroundColor: "#8fcbbc",
+  backgroundColor: "#DFD3BB",
   styledBoxShadow,
   colors: {
     ...DefaultTheme.colors,

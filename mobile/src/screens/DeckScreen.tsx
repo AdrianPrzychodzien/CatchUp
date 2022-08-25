@@ -12,6 +12,7 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
   const theme = useTheme();
   const [deck, setDeck] = useState<Deck>();
   const [error, setError] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getDeck(`${deckId}`)
@@ -20,19 +21,23 @@ export const DeckScreen = ({ route }: DeckScreenProps) => {
       })
       .catch(error => {
         setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
   return (
     <ScrollView
       contentContainerStyle={{
-        width: "100%",
-        height: "100%",
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: theme.backgroundColor,
       }}
     >
-      <TopBackNavigation />
-      {!deck && <div>Loading...</div>}
+      <TopBackNavigation absolute />
+
       {error && <Text>{error}</Text>}
 
       {deck && !!deck.cards && <CardsGame deck={deck} />}

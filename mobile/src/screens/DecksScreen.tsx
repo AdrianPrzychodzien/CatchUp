@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
-import { Text, Title, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { getDecks } from "../api/get-decks";
 import { useFocusEffect } from "@react-navigation/native";
 import { DeckPreview } from "../components/DeckPreview";
@@ -34,7 +34,9 @@ export const DecksScreen = () => {
 
       {!error && decks && (
         <>
-          <Title>Your decks:</Title>
+          <Text variant="headlineMedium" style={{ position: "absolute", top: 30 }}>
+            Your decks:
+          </Text>
           {decks.map(deck => (
             <DeckPreview key={deck.id} deck={deck} />
           ))}

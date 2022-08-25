@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Title } from "react-native-paper";
+import { Text } from "react-native-paper";
 import ProgressBar from "react-native-animated-progress";
 import { Deck } from "../types/deck.types";
 
@@ -14,7 +14,9 @@ export const CardsGameHeader = ({ deck, step }: CardsGameHeaderProps) => {
 
   return (
     <>
-      <Title style={styles.title}>{deck.name}</Title>
+      <Text variant="headlineMedium" style={styles.title}>
+        {deck.name}
+      </Text>
 
       <View style={styles.progressBarWrapper}>
         <ProgressBar height={5} progress={progress} backgroundColor="#4a0072" />

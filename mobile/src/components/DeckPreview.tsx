@@ -1,10 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Animated from "react-native-reanimated";
 import { differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { Button, Card, Text, useTheme } from "react-native-paper";
 import { RootStackProps } from "../navigation/types";
 import { ListElementDeck } from "../types/deck.types";
+import { useDeckListAnimation } from "../hooks/animations/use-deck-list-animation.hook";
 
 export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
   const navigation = useNavigation<RootStackProps>();
@@ -23,8 +25,10 @@ export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
     if (diffInSeconds > 2) return `${diffInSeconds} seconds`;
   };
 
+  const { reanimatedStyle } = useDeckListAnimation();
+
   return (
-    <Card style={{ ...styles.deck, ...theme.styledBoxShadow }}>
+    <Animated.View style={[{ ...styles.deck, ...theme.styledBoxShadow }, reanimatedStyle]}>
       <View style={styles.deckTitle}>
         <Card.Title title={deck.name.substring(0, 18)} />
         <View style={dotStyles(canPlay).playableDot}></View>
@@ -53,7 +57,7 @@ export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
           </Text>
         )}
       </View>
-    </Card>
+    </Animated.View>
   );
 };
 
@@ -61,8 +65,10 @@ const styles = StyleSheet.create({
   deck: {
     margin: 8,
     padding: 12,
-    borderRadius: 8,
-    width: "85%",
+    borderRadius: 20,
+    width: "90%",
+    height: 100,
+    backgroundColor: "white",
   },
   deckContent: {
     display: "flex",
