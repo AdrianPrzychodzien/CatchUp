@@ -4,12 +4,15 @@ import { Button, Title, useTheme } from "react-native-paper";
 import { saveGameResult } from "../api/save-game-result";
 import { CardPreview } from "../components/CardPreview";
 import { CardsGameResultProps } from "../navigation/types";
+import { AppTheme } from "../types/theme.types";
 
 export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProps) => {
-  const { savedCards, deckId } = route.params;
+  const { deckId, savedCards, withoutSave } = route.params;
   const theme = useTheme();
 
   useEffect(() => {
+    if (withoutSave) return;
+
     saveGameResult({ deckId, savedCards })
       .then(res => {
         console.log("🚀 ~ res", res);
@@ -19,22 +22,31 @@ export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProp
       });
   }, []);
 
-  return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
-      <Title>Preview:</Title>
+  const buildContent = () => {
+    if (withoutSave) {
+      return (
+        <Title style={{ textAlign: "center" }}>
+          You have finished training mode. Your answers won`t be saved
+        </Title>
+      );
+    } else {
+      return (
+        <>
+          <Title>Preview:</Title>
 
-      <View style={styles.cardsWrapper}>
-        {savedCards.map(card => (
-          <CardPreview key={card.id} card={card} />
-        ))}
-      </View>
+          <View style={styles(theme).cardsWrapper}>
+            {savedCards.map(card => (
+              <CardPreview key={card.id} card={card} />
+            ))}
+          </View>
+        </>
+      );
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles(theme).contentContainer}>
+      {buildContent()}
 
       <Button onPress={() => navigation.navigate("DecksStack", { screen: "Decks" })}>
         Go to all decks
@@ -43,13 +55,20 @@ export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProp
   );
 };
 
-const styles = StyleSheet.create({
-  cardsWrapper: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-    marginBottom: 20,
-  },
-});
+const styles = (theme: AppTheme) =>
+  StyleSheet.create({
+    contentContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.backgroundColor,
+    },
+    cardsWrapper: {
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      width: "100%",
+      marginBottom: 20,
+    },
+  });

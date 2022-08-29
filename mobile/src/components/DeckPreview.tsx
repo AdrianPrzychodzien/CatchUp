@@ -42,13 +42,22 @@ export const DeckPreview = ({ deck }: { deck: ListElementDeck }) => {
           <Text>done: {deck.done_cards_count}</Text>
         </Card.Content>
         {canPlay ? (
-          <Button
-            contentStyle={{ flexDirection: "row-reverse" }}
-            icon="arrow-right"
-            onPress={() => navigation.navigate("Deck", { deckId: deck.id })}
-          >
-            start
-          </Button>
+          <>
+            <Button
+              contentStyle={{ flexDirection: "row-reverse" }}
+              icon="arrow-right"
+              onPress={() => navigation.navigate("Deck", { deckId: deck.id })}
+            >
+              start
+            </Button>
+            <Button
+              contentStyle={{ flexDirection: "row-reverse" }}
+              icon="arrow-right"
+              onPress={() => navigation.navigate("Deck", { deckId: deck.id, withoutSave: true })}
+            >
+              train
+            </Button>
+          </>
         ) : (
           <Text>
             Available in

@@ -6,11 +6,16 @@ import { CardGameContent } from "./CardGameContent";
 import { CardsGameHeader } from "./CardsGameHeader";
 import { useCardGame } from "../hooks/use-card-game.hook";
 import { Deck } from "../types/deck.types";
+import { useCardGameContext } from "../context/card-game/cardGame.context";
 
-export const CardsGame = ({ deck }: { deck: Deck }) => {
-  const { step, flipped, allCards, handleDifficultyLevel, handleFail, handleFlip } = useCardGame({
-    deck,
-  });
+interface CardsGameProps {
+  deck: Deck;
+}
+
+export const CardsGame = ({ deck }: CardsGameProps) => {
+  const { withoutSave } = useCardGameContext();
+  const { step, flipped, allCards, handleDifficultyLevel, handleFail, handleFlip, handleNext } =
+    useCardGame({ deck });
 
   const haveCards = allCards.length > 0;
 
@@ -34,6 +39,7 @@ export const CardsGame = ({ deck }: { deck: Deck }) => {
         <CardsGameDifficultyButtons
           onDifficultyLevel={handleDifficultyLevel}
           onFail={() => handleFail(allCards[step])}
+          onNext={handleNext}
         />
       )}
     </View>

@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import { useCardGameContext } from "../context/card-game/cardGame.context";
 import { getCardInterval } from "../helpers/get-card-interval.helper";
 import { RootStackParams, RootStackProps } from "../navigation/types";
 import { Card, Deck } from "../types/deck.types";
 import { useHideTabBar } from "./use-hide-tab-bar.hook";
 
 export const useCardGame = ({ deck }: { deck: Deck }) => {
+  const { withoutSave } = useCardGameContext();
   const navigation = useNavigation<RootStackProps>();
 
   const [flipped, setFlipped] = useState(false);
@@ -18,7 +20,7 @@ export const useCardGame = ({ deck }: { deck: Deck }) => {
 
   useEffect(() => {
     if (haveCards && step === allCards.length) {
-      navigation.navigate("CardsGameResult", { deckId: deck.id, savedCards });
+      navigation.navigate("CardsGameResult", { deckId: deck.id, savedCards, withoutSave });
     }
   }, [step]);
 
@@ -58,5 +60,6 @@ export const useCardGame = ({ deck }: { deck: Deck }) => {
     handleDifficultyLevel,
     handleFail,
     handleFlip,
+    handleNext,
   };
 };

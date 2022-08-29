@@ -5,14 +5,14 @@ import { Card } from "../types/deck.types";
 export type RootStackParams = {
   Home: undefined;
   DecksStack: NavigatorScreenParams<DecksStackParams>;
-  Deck: { deckId: number };
-  CardsGameResult: { deckId: number; savedCards: Card[] };
+  Deck: { deckId: number; withoutSave?: boolean };
+  CardsGameResult: { deckId: number; savedCards: Card[]; withoutSave?: boolean };
 };
 
 export type DecksStackParams = {
   Decks: undefined;
-  Deck: { deckId: number };
-  CardsGameResult: { deckId: number; savedCards: Card[] };
+  Deck: { deckId: number; withoutSave?: boolean };
+  CardsGameResult: { deckId: number; savedCards: Card[]; withoutSave?: boolean };
 };
 
 export type AuthStackParams = {
