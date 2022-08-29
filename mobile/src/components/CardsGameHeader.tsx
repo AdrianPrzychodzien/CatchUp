@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     marginBottom: 16,
+    marginLeft: 40,
   },
   progressBarWrapper: {
     width: "100%",

@@ -1,15 +1,17 @@
 import React, { useCallback, useState } from "react";
-import { ScrollView } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { StyleSheet, ScrollView } from "react-native";
+import { Text } from "react-native-paper";
 import { getDecks } from "../api/get-decks";
 import { useFocusEffect } from "@react-navigation/native";
 import { DeckPreview } from "../components/DeckPreview";
 import { ListElementDeck } from "../types/deck.types";
+import { AppTheme } from "../types/theme.types";
+import { useStyles } from "../hooks/use-styles.hook";
 
 export const DecksScreen = () => {
-  const theme = useTheme();
   const [decks, setDecks] = useState<ListElementDeck[]>([]);
   const [error, setError] = useState<any>();
+  const tStyle = useStyles(styles);
 
   useFocusEffect(
     useCallback(() => {
@@ -22,14 +24,7 @@ export const DecksScreen = () => {
   );
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: theme.backgroundColor,
-      }}
-    >
+    <ScrollView contentContainerStyle={tStyle.contentContainer}>
       {error && <Text>{error}</Text>}
 
       {!error && decks && (
@@ -47,3 +42,13 @@ export const DecksScreen = () => {
     </ScrollView>
   );
 };
+
+const styles = (theme: AppTheme) =>
+  StyleSheet.create({
+    contentContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.backgroundColor,
+    },
+  });

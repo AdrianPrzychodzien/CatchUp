@@ -3,12 +3,13 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { Button, Title, useTheme } from "react-native-paper";
 import { saveGameResult } from "../api/save-game-result";
 import { CardPreview } from "../components/CardPreview";
+import { useStyles } from "../hooks/use-styles.hook";
 import { CardsGameResultProps } from "../navigation/types";
 import { AppTheme } from "../types/theme.types";
 
 export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProps) => {
   const { deckId, savedCards, withoutSave } = route.params;
-  const theme = useTheme();
+  const tStyle = useStyles(styles);
 
   useEffect(() => {
     if (withoutSave) return;
@@ -34,7 +35,7 @@ export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProp
         <>
           <Title>Preview:</Title>
 
-          <View style={styles(theme).cardsWrapper}>
+          <View style={tStyle.cardsWrapper}>
             {savedCards.map(card => (
               <CardPreview key={card.id} card={card} />
             ))}
@@ -45,7 +46,7 @@ export const CardsGameResultScreen = ({ route, navigation }: CardsGameResultProp
   };
 
   return (
-    <ScrollView contentContainerStyle={styles(theme).contentContainer}>
+    <ScrollView contentContainerStyle={tStyle.contentContainer}>
       {buildContent()}
 
       <Button onPress={() => navigation.navigate("DecksStack", { screen: "Decks" })}>
