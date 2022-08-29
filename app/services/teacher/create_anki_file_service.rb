@@ -40,6 +40,7 @@ class Teacher::CreateAnkiFileService
     anki_file = CSV_FILE
 
     CSV.open(anki_file, "w") do |csv|
+      p "parsed_cards: #{parsed_cards.inspect}"
       parsed_cards.each do |hash|
         csv << hash.values.reverse
       end
@@ -52,7 +53,7 @@ class Teacher::CreateAnkiFileService
 
   def parsed_cards
     json_cards = @deck.cards.to_json
-    JSON.parse(json_cards).values
+    JSON.parse(json_cards)
   end
 
   def file_name
