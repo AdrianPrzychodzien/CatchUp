@@ -60,7 +60,7 @@ jobs:
           echo "Commit Messages: $commit_messages"
           commit_messages=$(echo $commit_messages | tr '\n' ' ')
           # Write the commit messages to commit_messages.txt with each commit on a new line
-          echo $commit_messages | tr '\n' ' ' >> commit_messages.txt
+          echo "$commit_messages \n" >> commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
       - name: Read Commit Messages
