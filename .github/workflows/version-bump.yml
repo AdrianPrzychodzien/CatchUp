@@ -1,43 +1,37 @@
-name: Version Bump PR
+name: Create Pull Request with User-Specified Version Bump
 
 on:
-  workflow_dispatch: # This event allows manual triggering
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version for the bump (e.g., "1.2.3")'
+        required: true
 
 jobs:
-  version_bump:
+  version_bump_and_pr:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up Git user name and email from the secrets
-      - name: Configure Git
-        run: |
-          git config user.name "${{ secrets.GIT_USER_NAME }}"
-          git config user.email "${{ secrets.GIT_USER_EMAIL }}"
-
       # Ensure Node.js and Yarn are installed
       - name: Setup Node.js and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: "16" # Adjust the Node.js version as needed
+          registry-url: "https://registry.npmjs.org/" # Required for Yarn
 
-      # Install dependencies and bump the version using 'yarn version'
-      - name: Bump version in package.json
+      # Set the user-specified version in the 'package.json' file
+      - name: Set Version in package.json
         run: |
-          yarn install
-          # Choose the appropriate version bump option (major, minor, or patch)
-          yarn version --patch # For a patch version bump
+          echo "{\"version\": \"$INPUT_VERSION\"}" > package.json
 
-      - name: Commit changes
-        run: |
-          git commit -am "Bump version in package.json"
-
+      # Create Pull Request
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: version-bump
-          title: "Version Bump: ${{ steps.bump.outputs.new_version }}"
-          body: "Automated version bump to ${{ steps.bump.outputs.new_version }}"
+          branch: version-bump # Replace this with the branch where you want to create the PR
+          title: "Version Bump to ${{ inputs.version }}"
+          body: "Automated version bump to ${{ inputs.version }}"
