@@ -32,11 +32,11 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
-      # Fetch tags before retrieving commit messages
-      - name: Fetch Tags
-        run: git fetch --tags
+      # # Fetch tags before retrieving commit messages
+      # - name: Fetch Tags
+      #   run: git fetch --tags
 
-      # Get the latest tag from the environment variable
+      # Set the latest tag to the environment variable
       - name: Get version and tag
         id: get_latest_tag
         run: |
@@ -59,15 +59,8 @@ jobs:
           echo "Commit Messages: $commit_messages"
           commit_messages=$(echo $commit_messages | tr '\n' ' ')
 
-          # Write the commit messages to commit_messages.txt with each commit on a new line
-          # echo "$commit_messages" >> commit_messages.txt
+          # Write the commit messages to environment variable
           echo "COMMIT_MESSAGES=$commit_messages" >> $GITHUB_ENV
-
-      # # Read commit_messages.txt and set the output variable
-      # - name: Read Commit Messages
-      #   id: set_commit_messages
-      #   run: |
-      #     echo "COMMIT_MESSAGES=$(cat commit_messages.txt)" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messagesd
       - name: Update CHANGELOG.md
