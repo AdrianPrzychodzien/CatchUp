@@ -11,20 +11,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Ensure Node.js and PNPM are installed
-      - name: Setup Node.js and PNPM
+      # Ensure Node.js and Yarn are installed
+      - name: Setup Node.js and Yarn
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: 'https://registry.npmjs.org/' # Required for PNPM
-          scope: '@your-scope' # Replace with your scope if needed, remove if not using scopes
 
-      # Install dependencies and bump the version using 'pnpm version'
+      # Install dependencies and bump the version using 'yarn version'
       - name: Bump version in package.json
         run: |
-          pnpm install
+          yarn install
           # Choose the appropriate version bump option (major, minor, or patch)
-          pnpm version minor --force # For a patch version bump
+          yarn version --patch # For a patch version bump
 
       - name: Commit changes
         run: |
@@ -37,5 +35,5 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: version-bump
-          title: 'Version Bump: ${{ steps.bump.outputs.new_version }}'
-          body: 'Automated version bump to ${{ steps.bump.outputs.new_version }}'
+          title: "Version Bump: ${{ steps.bump.outputs.new_version }}"
+          body: "Automated version bump to ${{ steps.bump.outputs.new_version }}"
