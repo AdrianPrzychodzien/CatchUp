@@ -53,7 +53,7 @@ jobs:
           # print current git branch
           echo "Current Branch: $(git branch --show-current)"
           # Get the commit messages between the latest tag and HEAD
-          commit_messages=$(git log --pretty=format:"%s" $latest_tag..HEAD)
+          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
           echo $commit_messages > commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
