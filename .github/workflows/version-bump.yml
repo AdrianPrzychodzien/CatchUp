@@ -56,7 +56,9 @@ jobs:
           # Get the commit messages between the latest tag and HEAD
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
           # Convert newline-separated commit messages to space-separated
-          # prrint commit messages variable with descirption
+          # print commit messages variable with descirption
+          echo "Commit Messages: $commit_messages"
+          commit_messages=$(echo $commit_messages | tr '\n' ' ')
 
           # Write the commit messages to commit_messages.txt with each commit on a new line
           echo "$commit_messages" >> commit_messages.txt
