@@ -13,13 +13,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # Ensure Node.js and Yarn are installed
       - name: Setup Node.js and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Adjust the Node.js version as needed
+          node-version: 16
           registry-url: "https://registry.npmjs.org/" # Required for Yarn
 
       - name: package.json info
@@ -30,13 +29,6 @@ jobs:
             {
               "version": "${{ inputs.version }}"
             }
-
-      - run: echo "version - ${{ steps.info.outputs.version }}"
-
-      # # Set the user-specified version in the 'package.json' file
-      # - name: Set Version in package.json
-      #   run: |
-      #     echo "{\"version\": \"$INPUT_VERSION\"}" > package.json
 
       # Create Pull Request
       - name: Create Pull Request
