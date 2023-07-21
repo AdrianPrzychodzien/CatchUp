@@ -32,27 +32,27 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
-      - name: Get version and tag
-        run: |
-          echo "LATEST_TAG=$(git describe --tag --abbrev=0 | cut -c 2-)" >> $GITHUB_ENV
-          # echo this tag
-          echo "LATEST_TAG=$(git describe --tag --abbrev=0 | cut -c 2-)"
-
       # Fetch tags before retrieving commit messages
       - name: Fetch Tags
-        run: |
-          git fetch --prune --unshallow
+        run: git fetch --tags
 
-      # Get commit messages between the latest tagged version and HEAD
+      # Get the latest tag from the environment variable
+      - name: Get version and tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --tag --abbrev=0 | cut -c 2-)
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+
+      # Get commit messages between the latest tagged version and HEAD using the latest_tag
       - name: Get Commit Messages
         id: read_commit_messages
         run: |
-          test_tag=$(git describe --tags --abbrev=0)
-          # print test_tag with a short explamnation:
-          echo "test_tag: $test_tag"
+          latest_tag="${{ env.LATEST_TAG }}"
+          # print latest_tag with a short explanation:
+          echo "Latest Tag: $latest_tag"
           # print current git branch
-          echo "current branch: $(git branch --show-current)"
-          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
+          echo "Current Branch: $(git branch --show-current)"
+          commit_messages=$(git log --pretty=format:"%s" $latest_tag..HEAD | awk -F"(" '{print $1}')
           echo $commit_messages > commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
