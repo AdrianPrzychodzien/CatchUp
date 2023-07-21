@@ -56,8 +56,8 @@ jobs:
           > commit_messages.txt
           # Loop through each commit message and append it to commit_messages.txt
           git log --pretty=format:"%s" $latest_tag..HEAD | awk -F"(" '{print $1}' | while read -r message; do
-            # Insert the commit message at the beginning of the file and move the current content to the second line
-            sed -i "1s/^/$message\n/" commit_messages.txt
+            # push commit message to file and add a new line
+            echo "- $message" >> commit_messages.txt
           done
 
       # Read commit_messages.txt and set the output variable
