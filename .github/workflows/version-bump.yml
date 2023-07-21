@@ -52,10 +52,8 @@ jobs:
           echo "Latest Tag: $latest_tag"
           # print current git branch
           echo "Current Branch: $(git branch --show-current)"
-          # Get the commit range between the latest tag and HEAD
-          commit_range=$(git rev-list $latest_tag..HEAD)
-          # Extract commit messages using git log
-          commit_messages=$(git log --pretty=format:"%s" $commit_range | awk -F"(" '{print $1}')
+          # Get the commit messages between the latest tag and HEAD
+          commit_messages=$(git log --pretty=format:"%s" $latest_tag..HEAD)
           echo $commit_messages > commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
