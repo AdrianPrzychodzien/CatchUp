@@ -32,7 +32,9 @@ jobs:
 
       # Fetch tags before retrieving commit messages
       - name: Fetch Tags
-        run: git fetch --tags
+        run: |
+          git fetch --tags --force
+          git pull --force
 
       # Get commit messages between the latest tagged version and HEAD
       - name: Get Commit Messages
