@@ -28,7 +28,7 @@ jobs:
         with:
           data: |
             {
-              "version": ${{ inputs.version }}
+              "version": "${{ inputs.version }}"
             }
 
       - run: echo "version - ${{ steps.info.outputs.version }}"
