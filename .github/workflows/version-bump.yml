@@ -30,6 +30,11 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
+      # Update CHANGELOG.md with the specified version
+      - name: Update CHANGELOG.md
+        run: |
+          sed -i "1s/^/# Version ${{ inputs.version }}\n/" CHANGELOG.md
+
       # Create Pull Request
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
