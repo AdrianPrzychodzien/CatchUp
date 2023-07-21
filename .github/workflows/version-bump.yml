@@ -47,7 +47,8 @@ jobs:
       - name: Get Commit Messages
         id: read_commit_messages
         run: |
-          latest_tag="1.0.1"
+          # Get the latest tag from the environment variable
+          latest_tag="${{ env.LATEST_TAG }}"
           # print latest_tag with a short explanation:
           echo "Latest Tag: $latest_tag"
           # print current git branch
@@ -59,7 +60,7 @@ jobs:
           echo "Commit Messages: $commit_messages"
           commit_messages=$(echo $commit_messages | tr '\n' ' ')
           # Write the commit messages to commit_messages.txt with each commit on a new line
-          echo "$commit_messages" >> commit_messages.txt
+          echo $commit_messages | tr '\n' ' ' >> commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
       - name: Read Commit Messages
