@@ -76,7 +76,9 @@ jobs:
           today=$(date +"%d.%m.%Y")
           # Get the commit messages from the environment variable
           commit_messages="${{ env.COMMIT_MESSAGES }}"
-          # Construct the new content to append with today's date and commit messages
+          # Insert a newline before "[" using sed
+          commit_messages=$(echo "$commit_messages" | sed 's/\[/\n\[/g')
+          # Construct the new content to append with today's date and formatted commit messages
           new_content="Change were made $today, version ${{ inputs.version }}.\n\n$commit_messages"
           # Read the existing content of CHANGELOG.md
           existing_content=$(cat CHANGELOG.md)
