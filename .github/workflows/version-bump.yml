@@ -22,10 +22,22 @@ jobs:
           node-version: "16" # Adjust the Node.js version as needed
           registry-url: "https://registry.npmjs.org/" # Required for Yarn
 
-      # Set the user-specified version in the 'package.json' file
-      - name: Set Version in package.json
+      # Read the existing 'package.json' file
+      - name: Read Package JSON
+        id: read_package_json
         run: |
-          echo "{\"version\": \"$INPUT_VERSION\"}" > package.json
+          echo "::set-output name=content::$(cat package.json)"
+
+      # Update the version in 'package.json'
+      - name: Update Package JSON
+        id: update_package_json
+        run: |
+          echo "${{ steps.read_package_json.outputs.content }}" | jq '.version = $VERSION' --arg VERSION "${{ inputs.version }}" > package.json
+
+      # # Set the user-specified version in the 'package.json' file
+      # - name: Set Version in package.json
+      #   run: |
+      #     echo "{\"version\": \"$INPUT_VERSION\"}" > package.json
 
       # Create Pull Request
       - name: Create Pull Request
