@@ -27,12 +27,14 @@ jobs:
         id: read_package_json
         run: |
           echo "::set-output name=content::$(cat package.json)"
+          echo "::set-output name=current_version::$(jq -r '.version' package.json)"
 
       # Update the version in 'package.json'
       - name: Update Package JSON
         id: update_package_json
         run: |
-          echo "${{ steps.read_package_json.outputs.content }}" | jq '.version = $VERSION' --arg VERSION "${{ inputs.version }}" > package.json
+          updated_content=$(echo "${{ steps.read_package_json.outputs.content }}" | jq --arg VERSION "${{ inputs.version }}" '.version = $VERSION')
+          echo "$updated_content" > package.json
 
       # # Set the user-specified version in the 'package.json' file
       # - name: Set Version in package.json
