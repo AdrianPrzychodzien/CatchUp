@@ -33,7 +33,9 @@ jobs:
       # Update CHANGELOG.md with the specified version
       - name: Update CHANGELOG.md
         run: |
-          sed -i "1s/^/# Version ${{ inputs.version }}\n/" CHANGELOG.md
+          echo "Change were made 13.2.2022, version ${{ inputs.version }}." > CHANGELOG.md
+          echo "- [BFR-000] test" >> CHANGELOG.md
+          echo "- [BFR-123] test2" >> CHANGELOG.md
 
       # Create Pull Request
       - name: Create Pull Request
