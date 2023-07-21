@@ -33,12 +33,14 @@ jobs:
       # Update CHANGELOG.md with the specified version
       - name: Update CHANGELOG.md
         run: |
+          # Get today's date in the format: "day.month.year"
+          today=$(date +"%d.%m.%Y")
+          # Construct the new content to append with today's date
+          new_content="Change were made $today, version ${{ inputs.version }}.\n- [BFR-000] test\n- [BFR-123] test2"
           # Read the existing content of CHANGELOG.md
           existing_content=$(cat CHANGELOG.md)
-          # Construct the new content to append
-          new_content="Change were made 13.2.2022, version ${{ inputs.version }}.\n- [BFR-000] test\n- [BFR-123] test2\n"
-          # Append the new content to the existing content
-          echo -e "$new_content$existing_content" > CHANGELOG.md
+          # Append the new content to the existing content, with an empty line between them
+          echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
 
       # Create Pull Request
       - name: Create Pull Request
