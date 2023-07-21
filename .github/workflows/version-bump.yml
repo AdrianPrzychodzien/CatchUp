@@ -35,7 +35,13 @@ jobs:
         id: read_commit_messages
         run: |
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
-          echo "CHANGELOG_CONTENT=$commit_messages" >> $GITHUB_ENV
+          echo $commit_messages > commit_messages.txt
+
+      # Read commit_messages.txt and set the output variable
+      - name: Read Commit Messages
+        id: set_commit_messages
+        run: |
+          echo "COMMIT_MESSAGES=$(cat commit_messages.txt)" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
@@ -43,7 +49,7 @@ jobs:
           # Get today's date in the format: "day.month.year"
           today=$(date +"%d.%m.%Y")
           # Get the commit messages from the environment variable
-          commit_messages="${{ env.CHANGELOG_CONTENT }}"
+          commit_messages="${{ env.COMMIT_MESSAGES }}"
           # Construct the new content to append with today's date and commit messages
           new_content="Change were made $today, version ${{ inputs.version }}.\n$commit_messages"
           # Read the existing content of CHANGELOG.md
