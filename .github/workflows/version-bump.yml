@@ -35,7 +35,7 @@ jobs:
 
       # Update the version in 'package.json'
       - name: Set and Get values from the package.json
-        # id: packageJson
+        id: packageJson
         uses: RadovanPelka/github-action-json@main
         with:
           path: "package.json" # default value
