@@ -35,6 +35,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: version-bump # Replace this with the branch where you want to create the PR
-          title: "Version Bump to ${{ inputs.version }}"
+          branch: "v${{ inputs.version }}" # Replace this with the branch where you want to create the PR
+          title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
