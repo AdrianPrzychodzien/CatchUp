@@ -62,7 +62,7 @@ jobs:
         run: |
           echo "COMMIT_MESSAGES=$(cat commit_messages.txt)" >> $GITHUB_ENV
 
-      # Update CHANGELOG.md with the specified version and commit messages
+      # Update CHANGELOG.md with the specified version and commit messagesd
       - name: Update CHANGELOG.md
         run: |
           # Get today's date in the format: "day.month.year"
