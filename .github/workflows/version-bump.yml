@@ -26,11 +26,13 @@ jobs:
         id: info
         uses: jaywcjlove/github-action-package@main
         with:
-          rename: "@jaywcjlove/github-action-package-test"
+          data: |
+            {
+              "version": 1.1.1"
+            }
 
-      - run: echo "version - 1.0.0"
-      - run: echo "description - ${{ steps.info.outputs.description }}"
-      - run: echo "author - ${{ steps.info.outputs.author }}"
+      - run: echo "name - ${{ steps.info.outputs.name }}"
+      - run: echo "dependencies - ${{ steps.info.outputs.dependencies }}"
 
       # # Set the user-specified version in the 'package.json' file
       # - name: Set Version in package.json
