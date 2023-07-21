@@ -33,13 +33,14 @@ jobs:
       # Fetch tags before retrieving commit messages
       - name: Fetch Tags
         run: |
-          git describe --always
-          git fetch --tags
+          git fetch --prune --unshallow
 
       # Get commit messages between the latest tagged version and HEAD
       - name: Get Commit Messages
         id: read_commit_messages
         run: |
+          test_tag=$(git describe --tags --abbrev=0)
+          echo $test_tag
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
           echo $commit_messages > commit_messages.txt
 
