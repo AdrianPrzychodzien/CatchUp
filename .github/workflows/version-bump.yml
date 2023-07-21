@@ -52,12 +52,10 @@ jobs:
           echo "Latest Tag: $latest_tag"
           # print current git branch
           echo "Current Branch: $(git branch --show-current)"
-          # Get the commit messages between the latest tag and HEAD
-          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
-          # Convert newline-separated commit messages to space-separated
-          commit_messages=$(echo $commit_messages | tr '\n' ' ')
-          # Write the commit messages to commit_messages.txt with each commit on a new line
-          echo "$commit_messages" > commit_messages.txt
+          # Initialize an empty commit_messages.txt file
+          > commit_messages.txt
+          # Loop through each commit message and append it to commit_messages.txt
+          git log --pretty=format:"%s" $latest_tag..HEAD | awk -F"(" '{print $1}' >> commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
       - name: Read Commit Messages
@@ -73,7 +71,7 @@ jobs:
           # Get the commit messages from the environment variable
           commit_messages="${{ env.COMMIT_MESSAGES }}"
           # Construct the new content to append with today's date and commit messages
-          new_content="Change were made $today, version ${{ inputs.version }}.\n$commit_messages"
+          new_content="Change were made $today, version ${{ inputs.version }}.\n\n$commit_messages"
           # Read the existing content of CHANGELOG.md
           existing_content=$(cat CHANGELOG.md)
           # Append the new content to the existing content, with an empty line between them
