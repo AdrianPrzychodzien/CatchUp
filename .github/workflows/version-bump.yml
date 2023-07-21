@@ -28,8 +28,7 @@ jobs:
         with:
           rename: "@jaywcjlove/github-action-package-test"
 
-      - run: echo "name - ${{ steps.info.outputs.name }}"
-      - run: echo "version - ${{ steps.info.outputs.version }}"
+      - run: echo "version - 1.0.0"
       - run: echo "description - ${{ steps.info.outputs.description }}"
       - run: echo "author - ${{ steps.info.outputs.author }}"
 
