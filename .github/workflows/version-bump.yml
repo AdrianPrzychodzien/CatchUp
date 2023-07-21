@@ -30,37 +30,25 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
-      # Get the latest tag if it exists
-      - name: Get Latest Tag
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git describe --tags --abbrev=0)
-          if [ -z "$latest_tag" ]; then
-            echo "::set-output name=tag_found::false"
-          else
-            echo "::set-output name=tag_found::true"
-            echo "::set-output name=latest_tag::$latest_tag"
-          fi
+      # Fetch tags before retrieving commit messages
+      - name: Fetch Tags
+        run: git fetch --tags
 
-      # Get commit messages between the latest tagged version and HEAD if a tag exists
+      # Get commit messages between the latest tagged version and HEAD
       - name: Get Commit Messages
         id: read_commit_messages
-        if: steps.get_latest_tag.outputs.tag_found == 'true'
         run: |
-          latest_tag="${{ steps.get_latest_tag.outputs.latest_tag }}"
-          commit_messages=$(git log --pretty=format:"%s" $latest_tag..HEAD | awk -F"(" '{print $1}')
+          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
           echo $commit_messages > commit_messages.txt
 
-      # Read commit_messages.txt and set the output variable if a tag exists
+      # Read commit_messages.txt and set the output variable
       - name: Read Commit Messages
         id: set_commit_messages
-        if: steps.get_latest_tag.outputs.tag_found == 'true'
         run: |
           echo "COMMIT_MESSAGES=$(cat commit_messages.txt)" >> $GITHUB_ENV
 
-      # Update CHANGELOG.md with the specified version and commit messages if a tag exists
+      # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
-        if: steps.get_latest_tag.outputs.tag_found == 'true'
         run: |
           # Get today's date in the format: "day.month.year"
           today=$(date +"%d.%m.%Y")
