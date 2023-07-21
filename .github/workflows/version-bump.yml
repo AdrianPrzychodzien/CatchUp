@@ -11,6 +11,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Set up Git user name and email from the secrets
+      - name: Configure Git
+        run: |
+          git config user.name "${{ secrets.GIT_USER_NAME }}"
+          git config user.email "${{ secrets.GIT_USER_EMAIL }}"
+
       # Ensure Node.js and Yarn are installed
       - name: Setup Node.js and Yarn
         uses: actions/setup-node@v3
@@ -26,8 +32,6 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
           git commit -am "Bump version in package.json"
 
       - name: Create Pull Request
