@@ -33,9 +33,12 @@ jobs:
       # Update CHANGELOG.md with the specified version
       - name: Update CHANGELOG.md
         run: |
-          echo "Change were made 13.2.2022, version ${{ inputs.version }}." > CHANGELOG.md
-          echo "- [BFR-000] test" >> CHANGELOG.md
-          echo "- [BFR-123] test2" >> CHANGELOG.md
+          # Read the existing content of CHANGELOG.md
+          existing_content=$(cat CHANGELOG.md)
+          # Construct the new content to append
+          new_content="Change were made 13.2.2022, version ${{ inputs.version }}.\n- [BFR-000] test\n- [BFR-123] test2\n"
+          # Append the new content to the existing content
+          echo -e "$new_content$existing_content" > CHANGELOG.md
 
       # Create Pull Request
       - name: Create Pull Request
