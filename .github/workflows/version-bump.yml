@@ -54,7 +54,10 @@ jobs:
           echo "Current Branch: $(git branch --show-current)"
           # Get the commit messages between the latest tag and HEAD
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
-          echo $commit_messages > commit_messages.txt
+          # Convert newline-separated commit messages to space-separated
+          commit_messages=$(echo $commit_messages | tr '\n' ' ')
+          # Write the commit messages to commit_messages.txt with each commit on a new line
+          echo "$commit_messages" > commit_messages.txt
 
       # Read commit_messages.txt and set the output variable
       - name: Read Commit Messages
