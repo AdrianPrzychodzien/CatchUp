@@ -40,7 +40,10 @@ jobs:
         id: read_commit_messages
         run: |
           test_tag=$(git describe --tags --abbrev=0)
-          echo $test_tag
+          # print test_tag with a short explamnation:
+          echo "test_tag: $test_tag"
+          # print current git branch
+          echo "current branch: $(git branch --show-current)"
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
           echo $commit_messages > commit_messages.txt
 
