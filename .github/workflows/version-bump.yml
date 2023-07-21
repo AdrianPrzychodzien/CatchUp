@@ -30,17 +30,37 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
-      # Update CHANGELOG.md with the specified version
+      # Get commit messages between the latest tagged version and HEAD
+      - name: Get_Commit_Messages
+        run: |
+          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
+          echo "::set-output name=changelog::$commit_messages"
+
+      # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
         run: |
           # Get today's date in the format: "day.month.year"
           today=$(date +"%d.%m.%Y")
-          # Construct the new content to append with today's date
-          new_content="Change were made $today, version ${{ inputs.version }}.\n- [BFR-000] test\n- [BFR-123] test2"
+          # Get the commit messages from the previous step
+          commit_messages="${{ steps.Get_Commit_Messages.outputs.changelog }}"
+          # Construct the new content to append with today's date and commit messages
+          new_content="Change were made $today, version ${{ inputs.version }}.\n$commit_messages"
           # Read the existing content of CHANGELOG.md
           existing_content=$(cat CHANGELOG.md)
           # Append the new content to the existing content, with an empty line between them
           echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
+
+      # # Update CHANGELOG.md with the specified version
+      # - name: Update CHANGELOG.md
+      #   run: |
+      #     # Get today's date in the format: "day.month.year"
+      #     today=$(date +"%d.%m.%Y")
+      #     # Construct the new content to append with today's date
+      #     new_content="Change were made $today, version ${{ inputs.version }}.\n- [BFR-000] test\n- [BFR-123] test2"
+      #     # Read the existing content of CHANGELOG.md
+      #     existing_content=$(cat CHANGELOG.md)
+      #     # Append the new content to the existing content, with an empty line between them
+      #     echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
 
       # Create Pull Request
       - name: Create Pull Request
