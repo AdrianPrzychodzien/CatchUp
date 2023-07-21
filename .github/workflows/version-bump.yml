@@ -65,7 +65,7 @@ jobs:
       # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
         run: |
-          # Get today's date in the format: "day.month.year"
+          # Get today's date in the format: "Year-month-day"
           today=$(date +"%Y-%m-%d")
 
           # Get the commit messages from the environment variable
