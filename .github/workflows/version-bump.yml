@@ -28,11 +28,11 @@ jobs:
         with:
           data: |
             {
-              "version": 1.1.1"
+              "version": "1.1.1"
             }
 
       - run: echo "name - ${{ steps.info.outputs.name }}"
-      - run: echo "dependencies - ${{ steps.info.outputs.dependencies }}"
+      - run: echo "version - ${{ steps.info.outputs.version }}"
 
       # # Set the user-specified version in the 'package.json' file
       # - name: Set Version in package.json
