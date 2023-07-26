@@ -11,6 +11,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Get authenticated token
+        id: auth
+        uses: octokit/auth-action@v1.x
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Lock Main Branch
         uses: octokit/request-action@v2.x
         with:
@@ -20,6 +26,6 @@ jobs:
           headers: |
             {
               "Accept": "application/vnd.github.v3+json",
-              "Authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}"
+              "Authorization": "Bearer ${{ steps.auth.outputs.token }}"
             }
           mediaType: '{"required_status_checks":null,"enforce_admins":true,"required_pull_request_reviews":null,"restrictions":null}'
