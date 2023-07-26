@@ -1,34 +1,27 @@
-name: lock-dispatch
-
-on:
-  workflow_dispatch:
-    inputs:
-      reason:
-        description: "Reason for claiming the deployment lock"
-        required: false
-      # environment:
-      #   description: "The environment to claim a lock for (production, staging, etc) - global is supported to claim the special global lock)"
-      #   required: true
-      #   default: "production"
-      mode:
-        description: "The mode to use: check, lock, unlock"
-        required: true
-        default: "lock"
-      branch:
-        description: "The branch to lock"
-        required: true
-        default: "main"
-
-permissions:
-  contents: write
+name: Lock Main Branch
+on: workflow_dispatch
 
 jobs:
-  lock:
+  lock_branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: github/lock@v2.1.0
-        id: lock
+      - name: Lock Main Branch
+        uses: actions/github-script@v4
         with:
-          mode: ${{ github.event.inputs.mode }}
-          reason: ${{ github.event.inputs.reason }}
-          environment: ${{ github.event.inputs.environment }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: branch } = await github.rest.repos.getBranch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              branch: 'main',
+            });
+            await github.rest.repos.updateBranchProtection({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              branch: 'main',
+              enforce_admins: true,
+              required_pull_request_reviews: {
+                required_approving_review_count: 1,
+              },
+              restrictions: null,
+            });
