@@ -1,4 +1,4 @@
-name: Lock Main Branch new
+name: Lock Main Branch
 
 on:
   push:
@@ -9,31 +9,39 @@ jobs:
   lock:
     runs-on: ubuntu-latest
     steps:
-      - name: Lock Main Branch
-        uses: actions/github-script@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branch = "main";
-            const { data: pullRequest } = await github.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: branch,
-              base: branch,
-              title: `Lock ${branch} branch`,
-              body: `This pull request is used to lock the ${branch} branch.`,
-              maintainer_can_modify: true,
-            });
-            const { data: reviews } = await github.pulls.listReviews({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pullRequest.number,
-            });
-            if (reviews.length === 0) {
-              await github.pulls.requestReviewers({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number,
-                reviewers: [context.repo.owner],
-              });
-            }
+          python-version: "3.1" # Replace '3.x' with the Python version you need (e.g., '3.8', '3.9')
+
+      - name: Lock Main Branch
+        run: |
+          python - << EOF
+          from distutils.util import strtobool
+          from time import sleep
+
+          import configargparse
+          from github3 import login
+          from github3.exceptions import NotFoundError, GitHubException
+
+          def toggle_enforce_admin(options):
+              # The Python script content goes here...
+              # (copy the entire Python script here)
+
+          if __name__ == '__main__':
+              p = configargparse.ArgParser()
+              p.add_argument('-t', '--access-token', env_var='ACCESS_TOKEN', required=True, help='Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line')
+              p.add_argument('-o', '--owner', env_var='OWNER', required=False, default='', help='Owner. For example benjefferies for https://github.com/benjefferies/branch-protection-bot')
+              p.add_argument('-r', '--repo', env_var='REPO', required=False, default='', help='Repo. For example branch-protection-bot for https://github.com/benjefferies/branch-protection-bot')
+              p.add_argument('--github_repository', env_var='GITHUB_REPOSITORY', required=False, default='', help='Owner and repo. For example benjefferies/branch-protection-bot for https://github.com/benjefferies/branch-protection-bot')
+              p.add_argument('-b', '--branch', env_var='BRANCH', default='main', help='Branch name')
+              p.add_argument('--retries', env_var='RETRIES', default=5, help='Number of times to retry before exiting')
+              p.add_argument('--enforce-admins', env_var='ENFORCE_ADMINS', default=None, help='Flag to explicitly enable or disable "Include administrators"')
+
+              toggle_enforce_admin(p.parse_args())
+          EOF
+        env:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
