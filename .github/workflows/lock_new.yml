@@ -34,7 +34,7 @@ jobs:
                 required_pull_request_reviews: null,
                 restrictions: null,
               });
-              console.log(`The ${branch} branch is now locked.`);
+              console.log(`The ${branch} branchd is now locked.`);
             } else {
               console.log(`The ${branch} branch is already locked.`);
             }
