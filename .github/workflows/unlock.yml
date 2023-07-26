@@ -9,6 +9,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Echo GitHub Token
+        run: echo ${{ secrets.GITHUB_TOKEN }}
+
       - name: UnLock Main Branch
         run: |
           curl -L \
