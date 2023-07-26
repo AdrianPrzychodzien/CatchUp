@@ -16,7 +16,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const branch = "main"; // Update to "main" since your branch is called "main"
+            const branch = "main"; // Update toe "main" since your branch is called "main"
             const { data: branchData } = await github.repos.getBranchProtection({
               owner: context.repo.owner,
               repo: context.repo.repo,
