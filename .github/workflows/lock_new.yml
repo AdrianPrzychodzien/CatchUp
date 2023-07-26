@@ -1,0 +1,33 @@
+name: Lock Main Branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lock Main Branch
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const branch = "main";
+            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+            // Lock the branch
+            await octokit.repos.updateBranchProtection({
+              owner: owner,
+              repo: repo,
+              branch: branch,
+              required_status_checks: null,
+              enforce_admins: true,
+              required_pull_request_reviews: null,
+              restrictions: null,
+              headers: {
+                accept: "application/vnd.github.v3+json",
+              },
+            });
