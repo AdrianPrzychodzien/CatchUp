@@ -1,4 +1,4 @@
-name: Lock Main Branch
+name: Lock Main Branch New
 on:
   push:
     branches:
