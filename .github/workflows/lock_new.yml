@@ -1,4 +1,4 @@
-name: Lock New Branch
+name: Lock Main Branch new
 
 on:
   push:
@@ -9,38 +9,31 @@ jobs:
   lock:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Check if Branch is Protected
-        id: branch-check
+      - name: Lock Main Branch
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const branch = "main";
-            const { data: branchData } = await github.repos.getBranchProtection({
+            const { data: pullRequest } = await github.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              branch: branch,
+              head: branch,
+              base: branch,
+              title: `Lock ${branch} branch`,
+              body: `This pull request is used to lock the ${branch} branch.`,
+              maintainer_can_modify: true,
             });
-            console.log(`The ${branch} branch is ${branchData.protected ? "" : "not "}protected.`);
-            core.setOutput("protected", branchData.protected ? "true" : "false");
-
-      - name: Lock New Branch
-        if: steps.branch-check.outputs.protected == 'false'
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branch = "main";
-            await github.repos.updateBranchProtection({
+            const { data: reviews } = await github.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              branch: branch,
-              required_status_checks: null,
-              enforce_admins: true,
-              required_pull_request_reviews: null,
-              restrictions: null,
+              pull_number: pullRequest.number,
             });
-            console.log(`The ${branch} branch is now locked.`);
+            if (reviews.length === 0) {
+              await github.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number,
+                reviewers: [context.repo.owner],
+              });
+            }
