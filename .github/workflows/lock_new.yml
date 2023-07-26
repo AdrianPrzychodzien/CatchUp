@@ -11,21 +11,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Get authenticated token
-        id: auth
-        uses: octokit/auth-action@v1.x
+      - name: Lock Main Branch
+        uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = "main"; // Update to "main" since your branch is called "main"
+            const { data: branchData } = await github.repos.getBranchProtection({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              branch: branch,
+            });
 
-      - name: Lock Main Branch
-        uses: octokit/request-action@v2.x
-        with:
-          route: PUT /repos/:owner/:repo/branches/main/protection
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          headers: |
-            {
-              "Accept": "application/vnd.github.v3+json",
-              "Authorization": "Bearer ${{ steps.auth.outputs.token }}"
+            // Check if branch protection exists, if not, create it
+            if (!branchData.protected) {
+              await github.repos.updateBranchProtection({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                branch: branch,
+                required_status_checks: null,
+                enforce_admins: true,
+                required_pull_request_reviews: null,
+                restrictions: null,
+              });
+              console.log(`The ${branch} branch is now locked.`);
+            } else {
+              console.log(`The ${branch} branch is already locked.`);
             }
-          mediaType: '{"required_status_checks":null,"enforce_admins":true,"required_pull_request_reviews":null,"restrictions":null}'
