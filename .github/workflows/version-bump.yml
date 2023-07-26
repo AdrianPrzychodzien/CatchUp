@@ -1,4 +1,4 @@
-name: Create PR with Version Bump and Changelog Update
+name: Create Pull Request with User-Specified Version Bump
 
 on:
   workflow_dispatch:
@@ -14,11 +14,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js and Yarn
         uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: "https://registry.npmjs.org/" # Required for Yarn
 
       - name: package.json info
         id: info
