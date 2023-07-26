@@ -1,4 +1,5 @@
-name: Lock Main Branch new
+name: Lock New Branch new
+
 on:
   push:
     branches:
@@ -11,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Lock Main Branch
+      - name: Lock New Branch
         uses: actions/github-script@v4
         with:
           script: |
@@ -36,5 +37,5 @@ jobs:
             } else {
               console.log(`The ${branch} branch is already locked.`);
             }
-          env:
-            GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
