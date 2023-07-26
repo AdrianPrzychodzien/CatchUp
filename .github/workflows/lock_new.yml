@@ -15,6 +15,7 @@ jobs:
       - name: Lock New Branch
         uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const branch = "main";
             const { data: branchData } = await github.repos.getBranchProtection({
@@ -37,5 +38,3 @@ jobs:
             } else {
               console.log(`The ${branch} branch is already locked.`);
             }
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
