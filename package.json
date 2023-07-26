@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "76",
+  "version": "1111",
   "private": "true",
   "dependencies": {
     "@hotwired/stimulus": "^3.1.0",
