@@ -1,4 +1,4 @@
-name: Lock New Branch new
+name: Lock New Branch
 
 on:
   push:
@@ -12,10 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Lock New Branch
+      - name: Check if Branch is Protected
+        id: branch-check
         uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.PAT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const branch = "main";
             const { data: branchData } = await github.repos.getBranchProtection({
@@ -23,18 +24,23 @@ jobs:
               repo: context.repo.repo,
               branch: branch,
             });
+            console.log(`The ${branch} branch is ${branchData.protected ? "" : "not "}protected.`);
+            core.setOutput("protected", branchData.protected ? "true" : "false");
 
-            if (!branchData.protected) {
-              await github.repos.updateBranchProtection({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                branch: branch,
-                required_status_checks: null,
-                enforce_admins: true,
-                required_pull_request_reviews: null,
-                restrictions: null,
-              });
-              console.log(`The ${branch} branchd is now locked.`);
-            } else {
-              console.log(`The ${branch} branch is already locked.`);
-            }
+      - name: Lock New Branch
+        if: steps.branch-check.outputs.protected == 'false'
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const branch = "main";
+            await github.repos.updateBranchProtection({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              branch: branch,
+              required_status_checks: null,
+              enforce_admins: true,
+              required_pull_request_reviews: null,
+              restrictions: null,
+            });
+            console.log(`The ${branch} branch is now locked.`);
