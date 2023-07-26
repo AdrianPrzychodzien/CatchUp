@@ -1,4 +1,4 @@
-name: Create Pull Request with User-Specified Version Bump
+name: Create PR with Version Bump and Changelog Update
 
 on:
   workflow_dispatch:
@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: "https://registry.npmjs.org/" # Required for Yarn
 
       - name: package.json info
         id: info
@@ -88,6 +87,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: "v${{ inputs.version }}" # Replace this with the branch where you want to create the PR
+          branch: "v${{ inputs.version }}"
           title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
