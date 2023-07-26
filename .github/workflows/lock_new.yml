@@ -1,4 +1,4 @@
-name: Lock Main Branch New
+name: Lock Main Branch new
 on:
   push:
     branches:
@@ -12,27 +12,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Lock Main Branch
-        uses: actions/github-script@v4
+        uses: octokit/request-action@v2.x
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { Octokit } = require("@octokit/core");
-            const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
-
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const branch = "main";
-
-            // Lock the branch
-            await octokit.repos.updateBranchProtection({
-              owner: owner,
-              repo: repo,
-              branch: branch,
-              required_status_checks: null,
-              enforce_admins: true,
-              required_pull_request_reviews: null,
-              restrictions: null,
-              headers: {
-                accept: "application/vnd.github.v3+json",
-              },
-            });
+          route: PUT /repos/:owner/:repo/branches/main/protection
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          headers: |
+            {
+              "Accept": "application/vnd.github.v3+json",
+              "Authorization": "Bearer ${{ secrets.GITHUB_TOKEN }}"
+            }
+          mediaType: '{"required_status_checks":null,"enforce_admins":true,"required_pull_request_reviews":null,"restrictions":null}'
