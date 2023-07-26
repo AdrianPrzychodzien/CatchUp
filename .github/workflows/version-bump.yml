@@ -21,7 +21,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: "https://registry.npmjs.org/" # Required for Yarn
 
       - name: package.json info
         id: info
