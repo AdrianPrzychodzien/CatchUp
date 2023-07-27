@@ -76,7 +76,7 @@ jobs:
           existing_content=$(cat CHANGELOG.md)
 
           # Append the new content to the existing content, with an empty line between them
-          echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
+          printf "%s\n\n%s" "$new_content" "$existing_content" > CHANGELOG.md
 
       # Create Pull Request
       - name: Create Pull Request
