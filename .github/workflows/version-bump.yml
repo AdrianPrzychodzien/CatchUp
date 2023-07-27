@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: 16
 
+      # Install the latest version of Prettier
+      - name: Install Prettier
+        run: npm install prettier --save-dev
+
       - name: package.json info
         id: info
         uses: jaywcjlove/github-action-package@main
@@ -78,6 +82,8 @@ jobs:
           # Append the new content to the existing content, with an empty line between them
           printf "%s\n\n%s" "$new_content" "$existing_content" > CHANGELOG.md
 
+          npx prettier --write package.json CHANGELOG.md
+
       # Create Pull Request
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
@@ -86,10 +92,6 @@ jobs:
           branch: "v${{ inputs.version }}"
           title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
-
-      # Run Prettier to format package.json and CHANGELOG.md
-      - name: Run Prettier
-        run: npx prettier --write package.json CHANGELOG.md
 
       # Trigger the lock-branch.yml workflow after creating the pull request
       - name: Trigger lock-branch.yml
