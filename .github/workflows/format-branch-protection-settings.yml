@@ -1,13 +1,16 @@
 name: Format Branch Protection Settings
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      lock_master_branch:
+        description: "Lock the master branch"
+        required: true
+        default: "true"
 
 jobs:
   format_settings:
     runs-on: ubuntu-latest
-
-    outputs:
-      formatted_json: ${{ steps.format_branch_protection.outputs.formatted_json }}
 
     steps:
       - name: Checkout code
@@ -31,7 +34,6 @@ jobs:
           echo "$JSON_RESPONSE" > branch_protection_settings.json
 
       - name: Format branch protection settings
-        id: format_branch_protection
         run: |
           jq '
             # Phase 1: Remove unnecessary keys from the top-level object
@@ -94,16 +96,10 @@ jobs:
           # Echo the formatted output
           cat formatted_branch_protection.json
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: formatted_branch_protection
-          path: formatted_branch_protection.json
-
       - name: Update lock_branch property
         run: |
           FORMATTED_JSON=$(cat formatted_branch_protection.json)
-          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": true}')
+          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": "${{ inputs.lock_master_branch }}"}')
 
           # Echo the updated JSON (optional, for debugging)
           echo "$FORMATTED_JSON"
