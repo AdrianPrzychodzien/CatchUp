@@ -1,0 +1,20 @@
+name: Use Formatted Data
+
+on:
+  workflow_dispatch:
+
+jobs:
+  format_settings_wrapper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Format Branch Protection Settings action and get output
+        id: format_branch_protection
+        uses: ./.github/actions/format-branch-protection-settings
+        # You can add any other inputs needed by the action here if required
+
+      - name: Use the formatted data
+        run: |
+          # Get the formatted JSON data from the output of the previous step
+          formatted_json="${{ steps.format_branch_protection.outputs.formatted_json }}"
+          echo "Formatted JSON data: $formatted_json"
