@@ -73,6 +73,9 @@ jobs:
             end
           ' branch_protection_settings.json > formatted_branch_protection.json
 
+          # Echo the formatted output
+          cat formatted_branch_protection.json
+
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
