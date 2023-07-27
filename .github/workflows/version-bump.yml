@@ -23,8 +23,8 @@ jobs:
           node-version: 16
 
       # Install the latest version of Prettier
-      - name: Install Prettier
-        run: npm install prettier --save-dev
+      - name: Install prettier
+        run: yarn add -D prettier
 
       - name: package.json info
         id: info
@@ -80,7 +80,7 @@ jobs:
           existing_content=$(cat CHANGELOG.md)
 
           # Append the new content to the existing content, with an empty line between them
-          printf "%s\n\n%s" "$new_content" "$existing_content" > CHANGELOG.md
+          echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
 
           npx prettier --write package.json CHANGELOG.md
 
