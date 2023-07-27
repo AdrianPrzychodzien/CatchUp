@@ -87,6 +87,10 @@ jobs:
           title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
 
+      # Run Prettier to format package.json and CHANGELOG.md
+      - name: Run Prettier
+        run: npx prettier --write package.json CHANGELOG.md
+
       # Trigger the lock-branch.yml workflow after creating the pull request
       - name: Trigger lock-branch.yml
         run: |
