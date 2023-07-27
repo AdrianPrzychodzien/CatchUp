@@ -72,8 +72,8 @@ jobs:
               .
             end |
 
-            # Phase 6: Remove key-value pairs where the value is an empty array
-            with_entries(select(.value | length > 0))
+            # Phase 6: Remove key-value pairs where the value is an empty array or object
+            with_entries(select(.value | (type == "array" or type == "object") and length > 0))
           ' branch_protection_settings.json > formatted_branch_protection.json
 
           # Echo the formatted output
