@@ -31,10 +31,6 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
-      # # Fetch tags before retrieving commit messages
-      # - name: Fetch Tags
-      #   run: git fetch --tags
-
       # Set the latest tag to the environment variable
       - name: Get version and tag
         id: get_latest_tag
