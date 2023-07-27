@@ -13,13 +13,22 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Format branch protection settings
+      - name: Get branch protection settings
         run: |
-          JSON_DATA=$(curl -L \
+          JSON_RESPONSE=$(curl -L \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/AdrianPrzychodzien/CatchUp/branches/main/protection |
+          https://api.github.com/repos/AdrianPrzychodzien/CatchUp/branches/main/protection)
+
+          # Echo the response from curl
+          echo "$JSON_RESPONSE" 
+
+          # Save the JSON data to a file
+          echo "$JSON_RESPONSE" > branch_protection_settings.json
+
+      - name: Format branch protection settings
+        run: |
           jq '
             # Phase 1: Remove unnecessary keys from the top-level object
             del(
@@ -62,13 +71,10 @@ jobs:
             else
               .
             end
-          ')
-
-          # Save the formatted JSON data to a file
-          echo "$JSON_DATA" > formatted_branch_protection.json
+          ' branch_protection_settings.json > formatted_branch_protection.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: branch_protection_settings
+          name: formatted_branch_protection
           path: formatted_branch_protection.json
