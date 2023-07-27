@@ -62,14 +62,14 @@ jobs:
 
             # Phase 5: Remove "checks" key from "required_status_checks" if "app_id" is null
             if .required_status_checks and .required_status_checks.checks then
-              .required_status_checks |=
-                if any(.checks[]; .app_id == null) then
-                  del(.checks)
-                else
-                  .
-                end
+            .required_status_checks |=
+              if any(.checks[]; .app_id == null) then
+                del(.checks)
+              else
+                .
+              end
             else
-              .
+            . + {required_status_checks: null}
             end |
 
             # Phase 6: Remove empty arrays from "required_status_checks"
