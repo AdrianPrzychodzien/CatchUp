@@ -17,7 +17,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: formatted_branch_protection
-          path: formatted_artifact
+          path: formatted_branch_protection.json
 
       - name: Read formatted JSON data
         run: |
