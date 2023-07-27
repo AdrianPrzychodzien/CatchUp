@@ -86,3 +86,16 @@ jobs:
           branch: "v${{ inputs.version }}"
           title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
+
+      # Trigger the lock-branch.yml workflow after creating the pull request
+      - name: Trigger lock-branch.yml
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: lock_branch
+          client-payload: |
+            {
+              "branch_name": "main",
+              "lock": true
+            }
