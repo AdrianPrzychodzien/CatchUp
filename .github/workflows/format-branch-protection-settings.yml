@@ -99,7 +99,7 @@ jobs:
       - name: Update lock_branch property
         run: |
           FORMATTED_JSON=$(cat formatted_branch_protection.json)
-          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": "${{ inputs.lock_master_branch }}"}')
+          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": ${{ inputs.lock_master_branch }}}')
 
           # Echo the updated JSON (optional, for debugging)
           echo "$FORMATTED_JSON"
