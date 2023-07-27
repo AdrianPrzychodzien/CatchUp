@@ -30,18 +30,11 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Set URL
-        id: set_url
-        run: |
-          echo "::set-env name=URL::https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/branches/${{ inputs.branch_name }}/protection"
-
       - name: Get branch protection settings
         run: |
-          URL="$URL" # Retrieve the URL from the environment variable
-
           JSON_RESPONSE=$(curl -L \
             ${{ env.HEADERS }} \
-            "$URL")
+            ${{ env.BASE_URL }})
 
           # Echo the response from curl
           echo "$JSON_RESPONSE" 
@@ -124,5 +117,5 @@ jobs:
           curl -L \
             -X PUT \
             ${{ env.HEADERS }} \
-            "$URL" \
+            ${{ env.BASE_URL }} \
             -d "$FORMATTED_JSON"
