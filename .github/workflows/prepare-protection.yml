@@ -1,0 +1,65 @@
+name: Format Branch Protection Settings
+
+on: workflow_dispatch
+
+jobs:
+  format_settings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Format branch protection settings
+        run: |
+          curl -L \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/AdrianPrzychodzien/CatchUp/branches/main/protection |
+            jq '
+              # Phase 1: Remove unnecessary keys from the top-level object
+              del(
+                .allow_fork_syncing,
+                .required_linear_history,
+                .allow_force_pushes,
+                .allow_deletions,
+                .block_creations,
+                .required_conversation_resolution,
+                .required_signatures
+              ) |
+
+              # Phase 2: Delete all "url" and "contexts_url" keys
+              del(.. | .url?, .contexts_url?) |
+
+              # Phase 3: Map values, replacing objects with boolean value if "enabled" key exists
+              map_values(
+                if type == "object" and .enabled != null then
+                  .enabled
+                else
+                  .
+                end
+              ) |
+
+              # Phase 4: Format the "restrictions" object if it exists, otherwise add "restrictions": null
+              if has("restrictions") then
+                {restrictions: {users: .restrictions.users, teams: .restrictions.teams, apps: .restrictions.apps}}
+              else
+                . + {restrictions: null}
+              end |
+
+              # Phase 5: Remove "checks" key from "required_status_checks" if "app_id" is null
+              if .required_status_checks and .required_status_checks.checks then
+                .required_status_checks |=
+                  if any(.checks[]; .app_id == null) then
+                    del(.checks)
+                  else
+                    .
+                  end
+              else
+                .
+              end
+            '
