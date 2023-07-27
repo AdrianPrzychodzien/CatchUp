@@ -4,17 +4,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  format_settings_wrapper:
+  final_job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger Format Branch Protection Settings action and get output
-        id: format_branch_protection
-        uses: ./.github/workflows/format-branch-protection-settings
-        # You can add any other inputs needed by the action here if required
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Use the formatted data
+      # Add any steps you need before using the formatted_json data
+
+      - name: Download formatted_branch_protection artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: formatted_branch_protection
+          path: formatted_artifact
+
+      - name: Read formatted JSON data
         run: |
-          # Get the formatted JSON data from the output of the previous step
-          formatted_json="${{ steps.format_branch_protection.outputs.formatted_json }}"
-          echo "Formatted JSON data: $formatted_json"
+          # Read the formatted JSON data from the downloaded file
+          FORMATTED_JSON=$(cat formatted_artifact/formatted_branch_protection.json)
+
+          # Echo the formatted JSON data
+          echo "$FORMATTED_JSON"
