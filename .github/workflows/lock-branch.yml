@@ -1,10 +1,14 @@
-name: Format Branch Protection Settings
+name: Lock branch
 
 on:
   workflow_dispatch:
     inputs:
-      lock_master_branch:
-        description: "Lock the master branch"
+      branch_name:
+        description: "Branch name"
+        required: true
+        default: "main"
+      lock:
+        description: "Should the branch be locked?"
         required: true
         default: "true"
 
@@ -25,7 +29,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/branches/main/protection)
+          https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/branches/${{ inputs.branch_name }}/protection)
 
           # Echo the response from curl
           echo "$JSON_RESPONSE" 
@@ -99,7 +103,7 @@ jobs:
       - name: Update lock_branch property
         run: |
           FORMATTED_JSON=$(cat formatted_branch_protection.json)
-          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": ${{ inputs.lock_master_branch }}}')
+          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": ${{ inputs.lock }}}')
 
           # Echo the updated JSON (optional, for debugging)
           echo "$FORMATTED_JSON"
@@ -110,5 +114,5 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.PAT_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/branches/main/protection \
+            https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/branches/${{ inputs.branch_name }}/protection \
             -d "$FORMATTED_JSON"
