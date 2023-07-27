@@ -100,10 +100,15 @@ jobs:
           name: formatted_branch_protection
           path: formatted_branch_protection.json
 
-      - name: Make PUT request to update branch protection api
+      - name: Update lock_branch property
         run: |
           FORMATTED_JSON=$(cat formatted_branch_protection.json)
+          FORMATTED_JSON=$(echo "$FORMATTED_JSON" | jq '. + {"lock_branch": true}')
 
+          # Echo the updated JSON (optional, for debugging)
+          echo "$FORMATTED_JSON"
+
+          # Make the PUT request using curl
           curl -L \
             -X PUT \
             -H "Accept: application/vnd.github+json" \
