@@ -1,0 +1,35 @@
+name: Create Tag on PR Merge
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  create_tag_on_merge:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      startsWith(github.event.pull_request.title, '[V') &&
+      endsWith(github.event.pull_request.title, ']')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Extract PR title
+        id: get_pr_title
+        run: |
+          title="${{ github.event.pull_request.title }}"
+          echo "TAG_NAME=${title//[\[\]]/}" >> $GITHUB_ENV
+
+      - name: Create Tag
+        id: create_tag
+        run: |
+          tag_name="${{ env.TAG_NAME }}"
+          git tag "${tag_name}" "${GITHUB_SHA}"
+
+      - name: Push Tag to Origin
+        if: env.TAG_NAME != ''
+        run: |
+          git push origin "${{ env.TAG_NAME }}"
