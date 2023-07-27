@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Trigger Format Branch Protection Settings action and get output
         id: format_branch_protection
-        uses: ./.github/actions/format-branch-protection-settings
+        uses: ./.github/workflows/format-branch-protection-settings
         # You can add any other inputs needed by the action here if required
 
       - name: Use the formatted data
