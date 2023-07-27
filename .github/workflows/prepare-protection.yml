@@ -62,18 +62,29 @@ jobs:
 
             # Phase 5: Remove "checks" key from "required_status_checks" if "app_id" is null
             if .required_status_checks and .required_status_checks.checks then
-            .required_status_checks |=
-              if any(.checks[]; .app_id == null) then
-                del(.checks)
-              else
-                .
-              end
+              .required_status_checks |=
+                if any(.checks[]; .app_id == null) then
+                  del(.checks)
+                else
+                  .
+                end
             else
-            . + {required_status_checks: null}
+              . + {required_status_checks: null}
             end |
 
-            # Phase 6: Remove empty arrays from "required_status_checks"
-            .required_status_checks |= with_entries(select(.value | type != "array" or length > 0))
+            # Phase 6: Remove empty arrays from "required_status_checks" if it exists
+            if .required_status_checks and .required_status_checks.contexts then
+              .required_status_checks |= with_entries(select(.value | type != "array" or length > 0))
+            else
+              .
+            end |
+
+            # Phase 7: Check if "required_pull_request_reviews" exists and set it to null if not
+            if has("required_pull_request_reviews") then
+              .
+            else
+              . + {required_pull_request_reviews: null}
+            end
           ' branch_protection_settings.json > formatted_branch_protection.json
 
           # Echo the formatted output
