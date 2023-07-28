@@ -1,0 +1,29 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+jobs:
+  pr_validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title
+        uses: kamil/action-pr-title@master
+        with:
+          # Regular expression to validate PR title
+          # This regex allows the following PR title formats:
+          #   - [ABC-123] Any text here... (Text is required after [ABC-123])
+          #   - [HOTFIX] Any text here... (Text is required after [HOTFIX])
+          #   - [V2.0.0] (No text is allowed after [V2.0.0])
+          regex: '^(\[(?:[A-Z]{3}-\d+)\]\s+.+|\[HOTFIX\]\s+.+|\[V\d+\.\d+\.\d+\]\s*)'
+          allowed_prefixes: ''
+          disallowed_prefixes: ''
+          prefix_case_sensitive: false
+          min_length: 8
+          max_length: 100
+          github_token: ${{ github.token }}
