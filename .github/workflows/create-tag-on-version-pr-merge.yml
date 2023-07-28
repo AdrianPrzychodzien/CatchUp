@@ -17,11 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Extract PR title
-        id: get_pr_title
+      - name: Extract PR title and branch
+        id: get_pr_details
         run: |
           title="${{ github.event.pull_request.title }}"
           echo "TAG_NAME=${title//[\[\]]/}" >> $GITHUB_ENV
+          echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
 
       - name: Create Tag
         id: create_tag
@@ -33,3 +34,10 @@ jobs:
         if: env.TAG_NAME != ''
         run: |
           git push origin "${{ env.TAG_NAME }}"
+
+      - name: Get Changelog Changes
+        id: get_changelog_changes
+        run: |
+          # Fetch PR changes in the `CHANGELOG.md` file
+          changelog_changes=$(curl -s "https://api.github.com/repos/${{ github.repository }}/compare/main...${{ env.PR_BRANCH }}" | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch')
+          echo "CHANGELOG_CHANGES=${changelog_changes}" >> $GITHUB_ENV
