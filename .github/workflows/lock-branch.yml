@@ -89,6 +89,13 @@ jobs:
               .
             end |
 
+            # Phase 6B: Remove "context" from "required_status_checks" if it exists and "check" exists
+            if .required_status_checks and .required_status_checks.contexts then
+              .required_status_checks |= with_entries(select(.value | type != "array" or length > 0))
+            else
+              .
+            end |
+
             # Phase 7: Check if "required_pull_request_reviews" exists and set it to null if not
             if has("required_pull_request_reviews") then
               .
