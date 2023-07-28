@@ -82,17 +82,18 @@ jobs:
               . + {required_status_checks: null}
             end |
 
-            # Phase 6: Remove empty arrays from "required_status_checks" if it exists
+            # Phase 6A: Remove "context" from "required_status_checks" if it exists and "check" exists
+            if .required_status_checks and .required_status_checks.contexts then
+              .required_status_checks |= del(.contexts)
+            else
+
+            # Phase 6B: Remove empty arrays from "required_status_checks" if it exists
             if .required_status_checks and .required_status_checks.contexts then
               .required_status_checks |= with_entries(select(.value | type != "array" or length > 0))
             else
               .
             end |
 
-            # Phase 6B: Remove "context" from "required_status_checks" if it exists and "check" exists
-            if .required_status_checks and .required_status_checks.contexts then
-              .required_status_checks |= with_entries(select(.value | type != "array" or length > 0))
-            else
               .
             end |
 
