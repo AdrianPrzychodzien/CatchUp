@@ -11,11 +11,24 @@ env:
 jobs:
   create_tag_on_merge:
     runs-on: ubuntu-latest
-    # if: startsWith(github.event.head_commit.message, '[V') && endsWith(github.event.head_commit.message, ']')
+    if: startsWith(github.event.head_commit.message, '[V') && contains(github.event.head_commit.message, ']')
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Check commit message with regex
+        run: |
+          # Get the commit message from the event payload
+          commit_message="${{ github.event.head_commit.message }}"
+
+          # Use regex to check if the commit message matches the pattern
+          if [[ $commit_message =~ ^\[V\d+\.\d+\.\d+\] ]]; then
+            echo "Commit message matches the pattern."
+          else
+            echo "Commit message does not match the pattern."
+            exit 1
+          fi
 
       - name: Get data
         run: |
