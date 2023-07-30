@@ -1,3 +1,19 @@
+## [v1.1.1] - 2023-07-30
+
+- [QWE-123] lock new 17k
+- [QWE-123] lock new 17j
+- [QWE-123] lock new 17i
+- [QWE-123] lock new 17h
+- [QWE-123] lock new 17g
+- [QWE-123] lock new 17f
+- [QWE-123] lock new 17e
+- [QWE-123] lock new 17d
+- [QWE-123] lock new 17c
+- [QWE-123] lock new 17b
+- [QWE-123] lock new 17a
+- [QWE-123] lock new 17
+- [BFR-324]
+
 ## [v3.3.4] - 2023-07-27
 
 ## [v3.2.2] - 2023-07-27
