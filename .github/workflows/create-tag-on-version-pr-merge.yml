@@ -23,8 +23,9 @@ jobs:
           commit_message="${{ github.event.head_commit.message }}"
           echo "Commit message: $commit_message"
 
-          # Use regex to check if the commit message matches the pattern
-          if [[ $commit_message =~ ^\[V\d+\.\d+\.\d+\] ?\(.*\)$ ]]; then
+          # Use grep to check if the commit message matches the pattern
+          echo "$commit_message" | grep -E "^\[V\d+\.\d+\.\d+\] ?\(.*\)$" > /dev/null
+          if [ $? -eq 0 ]; then
             echo "Commit message matches the pattern."
           else
             echo "Commit message does not match the pattern."
