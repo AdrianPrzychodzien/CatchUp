@@ -25,7 +25,7 @@ jobs:
 
           filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
           # echo
-          echo "Filtered message: $filtered_message"
+          echo "Filered message: $filtered_message"
 
           commit_message_matches=$(echo "$filtered_message" | grep -Eq '\[V\d+\.\d+\.\d+\]'; echo $?)
           # echo
