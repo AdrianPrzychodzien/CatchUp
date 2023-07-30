@@ -24,7 +24,7 @@ jobs:
           echo "Commit message: $commit_message"
 
           # Use regex to check if the commit message matches the pattern
-          if [[ $commit_message =~ ^\[V\d+\.\d+\.\d+\]( \(.*\))?$ ]]; then
+          if [[ $commit_message =~ ^\[V\d+\.\d+\.\d+\] ?\(.*\)$ ]]; then
             echo "Commit message matches the pattern."
           else
             echo "Commit message does not match the pattern."
