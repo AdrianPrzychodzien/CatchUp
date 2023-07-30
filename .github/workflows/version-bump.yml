@@ -22,10 +22,6 @@ jobs:
         with:
           node-version: 16
 
-      # Install the latest version of Prettier
-      # - name: Install prettier
-      #   run: yarn add -D prettier
-
       - name: package.json info
         id: info
         uses: jaywcjlove/github-action-package@main
@@ -41,20 +37,6 @@ jobs:
         run: |
           latest_tag=$(git describe --tag --abbrev=0 | cut -c 2-)
           echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
-
-      # Get commit messages between the latest tagged version and HEAD using the latest_tag
-      # - name: Get Commit Messages
-      #   id: read_commit_messages
-      #   run: |
-      #     # Get the latest tag from the environment variable
-      #     latest_tag="${{ env.LATEST_TAG }}"
-
-      #     # Get the commit messages between the latest tag and HEAD
-      #     commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
-      #     echo "Commit Messages: $commit_messages"
-
-      #     # Write the commit messages to environment variable
-      #     echo "COMMIT_MESSAGES=$commit_messages" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
@@ -73,11 +55,8 @@ jobs:
           commit_messages=$(echo "$commit_messages" | sed 's/\[\([^]]*\)\]/- [\1]/g')
           echo "Formatted Commit Messages: $commit_messages"
 
-          # # Insert a newline before "[" using sed
-          # commit_messages=$(echo "$commit_messages" | sed 's/\[/\n- \[/g')
-
           # Construct the new content to append with today's date and formatted commit messages
-          new_content="## [v${{ inputs.version }}] - $today\n$commit_messages"
+          new_content="## [v${{ inputs.version }}] - $today\n\n$commit_messages"
 
           # Read the existing content of CHANGELOG.md
           existing_content=$(cat CHANGELOG.md)
@@ -85,16 +64,20 @@ jobs:
           # Append the new content to the existing content, with an empty line between them
           echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
 
-          # npx prettier --write package.json CHANGELOG.md
-
       # Create Pull Request
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: "v${{ inputs.version }}"
           title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
+      - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
 
       # Trigger the lock-branch.yml workflow after creating the pull request
       - name: Trigger lock-branch.yml
