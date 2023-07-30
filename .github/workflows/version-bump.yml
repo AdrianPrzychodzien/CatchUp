@@ -43,18 +43,18 @@ jobs:
           echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
 
       # Get commit messages between the latest tagged version and HEAD using the latest_tag
-      - name: Get Commit Messages
-        id: read_commit_messages
-        run: |
-          # Get the latest tag from the environment variable
-          latest_tag="${{ env.LATEST_TAG }}"
+      # - name: Get Commit Messages
+      #   id: read_commit_messages
+      #   run: |
+      #     # Get the latest tag from the environment variable
+      #     latest_tag="${{ env.LATEST_TAG }}"
 
-          # Get the commit messages between the latest tag and HEAD
-          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
-          echo "Commit Messages: $commit_messages"
+      #     # Get the commit messages between the latest tag and HEAD
+      #     commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
+      #     echo "Commit Messages: $commit_messages"
 
-          # Write the commit messages to environment variable
-          echo "COMMIT_MESSAGES=$commit_messages" >> $GITHUB_ENV
+      #     # Write the commit messages to environment variable
+      #     echo "COMMIT_MESSAGES=$commit_messages" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
@@ -62,8 +62,12 @@ jobs:
           # Get today's date in the format: "Year-month-day"
           today=$(date +"%Y-%m-%d")
 
-          # Get the commit messages from the environment variable
-          commit_messages="${{ env.COMMIT_MESSAGES }}"
+          # Get the latest tag from the environment variable
+          latest_tag="${{ env.LATEST_TAG }}"
+
+          # Get the commit messages between the latest tag and HEAD
+          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
+          echo "Commit Messages: $commit_messages"
 
           # Format commit_messages to have a "- " before each commit message
           commit_messages=$(echo "$commit_messages" | sed 's/\[\([^]]*\)\]/- [\1]/g')
