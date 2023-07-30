@@ -1,8 +1,9 @@
 name: Create Tag on PR Merge
+
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches:
+      - main
 
 env:
   HEADERS: "-H 'Accept: application/vnd.github+json' -H 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H 'X-GitHub-Api-Version: 2022-11-28'"
@@ -11,10 +12,8 @@ jobs:
   create_tag_on_merge:
     runs-on: ubuntu-latest
     if: |
-      github.event.pull_request.merged == true &&
-      github.event.pull_request.base.ref == 'main' &&
-      startsWith(github.event.pull_request.title, '[V') &&
-      endsWith(github.event.pull_request.title, ']')
+      startsWith(github.event.head_commit.message, '[V') &&
+      endsWith(github.event.head_commit.message, ']')
 
     steps:
       - name: Checkout repository
