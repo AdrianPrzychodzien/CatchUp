@@ -23,8 +23,8 @@ jobs:
           node-version: 16
 
       # Install the latest version of Prettier
-      - name: Install prettier
-        run: yarn add -D prettier
+      # - name: Install prettier
+      #   run: yarn add -D prettier
 
       - name: package.json info
         id: info
@@ -85,7 +85,7 @@ jobs:
           # Append the new content to the existing content, with an empty line between them
           echo -e "$new_content\n\n$existing_content" > CHANGELOG.md
 
-          npx prettier --write package.json CHANGELOG.md
+          # npx prettier --write package.json CHANGELOG.md
 
       # Create Pull Request
       - name: Create Pull Request
