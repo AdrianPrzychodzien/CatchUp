@@ -17,12 +17,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check Commit Message
-        uses: gsactions/commit-message-checker@v2
-        with:
-          pattern: '\[V\d+\.\d+\.\d+\]\s+.+'
-          flags: "gm"
-          error: "Commit message does not match the pattern [Vx.x.x] <message>"
+      - name: Filter out '#' characters from commit message
+        run: |
+          commit_message="${{ github.event.head_commit.message }}"
+          # echo
+          echo "Commit message: $commit_message"
+
+          filtered_message="${commit_message//#/}"
+          # echo
+          echo "Filtered message: $filtered_message"
+
+          if [[ $filtered_message =~ ^\[V\d+\.\d+\.\d+\] ]]; then
+            echo "Commit message matches the pattern.."
+          else
+            echo "Commit message does not match the pattern."
+            exit 1
+          fi
 
       - name: Get data
         run: |
