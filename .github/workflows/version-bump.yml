@@ -22,16 +22,15 @@ jobs:
         with:
           node-version: 16
 
-      - name: package.json info
-        id: info
+      # Update and format package.json with the specified version
+      - name: Update package.json
         uses: jaywcjlove/github-action-package@main
         with:
           data: |
             {
               "version": "${{ inputs.version }}"
             }
-
-      - name: Added last empty line to package.json
+      - name: Add an empty line at the end of package.json
         run: |
           echo "" >> package.json
 
@@ -57,7 +56,6 @@ jobs:
 
           # Format commit_messages to have a "- " before each commit message
           commit_messages=$(echo "$commit_messages" | sed 's/\[\([^]]*\)\]/- [\1]/g')
-          echo "Formatted Commit Messages: $commit_messages"
 
           # Construct the new content to append with today's date and formatted commit messages
           new_content="## [v${{ inputs.version }}] - $today\n\n$commit_messages"
