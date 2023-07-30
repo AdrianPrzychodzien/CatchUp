@@ -31,6 +31,10 @@ jobs:
               "version": "${{ inputs.version }}"
             }
 
+      - name: Added last empty line to package.json
+        run: |
+          echo "" >> package.json
+
       # Set the latest tag to the environment variable
       - name: Get version and tag
         id: get_latest_tag
@@ -73,6 +77,8 @@ jobs:
           branch: "v${{ inputs.version }}"
           title: "[V${{ inputs.version }}]"
           body: "Automated version bump to ${{ inputs.version }}"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
         run: |
