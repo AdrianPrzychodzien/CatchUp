@@ -23,7 +23,7 @@ jobs:
           # echo
           echo "Commit message: $commit_message"
 
-          filtered_message="${commit_message//#/}"
+          filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
           # echo
           echo "Filtered message: $filtered_message"
 
