@@ -53,10 +53,6 @@ jobs:
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
           echo "Commit Messages: $commit_messages"
 
-          # Format commit_messages with a short explanation
-          commit_messages=$(echo "$commit_messages" | sed 's/\[\([^]]*\)\]/- [\1]/g')
-          echo "Formatted Commit Messages: $commit_messages"
-
           # Write the commit messages to environment variable
           echo "COMMIT_MESSAGES=$commit_messages" >> $GITHUB_ENV
 
@@ -68,6 +64,10 @@ jobs:
 
           # Get the commit messages from the environment variable
           commit_messages="${{ env.COMMIT_MESSAGES }}"
+
+          # Format commit_messages to have a "- " before each commit message
+          commit_messages=$(echo "$commit_messages" | sed 's/\[\([^]]*\)\]/- [\1]/g')
+          echo "Formatted Commit Messages: $commit_messages"
 
           # # Insert a newline before "[" using sed
           # commit_messages=$(echo "$commit_messages" | sed 's/\[/\n- \[/g')
