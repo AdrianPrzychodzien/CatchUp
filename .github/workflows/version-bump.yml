@@ -84,17 +84,17 @@ jobs:
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
 
       # Trigger the lock-branch.yml workflow after creating the pull request
-      - name: Trigger lock-branch.yml
-        run: |
-          curl -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/lock-branch.yml/dispatches" \
-            -d '{
-              "ref": "main",
-              "inputs": {
-                "branch_name": "main",
-                "lock": "true"
-              }
-            }'
+      # - name: Trigger lock-branch.yml
+      #   run: |
+      #     curl -X POST \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "Content-Type: application/json" \
+      #       "https://api.github.com/repos/${{ github.repository }}/actions/workflows/lock-branch.yml/dispatches" \
+      #       -d '{
+      #         "ref": "main",
+      #         "inputs": {
+      #           "branch_name": "main",
+      #           "lock": "true"
+      #         }
+      #       }'

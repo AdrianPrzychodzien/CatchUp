@@ -4,6 +4,9 @@ on:
     types:
       - closed
 
+env:
+  HEADERS: "-H 'Accept: application/vnd.github+json' -H 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H 'X-GitHub-Api-Version: 2022-11-28'"
+
 jobs:
   create_tag_on_merge:
     runs-on: ubuntu-latest
@@ -54,7 +57,13 @@ jobs:
           echo $url
 
           # echo curl
-          curl -s $url
+          response=$(curl -s $url ${{ env.HEADERS }})
 
-          # echo jq
-          curl -s $url | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch'
+          # echo response
+          echo $response
+
+          # get CHANGELOG.md patch
+          patch = $(echo $response | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch')
+
+          # echo patch
+          echo $patch
