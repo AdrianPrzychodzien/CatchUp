@@ -54,6 +54,9 @@ jobs:
           # Get the commit messages between the latest tag and HEAD
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
 
+          # Remove trailing whitespace from commit messages
+          commit_messages=$(echo "$commit_messages" | awk '{gsub(/[ \t]+$/, "")}1')
+
           # Convert newline-separated commit messages to space-separated
           echo "Commit Messages: $commit_messages"
           commit_messages=$(echo $commit_messages | tr '\n' ' ')
