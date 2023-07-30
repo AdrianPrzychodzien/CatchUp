@@ -17,20 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Check commit message with regex
-        run: |
-          # Get the commit message from the event payload
-          commit_message="${{ github.event.head_commit.message }}"
-          echo "Commit message: $commit_message"
-
-          # Use grep to check if the commit message matches the pattern
-          echo "$commit_message" | grep -E "^\[V\d+\.\d+\.\d+\] ?\(.*\)$" > /dev/null
-          if [ $? -eq 0 ]; then
-            echo "Commit message matches the pattern."
-          else
-            echo "Commit message does not match the pattern."
-            exit 1
-          fi
+      - name: Check Commit Message
+        uses: gsactions/commit-message-checker@v2
+        with:
+          pattern: '\[V\d+\.\d+\.\d+\]\s+.+'
+          flags: "gm"
+          error: "Commit message does not match the pattern [Vx.x.x] <message>"
 
       - name: Get data
         run: |
