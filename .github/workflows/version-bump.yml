@@ -48,18 +48,14 @@ jobs:
         run: |
           # Get the latest tag from the environment variable
           latest_tag="${{ env.LATEST_TAG }}"
-          # print latest_tag with a short explanation:
-          echo "Latest Tag: $latest_tag"
 
           # Get the commit messages between the latest tag and HEAD
           commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
-
-          # Remove trailing whitespace from commit messages
-          commit_messages=$(echo "$commit_messages" | awk '{gsub(/[ \t]+$/, "")}1')
-
-          # Convert newline-separated commit messages to space-separated
           echo "Commit Messages: $commit_messages"
-          commit_messages=$(echo $commit_messages | tr '\n' ' ')
+
+          # Format commit_messages with a short explanation
+          commit_messages=$(echo "$commit_messages" | sed 's/\[\([^]]*\)\]/- [\1]/g')
+          echo "Formatted Commit Messages: $commit_messages"
 
           # Write the commit messages to environment variable
           echo "COMMIT_MESSAGES=$commit_messages" >> $GITHUB_ENV
@@ -73,8 +69,8 @@ jobs:
           # Get the commit messages from the environment variable
           commit_messages="${{ env.COMMIT_MESSAGES }}"
 
-          # Insert a newline before "[" using sed
-          commit_messages=$(echo "$commit_messages" | sed 's/\[/\n- \[/g')
+          # # Insert a newline before "[" using sed
+          # commit_messages=$(echo "$commit_messages" | sed 's/\[/\n- \[/g')
 
           # Construct the new content to append with today's date and formatted commit messages
           new_content="## [v${{ inputs.version }}] - $today\n$commit_messages"
