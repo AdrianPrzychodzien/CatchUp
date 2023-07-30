@@ -21,6 +21,10 @@ jobs:
         run: |
           # Get the commit message from the event payload
           commit_message="${{ github.event.head_commit.message }}"
+          echo "Commit message: $commit_message"
+
+          # create vraible to store regex pattern
+          regex_pattern="^\[V\d+\.\d+\.\d+\].*"
 
           # Use regex to check if the commit message matches the pattern
           if [[ $commit_message =~ ^\[V\d+\.\d+\.\d+\].* ]]; then
