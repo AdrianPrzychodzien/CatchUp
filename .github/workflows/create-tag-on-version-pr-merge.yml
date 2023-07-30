@@ -46,5 +46,15 @@ jobs:
           # echo repository_name
           echo ${{ github.event.repository.name }}
 
-          changelog_changes=$(curl -s "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/compare/main...${{ env.PR_BRANCH }}" | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch')
-          echo "CHANGELOG_CHANGES=${changelog_changes}" >> $GITHUB_ENV
+          # echo PR_BRANCH
+          echo ${{ env.PR_BRANCH }}
+
+          url="https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/compare/main...${{ env.PR_BRANCH }}"
+          # echo url
+          echo $url
+
+          # echo curl
+          curl -s $url
+
+          # echo jq
+          curl -s $url | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch'
