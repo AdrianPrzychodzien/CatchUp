@@ -27,6 +27,20 @@ jobs:
           # echo head_commit.message
           echo ${{ github.event.head_commit.message }}
 
+          # check if commit message starts with [V
+          if [[ ${{ github.event.head_commit.message }} == '[V'* ]]; then
+            echo "Commit message starts with [V"
+          else
+            echo "Commit message does not start with [V"
+          fi
+
+          # check if commit message ends with ]
+          if [[ ${{ github.event.head_commit.message }} == *']' ]]; then
+            echo "Commit message ends with ]"
+          else
+            echo "Commit message does not end with ]"
+          fi
+
       # - name: Extract PR title and branch
       #   id: get_pr_details
       #   run: |
