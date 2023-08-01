@@ -28,7 +28,7 @@ jobs:
 
       - name: test2
         run: |
-          echo "[V1.1.2]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
+          echo "[V1.1.2345]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
           if [ $? -eq 0 ]; then
             echo "The word contains the pattern '[Vx.y.z]'."
           else
