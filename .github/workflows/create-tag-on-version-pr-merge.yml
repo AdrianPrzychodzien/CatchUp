@@ -67,7 +67,7 @@ jobs:
 
           # Use awk to extract the content between the first and second "##" lines
           # and exclude the last two lines
-          changelog_between_blocks=$(echo "$changelog_changes" | awk '/^## /{count++} count == 1, count == 2' | head -n -2)
+          changelog_between_blocks=$(echo "$changelog_changes" | awk '/^## / && !found {found = 1; next} found && /^## / {exit} found {print}')
 
           echo "Changes between the first and second '##' in CHANGELOG.md:"
           echo "$changelog_between_blocks"
