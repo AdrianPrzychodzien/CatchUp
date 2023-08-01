@@ -26,6 +26,15 @@ jobs:
             echo "The word does not contain the character 'a'."
           fi
 
+      - name: test2
+        run: |
+          echo "[V1.1.2]" | grep -q '\[V\d+\.\d+\.\d+\]'
+          if [ $? -eq 0 ]; then
+            echo "The word contains the character 'a'."
+          else
+            echo "The word does not contain the character 'a'."
+          fi
+
       - name: Filter out '#' characters from commit message
         run: |
           commit_message="${{ github.event.head_commit.message }}"
