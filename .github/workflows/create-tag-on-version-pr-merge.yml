@@ -56,32 +56,22 @@ jobs:
         run: |
           # git push origin "${{ env.TAG_NAME }}"
 
-      - name: Get Changelog Changes
+      - name: Fetch last commit from main
+        run: git fetch origin main --depth=1
+
+      - name: Get changes from CHANGELOG.md
         id: get_changelog_changes
         run: |
-          # Fetch PR changes in the `CHANGELOG.md` file
+          # Get the commit range between the current branch and main
+          commit_range=$(git rev-parse HEAD..origin/main)
+          #echo
+          echo "Commit range: $commit_range"
 
-          # echo repository_owner
-          echo ${{ github.repository_owner }}
+          # Get the changes from the CHANGELOG.md file in that commit range
+          changelog_changes=$(git log --oneline --no-decorate --format="%s" $commit_range -- CHANGELOG.md)
 
-          # echo repository_name
-          echo ${{ github.event.repository.name }}
+          echo "Changelog changes:"
+          echo "$changelog_changes"
 
-          # echo PR_BRANCH
-          echo ${{ env.PR_BRANCH }}
-
-          url="https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/compare/main...${{ env.PR_BRANCH }}"
-          # echo url
-          echo $url
-
-          # echo curl
-          response=$(curl -s $url ${{ env.HEADERS }})
-
-          # echo response
-          echo $response
-
-          # get CHANGELOG.md patch
-          patch = $(echo $response | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch')
-
-          # echo patch
-          echo $patch
+          # Save the changes to $CHANGELOG_CHANGES
+          echo "CHANGELOG_CHANGES=$changelog_changes" >> $GITHUB_ENV
