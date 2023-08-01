@@ -20,21 +20,23 @@ jobs:
       - name: Check if commit message matches the pattern
         run: |
           commit_message="${{ github.event.head_commit.message }}"
-          echo "Commit message: $commit_message"
+          echo "Full commit message: $commit_message"
 
-          filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
-          echo "Filered message: $filtered_message"
+          # Extract the first line (commit title) from the full commit message
+          commit_title=$(echo "$commit_message" | head -n 1)
+          echo "Commit title: $commit_title"
 
-          # pattern from pr-validation.yml 
-          echo $filtered_message | grep -Pq '\[V\d+\.\d+\.\d+\]'
+          # filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
+          # echo "Filered message: $filtered_message"
 
-          if [ $? -eq 0 ]; then
+          # # pattern from pr-validation.yml 
+          # echo $filtered_message | grep -Pq '\[V\d+\.\d+\.\d+\]'
+
+          # Use grep to find lines that match the pattern [Vx.x.x]
+          filtered_message=$(echo "$commit_title" | grep -o '\[V[0-9]\+\.[0-9]\+\.[0-9]\+\]' | tr -d '[]')
+
+          if [ -n "$filtered_message" ]; then
             echo "Commit message matches the pattern.."
-
-            # remove brackets from commit message
-            filtered_message=$(echo "$filtered_message" | tr -d '[]')
-
-            echo
             echo "Tag name: $filtered_message"
 
             # save $filtered_message to $TAG_NAME
