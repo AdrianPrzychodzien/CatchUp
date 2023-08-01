@@ -33,6 +33,8 @@ jobs:
           # echo
           # echo "Commit messae mathes: $commit_message_matches"
 
+          echo $?
+
           if [ $? -eq 0 ]; then
             echo "Commit message matches the pattern.."
           else
