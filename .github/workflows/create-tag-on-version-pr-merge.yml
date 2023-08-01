@@ -17,25 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: test
-        run: |
-          echo "example" | grep -q "a"
-          if [ $? -eq 0 ]; then
-            echo "The word contains the character 'a'."
-          else
-            echo "The word does not contain the character 'a'."
-          fi
-
-      - name: test2
-        run: |
-          echo "[V1.1.2345]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
-
-          if [ $? -eq 0 ]; then
-            echo "The word contains the pattern '[Vx.y.z]'."
-          else
-            echo "The word does not contain the pattern '[Vx.y.z]'."
-          fi
-
       - name: Filter out '#' characters from commit message
         run: |
           commit_message="${{ github.event.head_commit.message }}"
@@ -44,35 +25,14 @@ jobs:
           filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
           echo "Filered message: $filtered_message"
 
-          echo "[V1.1.2345]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
+          # pattern from pr-validation.yml 
+          echo $filtered_message | grep -Pq '\[V\d+\.\d+\.\d+\]'
 
           if [ $? -eq 0 ]; then
             echo "Commit message matches the pattern.."
           else
             echo "Commit message does not match the pattern."
             exit 1
-          fi
-
-      - name: Get data
-        run: |
-          # echo head_commit
-          echo ${{ github.event.head_commit }}
-
-          # echo head_commit.message
-          echo ${{ github.event.head_commit.message }}
-
-          # check if commit message starts with [V
-          if [[ ${{ github.event.head_commit.message }} == '[V'* ]]; then
-            echo "Commit message starts with [V"
-          else
-            echo "Commit message does not start with [V"
-          fi
-
-          # check if commit message ends with ]
-          if [[ ${{ github.event.head_commit.message }} == *']' ]]; then
-            echo "Commit message ends with ]"
-          else
-            echo "Commit message does not end with ]"
           fi
 
       # - name: Extract PR title and branch
