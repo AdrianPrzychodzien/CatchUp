@@ -63,11 +63,19 @@ jobs:
           git fetch origin main
 
           # Get the content of the CHANGELOG.md file from the main branch
-          changelog_changes=$(git show origin/main:CHANGELOG.md)
+          changelog_content=$(git show origin/main:CHANGELOG.md)
 
           # Use awk to extract the content between the first and second "##" lines
-          # and exclude the last two lines
-          changelog_between_blocks=$(echo "$changelog_changes" | awk '/^## / && !found {found = 1; print; next} found && /^## / {exit} found {print}')
+          recent_changelog_update=$(echo "$changelog_content" | awk '/^## / && !found {found = 1; print; next} found && /^## / {exit} found {print}')
 
-          echo "Changes between the first and second '##' in CHANGELOG.md:"
-          echo "$changelog_between_blocks"
+          echo "Recent changes from CHANGELOG.md:"
+          echo "$recent_changelog_update"
+
+          # Save the changes to $RECENT_CHANGELOG_UPDATE environment variable
+          echo "RECENT_CHANGELOG_UPDATE=$recent_changelog_update" >> $GITHUB_ENV
+
+      - name: Echo Recent Changelog Update
+        run: |
+          # Echo the value of the RECENT_CHANGELOG_UPDATE environment variable
+          echo "Recent Changelog Update:"
+          echo "${{ env.RECENT_CHANGELOG_UPDATE }}"
