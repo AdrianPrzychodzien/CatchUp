@@ -45,13 +45,6 @@ jobs:
             exit 1
           fi
 
-      # - name: Extract PR title and branch
-      #   id: get_pr_details
-      #   run: |
-      #     title="${{ github.event.pull_request.title }}"
-      #     echo "TAG_NAME=${title//[\[\]]/}" >> $GITHUB_ENV
-      #     echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
-
       - name: Create Tag
         id: create_tag
         run: |
@@ -61,36 +54,34 @@ jobs:
       - name: Push Tag to Origin
         if: env.TAG_NAME != ''
         run: |
-          # echo tag
-          echo ${{ env.TAG_NAME }}
           # git push origin "${{ env.TAG_NAME }}"
 
-      # - name: Get Changelog Changes
-      #   id: get_changelog_changes
-      #   run: |
-      #     # Fetch PR changes in the `CHANGELOG.md` file
+      - name: Get Changelog Changes
+        id: get_changelog_changes
+        run: |
+          # Fetch PR changes in the `CHANGELOG.md` file
 
-      #     # echo repository_owner
-      #     echo ${{ github.repository_owner }}
+          # echo repository_owner
+          echo ${{ github.repository_owner }}
 
-      #     # echo repository_name
-      #     echo ${{ github.event.repository.name }}
+          # echo repository_name
+          echo ${{ github.event.repository.name }}
 
-      #     # echo PR_BRANCH
-      #     echo ${{ env.PR_BRANCH }}
+          # echo PR_BRANCH
+          echo ${{ env.PR_BRANCH }}
 
-      #     url="https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/compare/main...${{ env.PR_BRANCH }}"
-      #     # echo url
-      #     echo $url
+          url="https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/compare/main...${{ env.PR_BRANCH }}"
+          # echo url
+          echo $url
 
-      #     # echo curl
-      #     response=$(curl -s $url ${{ env.HEADERS }})
+          # echo curl
+          response=$(curl -s $url ${{ env.HEADERS }})
 
-      #     # echo response
-      #     echo $response
+          # echo response
+          echo $response
 
-      #     # get CHANGELOG.md patch
-      #     patch = $(echo $response | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch')
+          # get CHANGELOG.md patch
+          patch = $(echo $response | jq '.files | map(select(.filename == "CHANGELOG.md")) | .[0].patch')
 
-      #     # echo patch
-      #     echo $patch
+          # echo patch
+          echo $patch
