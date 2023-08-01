@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Filter out '#' characters from commit message
+      - name: Check if commit message matches the pattern
         run: |
           commit_message="${{ github.event.head_commit.message }}"
           echo "Commit message: $commit_message"
@@ -30,6 +30,16 @@ jobs:
 
           if [ $? -eq 0 ]; then
             echo "Commit message matches the pattern.."
+
+            # remove brackets from commit message
+            filtered_message=$(echo "$filtered_message" | tr -d '[]')
+
+            echo
+            echo "Tag name: $filtered_message"
+
+            # save $filtered_message to $TAG_NAME
+            echo "TAG_NAME=$filtered_message" >> $GITHUB_ENV
+
           else
             echo "Commit message does not match the pattern."
             exit 1
@@ -42,16 +52,18 @@ jobs:
       #     echo "TAG_NAME=${title//[\[\]]/}" >> $GITHUB_ENV
       #     echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
 
-      # - name: Create Tag
-      #   id: create_tag
-      #   run: |
-      #     tag_name="${{ env.TAG_NAME }}"
-      #     git tag "${tag_name}" "${GITHUB_SHA}"
+      - name: Create Tag
+        id: create_tag
+        run: |
+          tag_name="${{ env.TAG_NAME }}"
+          git tag "${tag_name}" "${GITHUB_SHA}"
 
-      # - name: Push Tag to Origin
-      #   if: env.TAG_NAME != ''
-      #   run: |
-      #     git push origin "${{ env.TAG_NAME }}"
+      - name: Push Tag to Origin
+        if: env.TAG_NAME != ''
+        run: |
+          # echo tag
+          echo ${{ env.TAG_NAME }}
+          # git push origin "${{ env.TAG_NAME }}"
 
       # - name: Get Changelog Changes
       #   id: get_changelog_changes
