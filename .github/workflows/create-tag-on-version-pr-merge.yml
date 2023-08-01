@@ -78,4 +78,4 @@ jobs:
         run: |
           # Echo the value of the RECENT_CHANGELOG_UPDATE environment variable
           echo "Recent Changelog Update:"
-          echo "${{ env.RECENT_CHANGELOG_UPDATE }}"
+          printf '%s\n' "${{ env.RECENT_CHANGELOG_UPDATE }}"
