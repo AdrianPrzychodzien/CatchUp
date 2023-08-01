@@ -38,7 +38,7 @@ jobs:
             echo "Tag name: $filtered_message"
 
             # save $filtered_message to $TAG_NAME
-            echo "TAG_NAME=$filtered_message" >> $GITHUB_ENV
+            echo "TAG_NAME=test-tag" >> $GITHUB_ENV
 
           else
             echo "Commit message does not match the pattern."
