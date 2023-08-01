@@ -59,19 +59,22 @@ jobs:
       - name: Get changes from CHANGELOG.md
         id: get_changelog_changes
         run: |
-          # Fetch the latest commit from the main branch                                                               ─╯
+          # Fetch the latest commit from the main branch
           git fetch origin main
 
           # Get the commit hash of the last commit on the main branch
           commit_hash=$(git rev-parse origin/main)
 
           # Get the added lines from the CHANGELOG.md file in the last commit of the main branch
-          changelog_changes=$(git diff --diff-filter=A $commit_hash^..$commit_hash -- CHANGELOG.md)
-
-          # Print the full diff output for debugging purposes
-          git diff $commit_hash^..$commit_hash -- CHANGELOG.md
+          changelog_changes=$(git show $commit_hash --diff-filter=A --format="" -- CHANGELOG.md | tail -n +7)
 
           echo "Added lines in CHANGELOG.md:"
+          echo "$changelog_changes"
+
+          # Save the changes to $CHANGELOG_CHANGES
+          echo "CHANGELOG_CHANGES=$changelog_changes" >> $GITHUB_ENV
+
+          # Display the added lines directly in GitHub Actions
           echo "$changelog_changes"
 
           # Save the changes to $CHANGELOG_CHANGES
