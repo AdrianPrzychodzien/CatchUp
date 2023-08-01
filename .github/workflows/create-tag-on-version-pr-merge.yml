@@ -49,7 +49,7 @@ jobs:
       - name: Push Tag to Origin
         if: env.TAG_NAME != ''
         run: |
-          # git push origin "${{ env.TAG_NAME }}"
+          git push origin "${{ env.TAG_NAME }}"
 
       - name: Get changes from CHANGELOG.md
         id: get_changelog_changes
