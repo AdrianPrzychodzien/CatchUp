@@ -28,11 +28,11 @@ jobs:
 
       - name: test2
         run: |
-          echo "[V1.1.2]" | grep -q '\[V\d+\.\d+\.\d+\]'
+          echo "[V1.1.2]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
           if [ $? -eq 0 ]; then
-            echo "The word contains the character 'a'."
+            echo "The word contains the pattern '[Vx.y.z]'."
           else
-            echo "The word does not contain the character 'a'."
+            echo "The word does not contain the pattern '[Vx.y.z]'."
           fi
 
       - name: Filter out '#' characters from commit message
