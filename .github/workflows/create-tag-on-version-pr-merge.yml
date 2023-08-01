@@ -28,7 +28,7 @@ jobs:
 
       - name: test2
         run: |
-          echo "[VER1.1.2345]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
+          echo "[V1.1.2345]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
           if [ $? -eq 0 ]; then
             echo "The word contains the pattern '[Vx.y.z]'."
           else
@@ -38,20 +38,12 @@ jobs:
       - name: Filter out '#' characters from commit message
         run: |
           commit_message="${{ github.event.head_commit.message }}"
-          # echo
           echo "Commit message: $commit_message"
 
           filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
-          # echo
           echo "Filered message: $filtered_message"
 
-          echo "[V1.1.2]" | grep -Eq '\[V\d+\.\d+\.\d+\]'
-
-          # commit_message_matches=$(echo "$filtered_message" | grep -Eq '\[V\d+\.\d+\.\d+\]')
-          # echo
-          # echo "Commit messae mathes: $commit_message_matches"
-
-          echo $?
+          echo "[V1.1.2345]" | grep -Pq '\[V\d+\.\d+\.\d+\]'
 
           if [ $? -eq 0 ]; then
             echo "Commit message matches the pattern.."
