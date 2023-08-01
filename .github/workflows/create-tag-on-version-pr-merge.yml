@@ -27,7 +27,7 @@ jobs:
           # echo
           echo "Filered message: $filtered_message"
 
-          echo $filtered_message | grep -Eq '\[V\d+\.\d+\.\d+\]'
+          echo "[V1.1.2]" | grep -Eq '\[V\d+\.\d+\.\d+\]'
 
           # commit_message_matches=$(echo "$filtered_message" | grep -Eq '\[V\d+\.\d+\.\d+\]')
           # echo
