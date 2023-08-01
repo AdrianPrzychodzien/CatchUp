@@ -68,8 +68,9 @@ jobs:
           echo "Commit range: $commit_range"
 
           # Get the changes from the CHANGELOG.md file in that commit range
-          changelog_changes=$(git log --oneline --no-decorate --format="%s" $commit_range -- CHANGELOG.md)
+          changelog_changes=$(git log --oneline)
 
+          #  --no-decorate --format="%s" $commit_range -- CHANGELOG.md
           echo "Changelog changes:"
           echo "$changelog_changes"
 
