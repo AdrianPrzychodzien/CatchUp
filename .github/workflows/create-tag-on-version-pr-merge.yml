@@ -27,11 +27,13 @@ jobs:
           # echo
           echo "Filered message: $filtered_message"
 
-          commit_message_matches=$(echo "$filtered_message" | grep -Eq '\[V\d+\.\d+\.\d+\]')
-          # echo
-          echo "Commit messae mathes: $commit_message_matches"
+          echo $filtered_message | grep -Eq '\[V\d+\.\d+\.\d+\]'
 
-          if [ "$commit_message_matches" -eq 0 ]; then
+          # commit_message_matches=$(echo "$filtered_message" | grep -Eq '\[V\d+\.\d+\.\d+\]')
+          # echo
+          # echo "Commit messae mathes: $commit_message_matches"
+
+          if [ $? -eq 0 ]; then
             echo "Commit message matches the pattern.."
           else
             echo "Commit message does not match the pattern."
