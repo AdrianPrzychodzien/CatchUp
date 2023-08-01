@@ -1,3 +1,7 @@
+## [v2.2.3] - 2023-08-11
+
+- [BFR-124] wesfgasdg wefwefr
+
 ## [v2.2.2] - 2023-08-01
 
 - [BFR-124] wesfgasdg wefwefr

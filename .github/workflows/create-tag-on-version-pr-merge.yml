@@ -56,21 +56,18 @@ jobs:
         run: |
           # git push origin "${{ env.TAG_NAME }}"
 
-      - name: Fetch last commit from main
-        run: git fetch origin main --depth=1
-
       - name: Get changes from CHANGELOG.md
         id: get_changelog_changes
         run: |
-          # Get the commit range between the current branch and main
-          commit_range=$(git rev-parse HEAD..origin/main)
-          #echo
-          echo "Commit range: $commit_range"
+          # Fetch the latest commit from the main branch
+          git fetch origin main
 
-          # Get the changes from the CHANGELOG.md file in that commit range
-          changelog_changes=$(git log --oneline)
+          # Get the commit hash of the last commit on the main branch
+          commit_hash=$(git rev-parse origin/main)
 
-          #  --no-decorate --format="%s" $commit_range -- CHANGELOG.md
+          # Get the changes from the CHANGELOG.md file in the last commit of the main branch
+          changelog_changes=$(git show --oneline --no-decorate --format="%s" $commit_hash -- CHANGELOG.md)
+
           echo "Changelog changes:"
           echo "$changelog_changes"
 
