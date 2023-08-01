@@ -46,7 +46,6 @@ jobs:
           fi
 
       - name: Create Tag
-        id: create_tag
         run: |
           tag_name="${{ env.TAG_NAME }}"
           git tag "${tag_name}" "${GITHUB_SHA}"
@@ -70,12 +69,3 @@ jobs:
 
           echo "Recent changes from CHANGELOG.md:"
           echo "$recent_changelog_update"
-
-          # Save the changes to $RECENT_CHANGELOG_UPDATE environment variable
-          echo "RECENT_CHANGELOG_UPDATE=$recent_changelog_update" >> $GITHUB_ENV
-
-      - name: Echo Recent Changelog Update
-        run: |
-          # Echo the value of the RECENT_CHANGELOG_UPDATE environment variable
-          echo "Recent Changelog Update:"
-          printf '%s\n' "${{ env.RECENT_CHANGELOG_UPDATE }}"
