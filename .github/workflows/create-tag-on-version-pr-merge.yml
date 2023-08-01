@@ -26,14 +26,9 @@ jobs:
           commit_title=$(echo "$commit_message" | head -n 1)
           echo "Commit title: $commit_title"
 
-          # filtered_message=$(echo "$commit_message" | sed 's/\].*/\]/' | tr -d '#')
-          # echo "Filered message: $filtered_message"
-
-          # # pattern from pr-validation.yml 
-          # echo $filtered_message | grep -Pq '\[V\d+\.\d+\.\d+\]'
-
           # Use grep to find lines that match the pattern [Vx.x.x]
-          filtered_message=$(echo "$commit_title" | grep -o '\[V[0-9]\+\.[0-9]\+\.[0-9]\+\]' | tr -d '[]')
+          filtered_message=$(echo "$commit_title" | grep -o '\[V\d+\.\d+\.\d+\]' | tr -d '[]')
+          # '\[V[0-9]\+\.[0-9]\+\.[0-9]\+\]'
 
           if [ -n "$filtered_message" ]; then
             echo "Commit message matches the pattern.."
