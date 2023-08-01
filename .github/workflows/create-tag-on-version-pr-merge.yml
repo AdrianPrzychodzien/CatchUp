@@ -62,26 +62,12 @@ jobs:
           # Fetch the latest commit from the main branch
           git fetch origin main
 
-          # Get the commit hash of the last commit on the main branch
-          commit_hash=$(git rev-parse origin/main)
+          # Get the content of the CHANGELOG.md file from the main branch
+          changelog_changes=$(git show origin/main:CHANGELOG.md)
 
-          # Check if the commit has any parents
-          if [ "$(git rev-parse $commit_hash^)" = "$commit_hash" ]; then
-            # If the commit has no parents, use git show directly
-            changelog_changes=$(git show --diff-filter=A --format="" $commit_hash -- CHANGELOG.md | tail -n +7)
-          else
-            # If the commit has parents, use git diff with the commit range
-            changelog_changes=$(git diff $commit_hash^..$commit_hash --diff-filter=A -- CHANGELOG.md | grep '^+')
-          fi
+          # Use awk to extract the content between the first and second "##" lines
+          # and exclude the last two lines
+          changelog_between_blocks=$(echo "$changelog_changes" | awk '/^## /{count++} count == 1, count == 2' | head -n -2)
 
-          echo "Added lines in CHANGELOG.md:"
-          echo "$changelog_changes"
-
-          # Save the changes to $CHANGELOG_CHANGES
-          echo "CHANGELOG_CHANGES=$changelog_changes" >> $GITHUB_ENV
-
-          # Display the added lines directly in GitHub Actions
-          echo "$changelog_changes"
-
-          # Save the changes to $CHANGELOG_CHANGES
-          # echo "CHANGELOG_CHANGES=$changelog_changes" >> $GITHUB_ENV
+          echo "Changes between the first and second '##' in CHANGELOG.md:"
+          echo "$changelog_between_blocks"
