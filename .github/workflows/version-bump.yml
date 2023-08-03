@@ -51,11 +51,13 @@ jobs:
 
           # Get the next valid tag
           current_tag=$(git describe --tags --abbrev=0 $last_tag^)
+          echo "Current Tag: $current_tag"
           while ! is_valid_tag "$current_tag"; do
             current_tag=$(git describe --tags --abbrev=0 $current_tag^) # Move to the previous tag
           done
 
           # Print the valid tag found
+          echo "Valid Tag: $current_tag"
           echo "LATEST_TAG=$current_tag" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messages
