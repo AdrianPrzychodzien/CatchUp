@@ -35,7 +35,7 @@ jobs:
           echo "" >> package.json
 
       # Add the step to find the next valid tag
-      - name: Find next valid tag
+      - name: Find next valid tagg
         run: |
           # Function to check if a tag is valid
           function is_valid_tag() {
