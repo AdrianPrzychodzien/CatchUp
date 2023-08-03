@@ -34,12 +34,29 @@ jobs:
         run: |
           echo "" >> package.json
 
-      # Set the latest tag to the environment variable
-      - name: Get version and tag
-        id: get_latest_tag
+      # Add the step to find the next valid tag
+      - name: Find next valid tag
         run: |
-          latest_tag=$(git describe --tag --abbrev=0 | cut -c 2-)
-          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+          # Function to check if a tag is valid
+          function is_valid_tag() {
+            if [[ "$1" =~ ^v[0-9]+(\.[0-9]+)+$ ]]; then
+              return 0 # It is a valid tag
+            else
+              return 1 # It is not a valid tag
+            fi
+          }
+
+          # Get the last tag without abbreviating
+          last_tag=$(git describe --tags --abbrev=0)
+
+          # Get the next valid tag
+          current_tag=$(git describe --tags --abbrev=0 $last_tag^)
+          while ! is_valid_tag "$current_tag"; do
+            current_tag=$(git describe --tags --abbrev=0 $current_tag^) # Move to the previous tag
+          done
+
+          # Print the valid tag found
+          echo "LATEST_TAG=$current_tag" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
