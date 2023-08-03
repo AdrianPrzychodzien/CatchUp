@@ -69,7 +69,7 @@ jobs:
           latest_tag="${{ env.LATEST_TAG }}"
 
           # Get the commit messages between the latest tag and HEAD
-          commit_messages=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0)..HEAD | awk -F"(" '{print $1}')
+          commit_messages=$(git log --pretty=format:"%s" "$current_tag"..HEAD | awk -F"(" '{print $1}')
           echo "Commit Messages: $commit_messages"
 
           # Format commit_messages to have a "- " before each commit message
