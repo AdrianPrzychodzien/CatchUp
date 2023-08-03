@@ -39,7 +39,7 @@ jobs:
         run: |
           # Function to check if a tag is valid
           function is_valid_tag() {
-            if [[ "$1" =~ ^(?i)v[0-9]+(\.[0-9]+)+$ ]]; then
+            if [[ "$1" =~ ^V[0-9]+(\.[0-9]+)+$ ]]; then
               return 0 # It is a valid tag
             else
               return 1 # It is not a valid tag
@@ -56,8 +56,8 @@ jobs:
           done
 
           # Print the valid tag found
-          echo "Valid tag found: $current_tag"
-          echo "$current_tag" >> $GITHUB_ENV
+          echo "Valid Tag: $current_tag"
+          echo "LATEST_TAG=$current_tag" >> $GITHUB_ENV
 
       # Update CHANGELOG.md with the specified version and commit messages
       - name: Update CHANGELOG.md
