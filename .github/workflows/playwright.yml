@@ -15,8 +15,7 @@ jobs:
           contains(github.event.deployment.environment, 'jampack-landing-pr')
         ) || (
           github.event_name == 'pull_request' &&
-          !startsWith(github.head_ref, 'v') &&
-          !contains(github.head_ref, '*.*')
+          !contains(github.head_ref, 'v2.')
         )
       }}
 
