@@ -39,7 +39,7 @@ jobs:
             echo "Valid tag: ${GITHUB_REF}"
           fi
   
-      - name: Install dependencies..
+      - name: Install dependencies...
         run: yarn add @playwright/test
 
       - name: Install Playwright Browsers
