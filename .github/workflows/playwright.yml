@@ -20,7 +20,7 @@ jobs:
         contains(github.event.deployment.environment, 'jampack-landing-pr')
       ) || (
         github.event_name == 'pull_request' &&
-        ./.github/scripts/is-valid-tag.sh "${{ github.head_ref }}" == true
+        .github/scripts/is-valid-tag.sh "${{ github.head_ref }}" == true
       )
 
     steps:
@@ -30,9 +30,6 @@ jobs:
         with:
           node-version: '16'
 
-<<<<<<< Updated upstream
-      - name: Install dependencies
-=======
       - name: test
         run: |
           if ! .github/scripts/is-valid-tag.sh "${GITHUB_REF}"; then
@@ -43,7 +40,6 @@ jobs:
           fi
   
       - name: Install dependencies..
->>>>>>> Stashed changes
         run: yarn add @playwright/test
 
       - name: Install Playwright Browsers
