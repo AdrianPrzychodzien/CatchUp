@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
+      - name: Install dependencies......
         run: yarn add @playwright/test
 
       - name: Install Playwright Browsers
