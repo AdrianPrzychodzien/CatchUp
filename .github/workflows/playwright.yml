@@ -20,7 +20,7 @@ jobs:
         contains(github.event.deployment.environment, 'jampack-landing-pr')
       ) || (
         github.event_name == 'pull_request' &&
-        source ./.github/scripts/is-valid-tag.sh && is_valid_tag "${{ github.head_ref }}"
+        ./.github/scripts/is-valid-tag.sh "${{ github.head_ref }}" == true
       )
 
     steps:
