@@ -20,7 +20,7 @@ jobs:
         contains(github.event.deployment.environment, 'jampack-landing-pr')
       ) || (
         github.event_name == 'pull_request' &&
-        [[ "${{ github.head_ref }}" =~ ^[Vv][0-9]+(\.[0-9]+)+$ ]]
+        [[ "${{ 'BFR-123' }}" =~ ^[Vv][0-9]+(\.[0-9]+)+$ ]]
       )
 
     steps:
