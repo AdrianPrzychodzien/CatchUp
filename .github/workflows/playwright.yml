@@ -14,7 +14,14 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    if: ${{ (github.event.deployment_status.state == 'success' && contains(github.event.deployment.environment, 'jampack-landing-pr')) || (startsWith(github.head_ref, 'v') && github.event_name == 'pull_request') }}
+      if: |
+        (
+          github.event.deployment_status.state == 'success' &&
+          contains(github.event.deployment.environment, 'jampack-landing-pr')
+        ) || (
+          github.event_name == 'pull_request' &&
+          startsWith(github.head_ref, 'v')
+        )
 
     steps:
       - uses: actions/checkout@v3
