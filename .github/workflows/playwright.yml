@@ -1,11 +1,6 @@
 name: Playwright Tests
 
-on:
-  deployment_status:
-
-  push:
-    branches:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+on: [deployment_status, pull_request]
 
 jobs:
   e2e-test:
