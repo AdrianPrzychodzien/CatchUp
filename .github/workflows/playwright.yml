@@ -9,7 +9,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      if: ${{ github.event_name == 'pull_request' && startsWith(github.head_ref, 'v') }}
+    if: ${{ github.event_name == 'pull_request' && startsWith(github.head_ref, 'v') }}
 
     steps:
       - uses: actions/checkout@v3
