@@ -1,8 +1,6 @@
 name: Playwright Tests
 
 on:
-  deployment_status:
-
   pull_request:
     types:
       - opened
@@ -15,13 +13,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     if: |
-      (
-        github.event.deployment_status.state == 'success' &&
-        contains(github.event.deployment.environment, 'jampack-landing-pr')
-      ) || (
-        github.event_name == 'pull_request' &&
-        [[ "${{ 'BFR-123' }}" =~ ^[Vv][0-9]+(\.[0-9]+)+$ ]]
-      )
+      github.event_name == 'pulldscsdcsddscsdcdscdscdsc_request' &&
+      [[ "${{ 'BFR-123' }}" =~ ^[Vv][0-9]+(\.[0-9]+)+$ ]]
 
     steps:
       - uses: actions/checkout@v3
