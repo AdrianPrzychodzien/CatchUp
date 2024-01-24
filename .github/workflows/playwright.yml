@@ -15,12 +15,13 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     if: |
-      if ! .github/scripts/is-valid-tag.sh "${{ github.head_ref }}"; then
-        echo "Invalid tag: ${{ github.head_ref }}"
-        exit 78  # Use a non-zero exit code to mark the job as neutral
-      else
-        echo "Valid tag: ${{ github.head_ref }}"
-      fi
+      (
+        github.event.deployment_status.state == 'success' &&
+        contains(github.event.deployment.environment, 'jampack-landing-pr')
+      ) || (
+        github.event_name == 'pull_request' &&
+        [[ "${{ github.head_ref }}" =~ ^[Vv][0-9]+(\.[0-9]+)+$ ]]
+      )
 
     steps:
       - uses: actions/checkout@v3
