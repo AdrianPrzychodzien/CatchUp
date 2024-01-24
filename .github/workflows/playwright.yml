@@ -30,7 +30,20 @@ jobs:
         with:
           node-version: '16'
 
+<<<<<<< Updated upstream
       - name: Install dependencies
+=======
+      - name: test
+        run: |
+          if ! .github/scripts/is-valid-tag.sh "${GITHUB_REF}"; then
+            echo "Invalid tag: ${GITHUB_REF}"
+            exit 1
+          else
+            echo "Valid tag: ${GITHUB_REF}"
+          fi
+  
+      - name: Install dependencies..
+>>>>>>> Stashed changes
         run: yarn add @playwright/test
 
       - name: Install Playwright Browsers
