@@ -15,13 +15,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     if: |
-      (
-        github.event.deployment_status.state == 'success' &&
-        contains(github.event.deployment.environment, 'jampack-landing-pr')
-      ) || (
-        github.event_name == 'pull_request' &&
-        .github/scripts/is-valid-tag.sh "${{ github.head_ref }}"
-      )
+      github.event_name == 'pull_request' &&
+      .github/scripts/is-valid-tag.sh "${{ github.head_ref }}"
 
     steps:
       - uses: actions/checkout@v3
