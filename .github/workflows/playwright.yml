@@ -33,5 +33,5 @@ jobs:
       - name: Install dependencies
         run: yarn add @playwright/test
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright Browsers.
         run: npx playwright install chromium
