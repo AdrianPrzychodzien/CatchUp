@@ -32,11 +32,13 @@ jobs:
 
       - name: test
         run: |
-          if ! .github/scripts/is-valid-tag.sh "${GITHUB_REF}"; then
-            echo "Invalid tag: ${GITHUB_REF}"
+          echo 'print github.head_ref: "${{ github.head_ref }}"'  
+
+          if ! .github/scripts/is-valid-tag.sh "${{ github.head_ref }}"; then
+            echo "Invalid tag: ${{ github.head_ref }}"
             exit 1
           else
-            echo "Valid tag: ${GITHUB_REF}"
+            echo "Valid tag: ${{ github.head_ref }}"
           fi
   
       - name: Install dependencies..
