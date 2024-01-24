@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '16'
 
-      - name: test
+      - name: testd
         run: |
           echo 'print github.head_ref: "${{ github.head_ref }}"'  
 
