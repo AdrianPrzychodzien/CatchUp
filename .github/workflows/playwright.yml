@@ -4,8 +4,8 @@ on:
   deployment_status:
 
   pull_request:
-    types:
-      - opened
+    branches:
+      - v*.*.*
 
 jobs:
   e2e-test:
